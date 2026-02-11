@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drill or Drop &mdash; Discovery Document v2.1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --color-primary: #1a365d;
+            --color-primary-light: #2a4a7f;
+            --color-accent: #c05621;
+            --color-accent-light: #dd6b20;
+            --color-bg: #ffffff;
+            --color-bg-alt: #f7fafc;
+            --color-bg-highlight: #ebf4ff;
+            --color-border: #e2e8f0;
+            --color-border-dark: #cbd5e0;
+            --color-text: #1a202c;
+            --color-text-secondary: #4a5568;
+            --color-text-muted: #718096;
+            --color-success: #276749;
+            --color-warning: #975a16;
+            --color-danger: #9b2c2c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 11pt;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @media print {
+            body { font-size: 10pt; }
+            .page-break { page-break-before: always; }
+            .no-print { display: none; }
+            .container { max-width: 100%; padding: 0; }
+            h2 { page-break-after: avoid; }
+            table { page-break-inside: avoid; }
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 48px;
+        }
+
+        /* Cover / Header */
+        .report-header {
+            border-bottom: 3px solid var(--color-primary);
+            padding-bottom: 32px;
+            margin-bottom: 40px;
+        }
+
+        .report-header .label {
+            font-size: 10pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-accent);
+            margin-bottom: 8px;
+        }
+
+        .report-header h1 {
+            font-size: 32pt;
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+
+        .report-header .subtitle {
+            font-size: 14pt;
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .report-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            background: var(--color-bg-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 16px 20px;
+        }
+
+        .report-meta dt {
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-text-muted);
+        }
+
+        .report-meta dd {
+            font-size: 10pt;
+            font-weight: 500;
+            color: var(--color-text);
+            margin-top: 2px;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--color-bg-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 24px 32px;
+            margin-bottom: 40px;
+        }
+
+        .toc h2 {
+            font-size: 12pt;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            border: none;
+            padding: 0;
+        }
+
+        .toc ol {
+            columns: 2;
+            column-gap: 32px;
+            padding-left: 20px;
+        }
+
+        .toc li {
+            font-size: 10pt;
+            margin-bottom: 4px;
+            color: var(--color-text-secondary);
+            break-inside: avoid;
+        }
+
+        .toc a {
+            color: var(--color-primary-light);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        /* Headings */
+        h2 {
+            font-size: 18pt;
+            font-weight: 700;
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: 8px;
+            margin-top: 48px;
+            margin-bottom: 20px;
+        }
+
+        h2 .section-number {
+            color: var(--color-accent);
+            margin-right: 8px;
+        }
+
+        h3 {
+            font-size: 13pt;
+            font-weight: 600;
+            color: var(--color-primary-light);
+            margin-top: 28px;
+            margin-bottom: 12px;
+        }
+
+        h4 {
+            font-size: 11pt;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* Text */
+        p {
+            margin-bottom: 12px;
+            color: var(--color-text);
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        /* Lists */
+        ul, ol {
+            padding-left: 24px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        li + li {
+            margin-top: 2px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px 0;
+            font-size: 10pt;
+        }
+
+        thead th {
+            background: var(--color-primary);
+            color: #ffffff;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 12px;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        thead th:first-child {
+            border-radius: 4px 0 0 0;
+        }
+
+        thead th:last-child {
+            border-radius: 0 4px 0 0;
+        }
+
+        tbody td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--color-border);
+            vertical-align: top;
+        }
+
+        tbody tr:nth-child(even) {
+            background: var(--color-bg-alt);
+        }
+
+        tbody tr:hover {
+            background: var(--color-bg-highlight);
+        }
+
+        /* Callout Boxes */
+        .callout {
+            border-left: 4px solid var(--color-primary);
+            background: var(--color-bg-highlight);
+            padding: 16px 20px;
+            margin: 16px 0 24px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .callout.warning {
+            border-left-color: var(--color-accent);
+            background: #fffaf0;
+        }
+
+        .callout.success {
+            border-left-color: var(--color-success);
+            background: #f0fff4;
+        }
+
+        .callout.danger {
+            border-left-color: var(--color-danger);
+            background: #fff5f5;
+        }
+
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Stage Cards */
+        .stage-card {
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 16px 0 24px 0;
+            background: var(--color-bg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        .stage-card .stage-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stage-card .stage-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14pt;
+            flex-shrink: 0;
+        }
+
+        .stage-card .stage-title {
+            font-size: 14pt;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .stage-card .stage-role {
+            font-size: 9pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-accent);
+        }
+
+        .stage-card .substeps {
+            padding-left: 20px;
+        }
+
+        .stage-card .substeps li {
+            margin-bottom: 6px;
+        }
+
+        .stage-gate {
+            margin-top: 12px;
+            padding: 8px 12px;
+            background: var(--color-bg-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-size: 9pt;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+        }
+
+        /* Parallel indicator */
+        .parallel-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #bee3f8;
+            color: #2a4365;
+            margin-left: 8px;
+        }
+
+        /* Confidence badge */
+        .confidence-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .confidence-high { background: #c6f6d5; color: var(--color-success); }
+        .confidence-medium { background: #fefcbf; color: var(--color-warning); }
+        .confidence-low { background: #fed7d7; color: var(--color-danger); }
+
+        /* Data Flow Diagram */
+        .data-flow {
+            background: var(--color-bg-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 20px;
+            margin: 16px 0 24px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9pt;
+            line-height: 1.5;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        /* Feature Priority Tags */
+        .priority {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .priority.p0 {
+            background: #c6f6d5;
+            color: var(--color-success);
+        }
+
+        .priority.p1 {
+            background: #fefcbf;
+            color: var(--color-warning);
+        }
+
+        .priority.future {
+            background: #e2e8f0;
+            color: var(--color-text-muted);
+        }
+
+        /* Risk Matrix Colors */
+        .risk-high { color: var(--color-danger); font-weight: 600; }
+        .risk-medium { color: var(--color-warning); font-weight: 600; }
+        .risk-low { color: var(--color-success); font-weight: 600; }
+
+        /* Resolved tag */
+        .resolved {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #c6f6d5;
+            color: var(--color-success);
+        }
+
+        /* New tag */
+        .new-tag {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #bee3f8;
+            color: #2a4365;
+        }
+
+        /* GO/NO-GO */
+        .go-condition {
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 9pt;
+        }
+
+        .go { background: #c6f6d5; color: var(--color-success); }
+        .nogo { background: #fed7d7; color: var(--color-danger); }
+        .conditional { background: #fefcbf; color: var(--color-warning); }
+
+        /* Persona Cards */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0 24px 0;
+        }
+
+        .persona-grid.three-col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        @media print {
+            .persona-grid { display: block; }
+            .persona-card { margin-bottom: 16px; }
+        }
+
+        @media (max-width: 768px) {
+            .persona-grid { grid-template-columns: 1fr; }
+            .persona-grid.three-col { grid-template-columns: 1fr; }
+        }
+
+        .persona-card {
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 20px;
+            background: var(--color-bg);
+        }
+
+        .persona-card .persona-role {
+            font-size: 12pt;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+
+        .persona-card .persona-desc {
+            font-size: 9pt;
+            color: var(--color-text-muted);
+            margin-bottom: 12px;
+        }
+
+        .persona-card h4 {
+            font-size: 9pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-secondary);
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+
+        .persona-card ul {
+            padding-left: 16px;
+            font-size: 10pt;
+        }
+
+        /* Footer */
+        .report-footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 2px solid var(--color-border);
+            font-size: 9pt;
+            color: var(--color-text-muted);
+            text-align: center;
+        }
+
+        /* Scenario Table */
+        .scenario-table td:first-child {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Glossary */
+        .glossary-table td:first-child {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 9pt;
+            white-space: nowrap;
+            color: var(--color-primary);
+        }
+
+        /* Optimization section */
+        .optimization-card {
+            border: 1px solid var(--color-border);
+            border-left: 4px solid var(--color-accent);
+            border-radius: 0 8px 8px 0;
+            padding: 20px 24px;
+            margin: 16px 0 24px 0;
+            background: var(--color-bg);
+        }
+
+        .optimization-card .opt-title {
+            font-size: 12pt;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .optimization-card .opt-observation {
+            font-size: 10pt;
+            color: var(--color-text-secondary);
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .optimization-card .opt-value {
+            font-size: 10pt;
+            font-weight: 500;
+            color: var(--color-success);
+            margin-top: 8px;
+        }
+
+        /* Decision badges for optimization recommendations */
+        .decision-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 3px;
+            font-size: 8pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+        .decision-v1 { background: #c6f6d5; color: var(--color-success); }
+        .decision-v2 { background: #bee3f8; color: #2a4365; }
+        .decision-deferred { background: #fefcbf; color: var(--color-warning); }
+        .decision-skipped { background: #e2e8f0; color: var(--color-text-muted); }
+
+        .optimization-card.approved { border-left-color: var(--color-success); }
+        .optimization-card.deferred { border-left-color: var(--color-warning); opacity: 0.8; }
+        .optimization-card.skipped { border-left-color: var(--color-text-muted); opacity: 0.7; }
+
+        /* State data source cards */
+        .state-card {
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 8px 0;
+            background: var(--color-bg);
+        }
+        .state-card .state-name {
+            font-size: 11pt;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+        .state-card .state-agency {
+            font-size: 9pt;
+            color: var(--color-text-muted);
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="report-header">
+        <div class="label">Discovery Document</div>
+        <h1>Drill or Drop</h1>
+        <div class="subtitle">AI-Powered Well Investment Decision Platform</div>
+        <dl class="report-meta">
+            <div>
+                <dt>Document Version</dt>
+                <dd>2.1 &mdash; BA Optimization Decisions + State Data</dd>
+            </div>
+            <div>
+                <dt>Date</dt>
+                <dd>February 9, 2026</dd>
+            </div>
+            <div>
+                <dt>Status</dt>
+                <dd>Discovery Phase</dd>
+            </div>
+            <div>
+                <dt>Prepared By</dt>
+                <dd>Business Analyst, Crucible</dd>
+            </div>
+            <div>
+                <dt>Product Type</dt>
+                <dd>AI + Analytics Platform</dd>
+            </div>
+            <div>
+                <dt>Domain</dt>
+                <dd>Upstream Oil &amp; Gas</dd>
+            </div>
+        </dl>
+    </header>
+
+    <!-- TABLE OF CONTENTS -->
+    <nav class="toc">
+        <h2>Contents</h2>
+        <ol>
+            <li><a href="#s1">Executive Summary</a></li>
+            <li><a href="#s2">Problem Statement</a></li>
+            <li><a href="#s3">Market Context</a></li>
+            <li><a href="#s4">Target Users &amp; Personas</a></li>
+            <li><a href="#s5">Workflow &amp; Process</a></li>
+            <li><a href="#s6">Data Architecture (High Level)</a></li>
+            <li><a href="#s7">Key Features</a></li>
+            <li><a href="#s8">AI &amp; Automation Capabilities</a></li>
+            <li><a href="#s9">Scenario Modeling &amp; Live Dashboard</a></li>
+            <li><a href="#s10">Decision Archive &amp; Analytics</a></li>
+            <li><a href="#s11">Technical Considerations</a></li>
+            <li><a href="#s12">Risks &amp; Assumptions</a></li>
+            <li><a href="#s13">MVP Scope</a></li>
+            <li><a href="#s14">Open Questions</a></li>
+            <li><a href="#s15">GO/NO-GO Conditions</a></li>
+            <li><a href="#s16">BA Optimization Recommendations</a></li>
+        </ol>
+    </nav>
+
+    <!-- SECTION 1: EXECUTIVE SUMMARY -->
+    <section id="s1">
+        <h2><span class="section-number">1.</span> Executive Summary</h2>
+
+        <p><strong>Drill or Drop</strong> is an AI-powered well investment decision platform designed for non-operated working interest (NOWI) holders evaluating Authorization for Expenditure (AFE) proposals. The platform ingests AFE documents, validates land records against internal and third-party data, builds type curves from analog well performance data, auto-calculates full-cycle economics through an engine-driven model, and delivers a drill/drop recommendation through a comprehensive, interactive executive dashboard with live financial modeling, structured advisory voting, and a delegated approval chain with escalation.</p>
+
+        <p>The product addresses a fundamental challenge in upstream oil &amp; gas: the AFE evaluation process for non-operators is manual, fragmented across spreadsheets and disconnected tools, and heavily dependent on institutional knowledge. Decisions that commit capital are often made without rigorous, repeatable analysis &mdash; or the analysis takes so long that the election window closes before work is complete.</p>
+
+        <div class="callout success">
+            <p><strong>Value Proposition:</strong> Drill or Drop compresses the AFE evaluation workflow from days or weeks into same-day automated results. It automates the mechanics (PDF parsing, land record matching, analog selection, economics calculations) while preserving expert control at every stage through role-based review gates with confidence-level sign-offs.</p>
+        </div>
+
+        <h3>Six Roles Define the Workflow</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Function</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Administrator</strong></td><td>System config, user management, data source connections, DOI deck upload, approval chain setup, escalation rules</td></tr>
+                <tr><td><strong>Land Analyst</strong></td><td>AFE ingestion (manual upload or email confirmation), DOI validation with confidence sign-off</td></tr>
+                <tr><td><strong>Technical Analyst</strong></td><td>Analog well scouting, type curve construction, opex assumptions with confidence sign-off</td></tr>
+                <tr><td><strong>Commercial Analyst</strong></td><td>Validates engine-generated economics, applies deal structure, signs off with confidence</td></tr>
+                <tr><td><strong>Commercial Advisory Group (CAG)</strong></td><td>Reviews dashboard, adjusts inputs live, votes (5-point scale with mandatory rationale)</td></tr>
+                <tr><td><strong>Approver (CEO + Delegates)</strong></td><td>Sole approval: Drill / Drop / Send Back; delegated chain with time-based escalation</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <p><strong>Key Architectural Change:</strong> Land and Technical Analysts work <strong>in parallel</strong> after AFE ingestion, eliminating the sequential bottleneck. Once both sign off, the economics engine auto-calculates the full model. The Commercial Analyst validates and adjusts rather than building from scratch. The dashboard is a <strong>live financial model</strong> &mdash; CAG members change inputs and watch everything recalculate in real time before casting votes.</p>
+        </div>
+
+        <p>If the election deadline passes without an approval decision, the system flags the AFE as <strong>Non-Consent</strong> and records the outcome in the decision archive.</p>
+
+        <p>The platform targets a client managing non-operated interests across the Permian (Delaware and Midland sub-basins), Eagle Ford, Haynesville, and Powder River basins. The MVP handles one AFE at a time. Well data is ingested from a multi-source strategy: free state regulatory data from Texas RRC, New Mexico OCD, and Wyoming WOGCC serve as the primary foundation, with Enverus CSV import as enrichment and fallback (especially for Louisiana/Haynesville data). The UI follows a light theme, modern, clean, professional design and is mobile-responsive from day one.</p>
+
+        <div class="callout">
+            <p><strong>v2.1 Updates:</strong> This revision incorporates client decisions on 12 BA optimization recommendations (8 approved for v1, 1 for v2, 2 deferred, 1 skipped) and a state regulatory data strategy leveraging free public data as the primary foundation. New v1 features include: confidence auto-gating, deadline-aware prioritization, breakeven auto-calculation, asymmetric risk framing, stale evaluation detection, PDF template library, export package, and decision outcome data model. Timeline extended to 20 weeks.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 2: PROBLEM STATEMENT -->
+    <section id="s2" class="page-break">
+        <h2><span class="section-number">2.</span> Problem Statement</h2>
+
+        <h3>The Non-Operator's Dilemma</h3>
+
+        <p>Non-operated working interest holders receive AFE proposals from operators and must make consequential capital allocation decisions &mdash; often under tight election deadlines (typically 30 days, worst case 1 week) &mdash; with limited access to the operator's subsurface data, completion design rationale, or economic assumptions.</p>
+
+        <h4>Fragmented Data and Tooling</h4>
+        <p>Land records live in Excel. Well data is pulled from Enverus manually via CSV exports. Economics are modeled in standalone spreadsheets. Commodity prices are looked up by hand. There is no single system that connects the evaluation pipeline end to end.</p>
+
+        <h4>Manual, Error-Prone Workflows</h4>
+        <p>DOI validation requires cross-referencing internal records against operator statements and public data. Analog well selection is subjective and inconsistent. Type curve generation depends on who is doing the work and what wells they happen to choose.</p>
+
+        <h4>Slow Turnaround</h4>
+        <p>A thorough AFE evaluation can take days to weeks depending on staff availability. When election windows are tight, delays translate directly into missed opportunities or uninformed decisions.</p>
+
+        <h4>No Institutional Memory</h4>
+        <p>Decisions are documented inconsistently. There is no structured archive of past evaluations, the assumptions that drove them, or how actual well performance compared to projections.</p>
+
+        <h4>No Structured Advisory Input</h4>
+        <p>Advisory group opinions are collected informally (email, hallway conversations, meetings) with no structured voting, no mandatory rationale capture, and no systematic way to aggregate sentiment for the decision-maker.</p>
+
+        <h4>Approval Bottlenecks</h4>
+        <p>The CEO or primary decision-maker is frequently traveling or unavailable. There is no systematic delegation chain, no automated escalation, and no way to act on approvals via SMS when away from a desk. Missed deadlines result in non-consent elections with potential financial penalties.</p>
+
+        <h4>Limited Scenario Flexibility</h4>
+        <p>Traditional spreadsheet models make it cumbersome to explore alternative deal structures. Each scenario requires manual rework, discouraging thorough exploration of the decision space.</p>
+
+        <h4>Expert Bottlenecks</h4>
+        <p>Senior technical and commercial staff are the scarce resource. They need tools that surface the analysis, not tools that require them to build it from scratch every time.</p>
+    </section>
+
+    <!-- SECTION 3: MARKET CONTEXT -->
+    <section id="s3" class="page-break">
+        <h2><span class="section-number">3.</span> Market Context</h2>
+
+        <h3>Competitive Landscape</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Platform</th>
+                    <th>Category</th>
+                    <th>Strengths</th>
+                    <th>Gaps vs. Drill or Drop</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Enverus PRISM</strong></td>
+                    <td>Full-stack E&amp;P analytics</td>
+                    <td>5.4M+ wells, forecasting, benchmarking, extensive data</td>
+                    <td>Operator-focused; no AFE ingestion; no voting/approval chain; no deal structure builder</td>
+                </tr>
+                <tr>
+                    <td><strong>ComboCurve</strong></td>
+                    <td>Forecasting &amp; economics</td>
+                    <td>Fast forecast-to-economics; 10 concurrent scenarios</td>
+                    <td>No AFE parsing; no land validation; no governance model; no live interactive dashboard</td>
+                </tr>
+                <tr>
+                    <td><strong>Val Nav (Quorum)</strong></td>
+                    <td>Reserves &amp; economics</td>
+                    <td>Deep economic modeling; industry standard for reserves</td>
+                    <td>Steep learning curve; not designed for rapid non-op decisions; no AI automation</td>
+                </tr>
+                <tr>
+                    <td><strong>Novi Labs</strong></td>
+                    <td>Well analytics &amp; forecasting</td>
+                    <td>Clean UX; proprietary analytics; investment screening</td>
+                    <td>No AFE workflow; no land validation; no economics engine; no advisory voting</td>
+                </tr>
+                <tr>
+                    <td><strong>Pandell AFE</strong></td>
+                    <td>AFE workflow management</td>
+                    <td>AFE approval workflows; cost tracking</td>
+                    <td>Administrative only; no technical evaluation, economics, or decision support</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <p><strong>Competitive Differentiation:</strong> No existing platform combines automated AFE ingestion, land validation, AI-driven analog selection, engine-driven economics with flexible deal structures, a live interactive dashboard, structured 5-point advisory voting with mandatory rationale, confidence-level sign-offs, delegated approval chain with SMS escalation, and decision archiving with non-consent tracking &mdash; all in a single workflow purpose-built for non-operators.</p>
+        </div>
+
+        <h3>Market Timing</h3>
+        <p>The upstream oil &amp; gas industry's adoption of AI and cloud-based analytics is accelerating. Non-operators are particularly underserved &mdash; most platforms are designed from the operator's perspective. The market window for a purpose-built non-operator decision tool is open and growing.</p>
+    </section>
+
+    <!-- SECTION 4: TARGET USERS & PERSONAS -->
+    <section id="s4" class="page-break">
+        <h2><span class="section-number">4.</span> Target Users &amp; Personas <span class="new-tag">6 Roles</span></h2>
+
+        <div class="persona-grid three-col">
+            <div class="persona-card">
+                <div class="persona-role">Administrator</div>
+                <div class="persona-desc">System configuration, user management, approval chain setup</div>
+                <h4>Key Responsibilities</h4>
+                <ul>
+                    <li>User accounts and role assignment (6 roles)</li>
+                    <li>Data source connections (Enverus CSV, pricing, opex)</li>
+                    <li>DOI deck upload and maintenance</li>
+                    <li>Approval chain configuration (Primary + 2 delegates)</li>
+                    <li>Escalation rule and timing threshold configuration</li>
+                    <li>Notification channel preferences (in-app, email, SMS)</li>
+                </ul>
+                <h4>Pain Points</h4>
+                <ul>
+                    <li>No centralized system administration today</li>
+                    <li>Delegation is ad hoc (phone calls, forwarded emails)</li>
+                    <li>No visibility into escalation or deadline risk</li>
+                </ul>
+            </div>
+
+            <div class="persona-card">
+                <div class="persona-role">Land Analyst</div>
+                <div class="persona-desc">AFE ingestion + DOI validation with confidence sign-off</div>
+                <h4>Key Needs</h4>
+                <ul>
+                    <li>Simple AFE upload or one-click confirmation of email auto-ingestion</li>
+                    <li>Automated field extraction via vision-language model</li>
+                    <li>Side-by-side: AFE vs. DOI deck vs. Enverus</li>
+                    <li>Override capability with explanation</li>
+                    <li>Confidence sign-off: <span class="confidence-badge confidence-high">High</span> <span class="confidence-badge confidence-medium">Medium</span> <span class="confidence-badge confidence-low">Low</span></li>
+                </ul>
+                <h4>Pain Points</h4>
+                <ul>
+                    <li>Manual cross-referencing against Excel</li>
+                    <li>No systematic validation tracking</li>
+                    <li>No way to communicate DOI confidence downstream</li>
+                </ul>
+            </div>
+
+            <div class="persona-card">
+                <div class="persona-role">Technical Analyst</div>
+                <div class="persona-desc">Analog scouting, type curves, opex assumptions + confidence sign-off</div>
+                <h4>Key Needs</h4>
+                <ul>
+                    <li>Automated analog selection with transparent scoring</li>
+                    <li>Type curve generation with P10/P50/P90</li>
+                    <li>Real-time impact of adding/removing analogs</li>
+                    <li>Opex assumption input (fixed + variable)</li>
+                    <li>Confidence sign-off: <span class="confidence-badge confidence-high">High</span> <span class="confidence-badge confidence-medium">Medium</span> <span class="confidence-badge confidence-low">Low</span></li>
+                </ul>
+                <h4>Pain Points</h4>
+                <ul>
+                    <li>Subjective, inconsistent analog selection</li>
+                    <li>Manual type curve building in spreadsheets</li>
+                    <li>Opex disconnected from technical evaluation</li>
+                </ul>
+            </div>
+
+            <div class="persona-card">
+                <div class="persona-role">Commercial Analyst</div>
+                <div class="persona-desc">Validates engine-generated economics + deal structures + confidence sign-off</div>
+                <h4>Key Needs</h4>
+                <ul>
+                    <li>Auto-assembled economic model from upstream inputs</li>
+                    <li>Deal structure builder: back-in, sliding scale, min royalty, promoted, custom</li>
+                    <li>Full cash flow analysis (all components, table + chart)</li>
+                    <li>NPV, IRR, payout, ROI, PI at configurable rates</li>
+                    <li>Confidence sign-off: <span class="confidence-badge confidence-high">High</span> <span class="confidence-badge confidence-medium">Medium</span> <span class="confidence-badge confidence-low">Low</span></li>
+                </ul>
+                <h4>Pain Points</h4>
+                <ul>
+                    <li>Excel economics disconnected from land/technical</li>
+                    <li>Complex deals require fragile bespoke formulas</li>
+                    <li>Operating cost assumptions hard to benchmark</li>
+                </ul>
+            </div>
+
+            <div class="persona-card">
+                <div class="persona-role">Commercial Advisory Group (CAG)</div>
+                <div class="persona-desc">Reviews live dashboard, runs scenarios, votes with mandatory rationale</div>
+                <h4>Key Needs</h4>
+                <ul>
+                    <li>Comprehensive deal dashboard (live interactive)</li>
+                    <li>Change inputs and see real-time recalculation</li>
+                    <li>5-point voting: Drill / Lean Drill / Neutral / Lean Drop / Drop</li>
+                    <li>Voting summary + sentiment distribution</li>
+                    <li>Mobile-responsive for review on the go</li>
+                </ul>
+                <h4>Pain Points</h4>
+                <ul>
+                    <li>Advisory input is informal and poorly documented</li>
+                    <li>Cannot explore scenarios independently</li>
+                    <li>No structured voting or rationale capture</li>
+                </ul>
+            </div>
+
+            <div class="persona-card">
+                <div class="persona-role">Approver (CEO + Delegates)</div>
+                <div class="persona-desc">Sole approval authority with delegated chain and SMS delegation</div>
+                <h4>Key Needs</h4>
+                <ul>
+                    <li>Full dashboard with analyst confidence + CAG votes</li>
+                    <li>Three actions: Approve / Decline / Send Back</li>
+                    <li>Approval chain status + deadline countdown</li>
+                    <li>SMS delegation (&ldquo;Reply DELEGATE to pass to [Name]&rdquo;)</li>
+                    <li>Mobile-optimized approval interface</li>
+                </ul>
+                <h4>Pain Points</h4>
+                <ul>
+                    <li>No way to act on approvals while traveling</li>
+                    <li>No systematic delegation when unavailable</li>
+                    <li>Missed deadlines = non-consent penalties</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: WORKFLOW & PROCESS -->
+    <section id="s5" class="page-break">
+        <h2><span class="section-number">5.</span> Workflow &amp; Process <span class="new-tag">Parallel Model</span></h2>
+
+        <p>The v2.0 workflow is structured around a <strong>parallel processing model</strong> where Land and Technical Analysts work simultaneously after AFE ingestion. The economics engine auto-calculates the full model once both sign off. The CAG reviews and votes, then the Approver decides through a delegated chain with escalation.</p>
+
+        <div class="data-flow">Admin configures system (one-time + ongoing)
+  |
+  v
+Land Analyst uploads AFE or confirms email auto-ingestion
+  |
+  v
+System parses AFE (vision-language model) + auto-validates
+  |
+  +-----------------------+-----------------------+
+  |                       |                       |
+  v                       v                       |
+[Land Analyst]         [Technical Analyst]         |
+ Validates DOI          Builds type curve + opex   |
+ Signs off w/           Signs off w/               |
+ confidence             confidence                 |
+  |                       |                       |
+  +-----------+-----------+                       |
+              |                                   |
+              v                                   |
+  Economics Engine auto-calculates full model      |
+              |                                   |
+              v                                   |
+  Commercial Analyst validates + adjusts           |
+  Signs off w/ confidence                          |
+              |                                   |
+              v                                   |
+  Dashboard published (live interactive)           |
+              |                                   |
+              v                                   |
+  CAG reviews, changes inputs, votes (5-point)     |
+              |                                   |
+              v                                   |
+  Approver: Approve / Decline / Send Back          |
+  Delegated chain + time-based escalation          |
+              |                                   |
+  No action ---> Non-Consent flag                  |</div>
+
+        <div class="callout success">
+            <p><strong>Cross-Cutting Workflow Behaviors (v2.1):</strong></p>
+            <ul>
+                <li><strong>Deadline-Aware Prioritization:</strong> All views sorted by election deadline urgency. Color-coded: <span style="color: var(--color-success); font-weight:600;">green</span> (&gt;14 days), <span style="color: var(--color-warning); font-weight:600;">amber</span> (7&ndash;14 days), <span style="color: var(--color-danger); font-weight:600;">red</span> (&lt;3 days). Proactive alerts when deadlines are at risk.</li>
+                <li><strong>Confidence Auto-Gating:</strong> If any analyst signs off with <span class="confidence-badge confidence-low">Low</span> confidence, the system auto-flags the evaluation to the Approver requiring explicit acknowledgment of the uncertainty.</li>
+                <li><strong>Stale Evaluation Detection:</strong> Evaluations with no activity for a configurable period are flagged as stale. Admin and assigned analyst are notified; auto-escalation if deadline is approaching.</li>
+            </ul>
+        </div>
+
+        <div class="stage-card">
+            <div class="stage-header">
+                <span class="stage-number">1</span>
+                <div>
+                    <div class="stage-title">AFE Ingestion &amp; Land Validation</div>
+                    <div class="stage-role">Land Analyst <span class="parallel-badge">Parallel with Stage 2</span></div>
+                </div>
+            </div>
+            <p><strong>Trigger:</strong> AFE arrives via email auto-ingestion (AI agent detects, Land Analyst confirms) or manual PDF upload. ~50 operators, 3&ndash;5 AFEs/month.</p>
+            <h4>Automated Steps</h4>
+            <ol class="substeps">
+                <li>Vision-language model parses AFE PDF to extract: API number, well name, location, stated interest, operator, costs</li>
+                <li>Auto-validates against internal DOI deck (loaded from master Excel)</li>
+                <li>Cross-references DOI against Enverus records (imported via CSV)</li>
+                <li>Flags discrepancies with specific detail and severity</li>
+            </ol>
+            <h4>Manual Review</h4>
+            <ul class="substeps">
+                <li>Land Analyst reviews matches, investigates discrepancies</li>
+                <li>Can override system-matched values with explanation</li>
+                <li>Signs off with confidence: <span class="confidence-badge confidence-high">High</span> <span class="confidence-badge confidence-medium">Medium</span> or <span class="confidence-badge confidence-low">Low</span></li>
+            </ul>
+            <div class="stage-gate">OUTPUT: Validated WI, NRI, and leasehold burdens &rarr; Economics Engine</div>
+        </div>
+
+        <div class="stage-card">
+            <div class="stage-header">
+                <span class="stage-number">2</span>
+                <div>
+                    <div class="stage-title">Technical Evaluation</div>
+                    <div class="stage-role">Technical Analyst <span class="parallel-badge">Parallel with Stage 1</span></div>
+                </div>
+            </div>
+            <p><strong>Trigger:</strong> AFE ingestion (runs concurrently with Land Validation).</p>
+            <h4>Automated Steps</h4>
+            <ol class="substeps">
+                <li>Search Enverus CSV data for analog wells by proximity, formation, well type, completion, operator, vintage</li>
+                <li>Score and rank analogs; select top-N; retrieve production histories</li>
+                <li>Generate type curve: normalize to time-zero, fit Arps decline, produce P10/P50/P90</li>
+                <li>Generate monthly production forecast from projected spud date</li>
+            </ol>
+            <h4>Manual Review</h4>
+            <ul class="substeps">
+                <li>Review analog selection; add/remove analogs with real-time type curve update</li>
+                <li>Review and adjust opex assumptions (fixed + variable, based on operator/basin)</li>
+                <li>Signs off with confidence: <span class="confidence-badge confidence-high">High</span> <span class="confidence-badge confidence-medium">Medium</span> or <span class="confidence-badge confidence-low">Low</span></li>
+            </ul>
+            <div class="stage-gate">OUTPUT: Production forecast (P10/P50/P90) + opex assumptions &rarr; Economics Engine</div>
+        </div>
+
+        <div class="stage-card">
+            <div class="stage-header">
+                <span class="stage-number">3</span>
+                <div>
+                    <div class="stage-title">Engine-Driven Economic Analysis</div>
+                    <div class="stage-role">Economics Engine + Commercial Analyst</div>
+                </div>
+            </div>
+            <p><strong>Trigger:</strong> Both Land and Technical sign-offs complete.</p>
+            <h4>Engine Auto-Calculates</h4>
+            <ol class="substeps">
+                <li>Pulls type curve from TA, DOI/NRI from Land, capex from AFE, price deck from settings, opex from TA/benchmarks</li>
+                <li>Computes: gross revenue &rarr; NRI &rarr; deal structure &rarr; net revenue &rarr; opex &rarr; EBITDA &rarr; capex &rarr; FCF &rarr; cumulative CF</li>
+                <li>Produces DCF, NPV, IRR, payout, ROI, PI &mdash; full first-pass model with zero manual input</li>
+            </ol>
+            <h4>Commercial Analyst Validates &amp; Adjusts</h4>
+            <ul class="substeps">
+                <li>Reviews auto-generated model; adjusts price, opex, discount rate, deal structure</li>
+                <li>Configures deal structure: standard WI/NRI, back-in, sliding scale, min royalty, promoted, custom</li>
+                <li>Signs off with confidence: <span class="confidence-badge confidence-high">High</span> <span class="confidence-badge confidence-medium">Medium</span> or <span class="confidence-badge confidence-low">Low</span></li>
+            </ul>
+            <div class="stage-gate">OUTPUT: Full economic model + dashboard-ready data &rarr; Comprehensive Deal Dashboard</div>
+        </div>
+
+        <div class="stage-card">
+            <div class="stage-header">
+                <span class="stage-number">4</span>
+                <div>
+                    <div class="stage-title">CAG Review &amp; Voting</div>
+                    <div class="stage-role">Commercial Advisory Group</div>
+                </div>
+            </div>
+            <p><strong>Trigger:</strong> Commercial Analyst sign-off publishes the comprehensive deal dashboard.</p>
+            <h4>Live Interactive Dashboard</h4>
+            <ul class="substeps">
+                <li><strong>Production Profile Chart:</strong> Type curve decline (oil + gas)</li>
+                <li><strong>Revenue Waterfall:</strong> Gross &rarr; royalty burden &rarr; ORRI &rarr; other burdens &rarr; net revenue</li>
+                <li><strong>Full Cash Flow Analysis:</strong> All components in <strong>both tabular AND chart</strong> formats</li>
+                <li><strong>Economics Summary:</strong> NPV, IRR, Payout, ROI, PI</li>
+                <li><strong>Recommendation with Rationale:</strong> Explains WHY (not just a banner)</li>
+                <li><strong>Analyst Confidence Indicators:</strong> High/Medium/Low from each stage</li>
+                <li>Change any input &rarr; everything recalculates live (including recommendation)</li>
+            </ul>
+            <h4>Voting</h4>
+            <ul class="substeps">
+                <li>5-point scale: <strong>Drill / Lean Drill / Neutral / Lean Drop / Drop</strong></li>
+                <li>Mandatory rationale (at least one line per vote)</li>
+                <li>Sentiment summary: &ldquo;4 of 6 advisors favor Drill&rdquo;</li>
+                <li>All votes and rationale visible to Approver</li>
+            </ul>
+            <div class="stage-gate">OUTPUT: CAG votes + sentiment &rarr; Approver</div>
+        </div>
+
+        <div class="stage-card">
+            <div class="stage-header">
+                <span class="stage-number">5</span>
+                <div>
+                    <div class="stage-title">Approval &amp; Escalation</div>
+                    <div class="stage-role">Approver (CEO + Delegates)</div>
+                </div>
+            </div>
+            <p><strong>Trigger:</strong> CAG voting complete (or Approver can act early).</p>
+            <h4>Approval Actions</h4>
+            <ul class="substeps">
+                <li><strong>Approve (Drill):</strong> Accept AFE, commit capital, archive with full context</li>
+                <li><strong>Decline (Drop):</strong> Reject AFE, archive with full context</li>
+                <li><strong>Send Back:</strong> Route to specific analyst with written questions</li>
+            </ul>
+            <h4>Delegated Approval Chain</h4>
+            <ul class="substeps">
+                <li>Admin configures: Primary Approver &rarr; 1st Delegate &rarr; 2nd Delegate</li>
+                <li>Time-based escalation: configurable days before election deadline</li>
+                <li>Auto-escalates with notifications (in-app, email, SMS)</li>
+                <li>Any person can manually delegate via app or SMS (&ldquo;Reply DELEGATE to pass to [Name]&rdquo;)</li>
+                <li>If nobody acts before deadline &rarr; <strong>Non-Consent</strong> flag</li>
+            </ul>
+            <div class="stage-gate">FINAL: Decision archived with complete audit trail (votes, confidence, escalation history)</div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: DATA ARCHITECTURE -->
+    <section id="s6" class="page-break">
+        <h2><span class="section-number">6.</span> Data Architecture (High Level)</h2>
+
+        <h3>Data Sources <span class="new-tag">Multi-Source Strategy v2.1</span></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Source</th>
+                    <th>Data</th>
+                    <th>Format</th>
+                    <th>Access</th>
+                    <th>Refresh</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AFE Documents</td>
+                    <td>Well proposals</td>
+                    <td>PDF</td>
+                    <td>Email auto-ingestion + manual upload</td>
+                    <td>Event-driven</td>
+                    <td>Primary</td>
+                </tr>
+                <tr>
+                    <td>Internal DOI Deck</td>
+                    <td>DOI, WI, burdens, leases, non-consent penalties</td>
+                    <td>Excel (.xlsx)</td>
+                    <td>Single master spreadsheet (Admin upload)</td>
+                    <td>Manual upload</td>
+                    <td>Primary</td>
+                </tr>
+                <tr>
+                    <td><strong>TX RRC</strong> <span class="new-tag">New</span></td>
+                    <td>Wells, production (monthly), permits, completions, maps</td>
+                    <td>CSV/ASCII/Shapefiles</td>
+                    <td>Free bulk file downloads</td>
+                    <td>Weekly&ndash;monthly</td>
+                    <td><strong>Primary (TX)</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>NM OCD</strong> <span class="new-tag">New</span></td>
+                    <td>Wells, production stats, injection totals</td>
+                    <td>JSON/CSV/GeoJSON</td>
+                    <td>Free REST API (ArcGIS)</td>
+                    <td>Near real-time</td>
+                    <td><strong>Primary (NM)</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>WY WOGCC</strong> <span class="new-tag">New</span></td>
+                    <td>Wells, location, permits, production</td>
+                    <td>CSV/GeoJSON/JSON</td>
+                    <td>Free REST API via Data Explorer</td>
+                    <td>Configurable</td>
+                    <td><strong>Primary (WY)</strong></td>
+                </tr>
+                <tr>
+                    <td>Enverus</td>
+                    <td>Well headers, production, completions, DOI, surveys</td>
+                    <td>CSV</td>
+                    <td>CSV import from exports</td>
+                    <td>Manual upload / batch</td>
+                    <td>Enrichment / Fallback</td>
+                </tr>
+                <tr>
+                    <td>Fixed Price Deck</td>
+                    <td>WTI, Henry Hub prices</td>
+                    <td>User config</td>
+                    <td>Admin-configurable in app</td>
+                    <td>Manual update</td>
+                    <td>Primary</td>
+                </tr>
+                <tr>
+                    <td>Public Opex</td>
+                    <td>LOE per BOE by basin/operator</td>
+                    <td>Curated dataset</td>
+                    <td>SEC filings, EIA</td>
+                    <td>Quarterly</td>
+                    <td>Primary</td>
+                </tr>
+                <tr>
+                    <td>TA Opex Input</td>
+                    <td>Fixed + variable opex assumptions</td>
+                    <td>User input</td>
+                    <td>Technical Analyst per evaluation</td>
+                    <td>Per AFE</td>
+                    <td>Primary</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <p><strong>Data Strategy (v2.1):</strong> Free state regulatory data serves as the primary foundation for well and production data. Enverus CSV provides enrichment (completions detail, DOI cross-referencing, directional surveys) and serves as the primary fallback for Louisiana/Haynesville data where no reliable public API exists. A <strong>unified data normalization layer</strong> ingests from all sources into a common schema with source provenance tracking.</p>
+        </div>
+
+        <h3>State Regulatory Data Sources <span class="new-tag">New in v2.1</span></h3>
+        <div class="state-card">
+            <div class="state-name">Texas &mdash; Railroad Commission (RRC)</div>
+            <div class="state-agency">Bulk file downloads &bull; No API</div>
+            <p>Production data (monthly CSV/ASCII), well data (weekly ASCII), drilling permits, completions, field data, shapefiles. Covers Permian (Midland), Eagle Ford, TX-side Haynesville. Scheduled bulk download with incremental updates.</p>
+        </div>
+        <div class="state-card">
+            <div class="state-name">New Mexico &mdash; Oil Conservation Division (OCD)</div>
+            <div class="state-agency">Free REST API via OCD Hub (ArcGIS) &bull; api.emnrd.nm.gov</div>
+            <p>Oil &amp; gas wells, production statistics, injection totals. JSON, CSV, GeoJSON formats. Also: OCD Well Search (completions, formation tops, casing), NM Tech Octane Database. Covers Permian (Delaware). Direct API integration.</p>
+        </div>
+        <div class="state-card">
+            <div class="state-name">Wyoming &mdash; Oil &amp; Gas Conservation Commission (WOGCC)</div>
+            <div class="state-agency">Free REST API via Data Explorer</div>
+            <p>Well info, location, status, API numbers, permits, production. CSV, GeoJSON, JSON. Wyoming Geospatial Hub for bulk fallback. Covers Powder River Basin. Direct API integration.</p>
+        </div>
+        <div class="state-card" style="border-left: 3px solid var(--color-warning);">
+            <div class="state-name">Louisiana &mdash; SONRIS</div>
+            <div class="state-agency">No reliable public API &bull; Enverus CSV fallback</div>
+            <p>No clear programmatic access. Web-based reports only. ArcGIS MapServer has expired SSL cert. Covers Haynesville (LA side). <strong>Enverus CSV is the primary data path for Louisiana.</strong> Contact LA DNR for future bulk access.</p>
+        </div>
+
+        <h3>Data Model Provisions for Future Features <span class="new-tag">v2.1</span></h3>
+        <ul>
+            <li><strong>Operator Performance Scorecard Model:</strong> Operator entity with performance tracking fields (EUR, IP-30, IP-90, completion consistency, DOI accuracy, AFE history). Data accumulates automatically; v2 UI will surface as scorecards.</li>
+            <li><strong>Decision Outcome Feedback Loop Model:</strong> Pending Outcome Records for &ldquo;Drill&rdquo; decisions. Auto-match to actual production data by API number. Status tags: Awaiting / Available / Not Applicable. No variance UI in v1 &mdash; data collection only.</li>
+        </ul>
+
+        <h3>Parallel Data Flow</h3>
+        <div class="data-flow">AFE (Email or Manual Upload)
+         |
+         v
+[Vision-Language Model Parser] --> AFE Data Store
+         |
+         +--------------------------------------------+
+         |                                            |
+         v                                            v
+[Land Validation Engine]                    [Analog Selection Engine]
+ DOI Deck (Excel) ------>                    Enverus CSV Data ------>
+ Enverus CSV (cross-ref) ->                  (well search, scoring)
+         |                                            |
+         v                                            v
+ Validated DOI/NRI/Burdens              [Type Curve Engine] --> Forecast
+ (Land: confidence sign-off)             Opex Assumptions
+         |                               (Technical: confidence sign-off)
+         +--------------------+-----------------------+
+                              |
+                              v
+                    [Economics Engine]  <-- Price Deck
+                    (Auto-calculates)  <-- Capex (AFE)
+                              |
+                              v
+                    Auto-Generated Model
+                    (Commercial Analyst validates,
+                     confidence sign-off)
+                              |
+                              v
+                   Comprehensive Deal Dashboard
+                   (Live Interactive Model)
+                              |
+                              v
+                    CAG Review + Voting (5-point)
+                              |
+                              v
+                    Approver (Drill/Drop/Send Back)
+                    Delegated Chain + Escalation
+                              |
+                              v
+                    Decision Archive
+                    (votes, confidence, non-consent)</div>
+    </section>
+
+    <!-- SECTION 7: KEY FEATURES -->
+    <section id="s7" class="page-break">
+        <h2><span class="section-number">7.</span> Key Features</h2>
+
+        <h3>MVP Features (v1) <span class="priority p0">P0 &mdash; Must Have</span></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Feature</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td><strong>AFE Ingestion (Dual-Path)</strong></td><td>Email auto-ingestion (AI agent + Land Analyst confirmation) + manual PDF upload; vision-language model parsing</td></tr>
+                <tr><td>2</td><td><strong>DOI Deck Management (Admin)</strong></td><td>Master Excel upload; version history; non-consent penalty data</td></tr>
+                <tr><td>3</td><td><strong>Land Validation + Confidence</strong></td><td>Auto-validation against DOI deck + Enverus CSV; discrepancy flagging; override; H/M/L confidence sign-off</td></tr>
+                <tr><td>4</td><td><strong>Enverus CSV Import</strong></td><td>Configurable column mapping; well headers, production, completions, DOI; analog search</td></tr>
+                <tr><td>5</td><td><strong>Analog Selection &amp; Type Curve</strong></td><td>Multi-criteria scoring (proximity, formation, well type, completion, operator); Arps decline; P50 (P10/P90 stretch)</td></tr>
+                <tr><td>6</td><td><strong>Engine-Driven Economics</strong></td><td>Auto-calculation from upstream inputs; Commercial Analyst validates/adjusts; full cash flow + deal structure builder</td></tr>
+                <tr><td>7</td><td><strong>Confidence Level Sign-Offs</strong></td><td>Land, Technical, Commercial Analysts each sign off with High/Medium/Low; displayed on dashboard</td></tr>
+                <tr><td>8</td><td><strong>Comprehensive Deal Dashboard</strong></td><td>Live interactive: production chart, revenue waterfall, cash flow (table + chart), economics summary, recommendation with rationale</td></tr>
+                <tr><td>9</td><td><strong>CAG Voting System</strong></td><td>5-point scale; mandatory rationale; sentiment summary; multiple users; all visible to Approver</td></tr>
+                <tr><td>10</td><td><strong>Delegated Approval Chain</strong></td><td>3-level chain; Approve/Decline/Send Back; time-based escalation; SMS delegation</td></tr>
+                <tr><td>11</td><td><strong>Notification System</strong></td><td>In-app (all events), email (sign-offs, escalations), SMS (urgent); urgency gradient approaching deadline</td></tr>
+                <tr><td>12</td><td><strong>Non-Consent Handling</strong></td><td>Deadline tracking; auto-flag; penalty recording from DOI deck; archive non-consent outcome</td></tr>
+                <tr><td>13</td><td><strong>Admin Panel</strong></td><td>6-role user management; data sources; approval chain; escalation rules; notification config</td></tr>
+                <tr><td>14</td><td><strong>Decision Archive</strong></td><td>Full audit trail: votes, confidence, escalation, Send Back, non-consent; search and filter</td></tr>
+                <tr><td>15</td><td><strong>Mobile-Responsive</strong></td><td>All features on phone/tablet; SMS approval actions; optimized for executive review</td></tr>
+                <tr><td>16</td><td><strong>Historical Decision Import</strong></td><td>Spreadsheet import for seeding archive with past evaluations</td></tr>
+                <tr><td>17</td><td><strong>Confidence Auto-Gating</strong> <span class="new-tag">v2.1</span></td><td>Low-confidence sign-off auto-flags to Approver requiring acknowledgment; active workflow gate</td></tr>
+                <tr><td>18</td><td><strong>Deadline-Aware Prioritization</strong> <span class="new-tag">v2.1</span></td><td>All views sorted by deadline urgency; green/amber/red color coding; proactive deadline-risk alerts</td></tr>
+                <tr><td>19</td><td><strong>Breakeven Auto-Calculation</strong> <span class="new-tag">v2.1</span></td><td>Auto-compute breakeven oil, gas, capex, opex, WI (NPV=0); displayed on dashboard with margin-of-safety framing</td></tr>
+                <tr><td>20</td><td><strong>Asymmetric Risk Framing</strong> <span class="new-tag">v2.1</span></td><td>P10 upside vs P90 downside; regret analysis; 2x2 decision matrix on dashboard; all values update live</td></tr>
+                <tr><td>21</td><td><strong>Stale Evaluation Detection</strong> <span class="new-tag">v2.1</span></td><td>Configurable inactivity threshold; notify Admin + analyst; auto-escalate if deadline approaching</td></tr>
+                <tr><td>22</td><td><strong>Decision Outcome Data Model</strong> <span class="new-tag">v2.1</span></td><td>Outcome records for Drill decisions; auto-match actual production; data model only (seeds v2 analytics)</td></tr>
+                <tr><td>23</td><td><strong>PDF Template Library</strong> <span class="new-tag">v2.1</span></td><td>Cache operator extraction mappings; template-first parsing for repeat operators; reduces AI API costs</td></tr>
+                <tr><td>24</td><td><strong>Export Package</strong> <span class="new-tag">v2.1</span></td><td>One-click PDF report + Excel workbook + executive summary slide; reflects current dashboard state</td></tr>
+                <tr><td>25</td><td><strong>State Regulatory Data</strong> <span class="new-tag">v2.1</span></td><td>TX RRC bulk, NM OCD API, WY WOGCC API; unified normalization layer; Enverus as enrichment/LA fallback</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Should Have (MVP if time permits) <span class="priority p1">P1</span></h3>
+        <table>
+            <thead>
+                <tr><th>#</th><th>Feature</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>26</td><td><strong>Enverus API Integration</strong></td><td>Query Developer API for real-time data; dynamic analog search; supplement state data + CSV</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Future Features (v2+) <span class="priority future">Deferred</span></h3>
+        <table>
+            <thead>
+                <tr><th>#</th><th>Feature</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>27</td><td>Conversational AI for scenarios (natural language chat interface)</td></tr>
+                <tr><td>28</td><td>Live commodity pricing (EIA/CME feeds, futures strip)</td></tr>
+                <tr><td>29</td><td>Portfolio view and side-by-side AFE ranking</td></tr>
+                <tr><td>30</td><td>Post-drill variance analysis (leverages v1 Decision Outcome Data Model)</td></tr>
+                <tr><td>31</td><td>Operator performance scorecards (leverages v1 data model; UI in v2)</td></tr>
+                <tr><td>32</td><td>Portfolio-level capital allocation optimizer</td></tr>
+                <tr><td>33</td><td>Advanced opex modeling from 10-K filings (NLP)</td></tr>
+                <tr><td>34</td><td>Automated operator communication for DOI reconciliation</td></tr>
+                <tr><td>35</td><td>Agreement-to-asset linking for non-consent penalty surfacing</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- SECTION 8: AI & AUTOMATION -->
+    <section id="s8" class="page-break">
+        <h2><span class="section-number">8.</span> AI &amp; Automation Capabilities</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Capability</th>
+                    <th>AI / Automation Type</th>
+                    <th>What It Does</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>AFE Ingestion</strong></td>
+                    <td>Email Agent + Document Intelligence</td>
+                    <td>Monitors inbox for AFEs; vision-language model extracts structured fields from semi-standardized PDFs (~50 operator formats); fuzzy matching against DOI deck; auto-validation.</td>
+                </tr>
+                <tr>
+                    <td><strong>PDF Template Library</strong> <span class="new-tag">v2.1</span></td>
+                    <td>Adaptive Extraction + Template Caching</td>
+                    <td>After successful parse, cache extraction mapping as operator template. Template-first extraction for repeat operators (fast, cheap, deterministic). Vision-language model fallback for new operators or mismatches. Reduces AI API costs over time.</td>
+                </tr>
+                <tr>
+                    <td><strong>Parallel Analysis</strong></td>
+                    <td>Similarity Scoring + Statistical Modeling</td>
+                    <td>Multi-dimensional analog scoring from Enverus CSV. Arps decline fitting with P10/P50/P90. Land + Technical run concurrently.</td>
+                </tr>
+                <tr>
+                    <td><strong>Engine-Driven Economics</strong></td>
+                    <td>Automated Model Assembly + Deal Structure Engine</td>
+                    <td>Full model auto-calculated from upstream inputs (type curve, DOI, capex, pricing, opex). Zero manual data entry for first pass. Commercial Analyst validates, not builds. Deal structure engine handles back-in, sliding scale, promoted, custom.</td>
+                </tr>
+                <tr>
+                    <td><strong>Breakeven Auto-Calc</strong> <span class="new-tag">v2.1</span></td>
+                    <td>Goal-Seek Optimization</td>
+                    <td>Automatically computes breakeven oil price, gas price, capex, opex, and minimum WI (NPV=0) for every deal. Displayed alongside economics summary with &ldquo;margin of safety&rdquo; framing in recommendation rationale.</td>
+                </tr>
+                <tr>
+                    <td><strong>Live Dashboard</strong></td>
+                    <td>Real-Time Parameterized Recalculation</td>
+                    <td>Any input change triggers instant recalculation of all charts, tables, metrics, and recommendation. Recommendation can flip (DRILL/DROP) based on changed inputs.</td>
+                </tr>
+                <tr>
+                    <td><strong>Notification &amp; Escalation</strong></td>
+                    <td>Multi-Channel Engine</td>
+                    <td>In-app, email, SMS notifications with urgency gradient. Auto-escalation through approval chain. SMS delegation commands.</td>
+                </tr>
+                <tr>
+                    <td><strong>Recommendation</strong></td>
+                    <td>Composite Engine</td>
+                    <td>Synthesizes land confidence, technical assessment, economic returns, and analyst confidence into drill/drop recommendation with explanatory rationale.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <p><strong>Note on Conversational AI:</strong> Natural language chat-driven scenario modeling is planned for a post-MVP release. The MVP uses the live interactive dashboard with predefined controls, which provides full what-if capability through direct input manipulation with instant recalculation.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 9: SCENARIO MODELING & LIVE DASHBOARD -->
+    <section id="s9" class="page-break">
+        <h2><span class="section-number">9.</span> Scenario Modeling &amp; Live Dashboard</h2>
+
+        <p>Scenario modeling in v2.0 is embedded directly into the comprehensive deal dashboard as a <strong>live interactive capability</strong>. The dashboard is both the deal summary and the scenario modeling tool. When any input changes, everything recalculates instantly.</p>
+
+        <h3>Live Interactive Controls</h3>
+        <table class="scenario-table">
+            <thead>
+                <tr>
+                    <th>Input</th>
+                    <th>Control</th>
+                    <th>Range</th>
+                    <th>What Recalculates</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Farm-Out</td><td>Slider</td><td>0&ndash;100%</td><td>WI, capex share, revenue, all economics</td></tr>
+                <tr><td>Oil Price</td><td>Slider / Input</td><td>&plusmn;50%</td><td>Revenue, cash flow, NPV, IRR, payout, recommendation</td></tr>
+                <tr><td>Gas Price</td><td>Slider / Input</td><td>&plusmn;50%</td><td>Revenue, cash flow, NPV, IRR, payout, recommendation</td></tr>
+                <tr><td>Production Case</td><td>Toggle</td><td>P10 / P50 / P90</td><td>Forecast, revenue, all economics</td></tr>
+                <tr><td>Discount Rate</td><td>Input</td><td>0&ndash;25%</td><td>NPV, PI</td></tr>
+                <tr><td>Opex</td><td>Input</td><td>$/well/month + $/BOE</td><td>Cash flow, EBITDA, NPV, IRR, payout</td></tr>
+                <tr><td>Capex</td><td>Input</td><td>$</td><td>Cash flow, NPV, IRR, payout, ROI</td></tr>
+                <tr><td>Deal Structure</td><td>Dropdown + Config</td><td>Presets + Custom</td><td>NRI schedule, cash flow splits, all economics</td></tr>
+                <tr><td>Before/After Payout</td><td>Toggle + Config</td><td>On/Off + Split %</td><td>WI schedule, cash flow splits, all economics</td></tr>
+                <tr><td>Financing Terms</td><td>Input</td><td>Custom</td><td>Net capex, cash flow, all return metrics</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Dashboard Components (All Update Live)</h3>
+        <ol>
+            <li><strong>Production Profile Chart</strong> &mdash; Type curve showing oil + gas decline over time</li>
+            <li><strong>Revenue Waterfall</strong> &mdash; Gross revenue &rarr; royalty burden &rarr; ORRI &rarr; other burdens &rarr; net revenue</li>
+            <li><strong>Cash Flow Table</strong> &mdash; Monthly/annual: Gross Revenue, each Burden, Net Revenue, Fixed Opex, Variable Opex, EBITDA, Capex, FCF, Cumulative CF</li>
+            <li><strong>Cash Flow Chart</strong> &mdash; Visual representation (stacked bar or area chart)</li>
+            <li><strong>Economics Summary Panel</strong> &mdash; NPV, IRR, Payout, ROI, PI prominently displayed</li>
+            <li><strong>Recommendation with Rationale</strong> &mdash; DRILL or DROP with paragraph explaining WHY</li>
+            <li><strong>Analyst Confidence Indicators</strong> &mdash; Three badges: Land, Technical, Commercial</li>
+            <li><strong>CAG Voting Summary</strong> &mdash; Sentiment distribution + individual votes with rationale</li>
+            <li><strong>Approval Chain Status</strong> &mdash; Current approver, escalation timeline, deadline countdown</li>
+        </ol>
+
+        <h3>Breakeven Sensitivity Display <span class="new-tag">v2.1</span></h3>
+        <table>
+            <thead><tr><th>Breakeven Metric</th><th>Description</th><th>Display</th></tr></thead>
+            <tbody>
+                <tr><td>Breakeven Oil Price</td><td>WTI price at which NPV = 0</td><td>$/bbl with margin vs. current price</td></tr>
+                <tr><td>Breakeven Gas Price</td><td>HH price at which NPV = 0</td><td>$/Mcf with margin vs. current price</td></tr>
+                <tr><td>Breakeven Capex</td><td>Maximum capex at which well still works</td><td>$ with margin vs. AFE capex</td></tr>
+                <tr><td>Breakeven Opex</td><td>Maximum opex at which well still works</td><td>$/BOE with margin vs. assumed opex</td></tr>
+                <tr><td>Breakeven WI</td><td>Minimum working interest worth participating</td><td>% with margin vs. stated WI</td></tr>
+            </tbody>
+        </table>
+        <p>All breakeven values update live when any dashboard input changes.</p>
+
+        <h3>Asymmetric Risk Framing <span class="new-tag">v2.1</span></h3>
+        <p>The recommendation section includes an asymmetric risk analysis panel:</p>
+        <ul>
+            <li><strong>Upside case (P10):</strong> NPV, IRR, and payout if the well outperforms</li>
+            <li><strong>Base case (P50):</strong> Expected scenario economics</li>
+            <li><strong>Downside case (P90):</strong> NPV, IRR, and payout if the well underperforms</li>
+            <li><strong>Maximum loss:</strong> Capex exposure if the well is a total dry hole</li>
+        </ul>
+        <table>
+            <thead><tr><th></th><th>Well Performs (P10&ndash;P50)</th><th>Well Underperforms (P90)</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Drill</strong></td><td>Upside captured (NPV at P10)</td><td>Downside realized (NPV at P90)</td></tr>
+                <tr><td><strong>Drop</strong></td><td>Opportunity cost forfeited</td><td>Loss avoided</td></tr>
+            </tbody>
+        </table>
+        <p>This regret analysis shifts the decision from &ldquo;is this a good well?&rdquo; to &ldquo;is the risk-reward acceptable?&rdquo; All values update live with other dashboard components.</p>
+
+        <h3>Scenario Comparison</h3>
+        <ul>
+            <li>Save current state as a named scenario</li>
+            <li>Side-by-side comparison view across saved scenarios</li>
+            <li>Scenario history stored as part of the evaluation record</li>
+        </ul>
+
+        <h3>Future: Conversational AI Scenarios (v2+)</h3>
+        <p>Natural language chat interface for dynamic requests (e.g., &ldquo;What happens if we farm out 50% and oil drops to $55?&rdquo;) is planned for post-MVP.</p>
+    </section>
+
+    <!-- SECTION 10: DECISION ARCHIVE -->
+    <section id="s10">
+        <h2><span class="section-number">10.</span> Decision Archive &amp; Analytics</h2>
+
+        <h3>Decision Record Contents</h3>
+        <ul>
+            <li>AFE identifier (API number, well name, operator)</li>
+            <li>Evaluation date range (received to decision)</li>
+            <li>Land validation results, <strong>confidence level</strong>, and sign-off timestamp</li>
+            <li>Analog wells, type curve parameters, opex assumptions, <strong>technical confidence level</strong>, sign-off</li>
+            <li>Economic model inputs/outputs, deal structure config, <strong>commercial confidence level</strong>, sign-off</li>
+            <li>Auto-generated model (before Commercial Analyst adjustments) &mdash; preserved for audit</li>
+            <li>System-generated recommendation with rationale</li>
+            <li><strong>CAG votes:</strong> Each member's vote (5-point scale), rationale, and timestamp</li>
+            <li><strong>CAG sentiment summary:</strong> Aggregated vote distribution</li>
+            <li>Final decision: Approve (Drill) / Decline (Drop) / <strong>Non-Consent</strong></li>
+            <li><strong>Send Back history:</strong> Questions to analysts, responses, re-sign-off records</li>
+            <li>Override annotation (if applicable)</li>
+            <li><strong>Approval chain activity:</strong> Notifications, escalations, delegation history</li>
+            <li><strong>Non-consent record:</strong> Penalty data from DOI deck, contributing factors</li>
+            <li>All scenarios explored during the evaluation</li>
+        </ul>
+
+        <h3>Search &amp; Filter</h3>
+        <ul>
+            <li>By operator, basin, formation, date range, decision outcome, non-consent status</li>
+            <li>By economic metrics (e.g., &ldquo;NPV &gt; $1M&rdquo;)</li>
+            <li>By analyst confidence level (e.g., &ldquo;any analyst flagged Low&rdquo;)</li>
+            <li>By CAG sentiment (e.g., &ldquo;majority voted Lean Drop or Drop&rdquo;)</li>
+            <li>By approval chain activity (e.g., &ldquo;escalated to 2nd Delegate&rdquo;)</li>
+        </ul>
+
+        <h3>Historical Decision Data Import</h3>
+        <ul>
+            <li>Upload historical evaluation spreadsheets (Excel format)</li>
+            <li>Configurable column mapping to decision archive schema</li>
+            <li>Support for partial records; validation and error reporting</li>
+            <li>Historical records tagged as &ldquo;imported&rdquo; vs. &ldquo;native&rdquo;</li>
+        </ul>
+
+        <h3>Future Analytics (v2)</h3>
+        <ul>
+            <li><strong>Post-drill variance:</strong> Projected vs. actual production and economics</li>
+            <li><strong>Bias detection:</strong> Systematic optimism/pessimism by basin, operator, formation</li>
+            <li><strong>Confidence calibration:</strong> Are &ldquo;High&rdquo; confidence sign-offs actually more accurate?</li>
+            <li><strong>CAG vote accuracy:</strong> Which advisors' votes best predict outcomes?</li>
+            <li><strong>Portfolio ranking:</strong> Risk-adjusted return ranking and capital allocation</li>
+        </ul>
+    </section>
+
+    <!-- SECTION 11: TECHNICAL CONSIDERATIONS -->
+    <section id="s11" class="page-break">
+        <h2><span class="section-number">11.</span> Technical Considerations</h2>
+
+        <h3>11.1 Enverus Integration</h3>
+        <p><strong>Enrichment &amp; Fallback: CSV Import.</strong> With state regulatory data as the primary foundation, Enverus CSV serves as enrichment (completions detail, DOI cross-referencing, directional surveys) and primary data path for Louisiana/Haynesville. Configurable column mapping, data validation, incremental import with duplicate detection by API number.</p>
+        <p><strong>Future:</strong> Enverus Developer API v3 to supplement both state data and CSV. Subscription and cost verification required.</p>
+
+        <h3>11.2 State Regulatory Data Integration <span class="new-tag">New in v2.1</span></h3>
+        <p>Free state regulatory data serves as the primary foundation. Each state requires a different integration approach:</p>
+        <table>
+            <thead><tr><th>State</th><th>Agency</th><th>Access</th><th>Key Data</th><th>Coverage</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Texas</strong></td><td>RRC</td><td>Free bulk downloads (CSV/ASCII)</td><td>Production (monthly), wells (weekly), permits, completions, shapefiles</td><td>Permian (Midland), Eagle Ford, TX Haynesville</td></tr>
+                <tr><td><strong>New Mexico</strong></td><td>OCD</td><td>Free REST API (ArcGIS, JSON/CSV/GeoJSON)</td><td>Wells, production stats, injection totals; also OCD Well Search, Octane DB</td><td>Permian (Delaware)</td></tr>
+                <tr><td><strong>Wyoming</strong></td><td>WOGCC</td><td>Free REST API (CSV/GeoJSON/JSON)</td><td>Wells, location, status, permits, production; Geospatial Hub bulk fallback</td><td>Powder River Basin</td></tr>
+                <tr><td><strong>Louisiana</strong></td><td>SONRIS</td><td><span class="risk-medium">No reliable API</span>; Enverus CSV fallback</td><td>Web reports only; expired SSL on ArcGIS endpoint</td><td>Haynesville (LA side)</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Unified Normalization Layer:</strong> All sources ingested into common schema. Source provenance tags per record. Deduplication by API number across sources. State data authoritative for regulatory fields; Enverus authoritative for enriched fields (completions, surveys). Conflicts flagged for analyst review.</p>
+        <p><strong>Sync Schedule:</strong> TX RRC weekly/monthly; NM OCD and WY WOGCC daily (configurable); Enverus CSV manual upload. Admin dashboard shows last-sync timestamp and record counts per source.</p>
+
+        <h3>11.3 PDF Parsing for AFE Documents</h3>
+        <p><strong>Hybrid approach:</strong> Vision-language model (GPT-4 Vision or Claude) for prompt-based field extraction. Handles layout variability across ~50 operators without custom training. Manual correction fallback. Cloud-hosted &mdash; no data sensitivity constraints.</p>
+
+        <h3>11.4 Email Auto-Ingestion <span class="new-tag">New in v2.0</span></h3>
+        <p>Connect to shared inbox via IMAP, Microsoft Graph API, or Google Workspace API. Rule-based classification (sender domain, subject keywords, PDF attachment) supplemented by AI. Detected AFEs queued in &ldquo;pending confirmation&rdquo; state. Land Analyst confirms to trigger parsing. False positives dismissible.</p>
+
+        <h3>11.5 Commodity Pricing</h3>
+        <p><strong>MVP: Fixed Price Deck.</strong> User sets WTI and HH prices (flat or escalation), basin-specific differentials. Stored per evaluation.</p>
+        <p><strong>Future:</strong> EIA Open Data API + CME settlement data for live pricing.</p>
+
+        <h3>11.6 Public Opex Benchmarking</h3>
+        <p>Curated baseline from SEC filings. Lookup: operator + basin + year &rarr; LOE/BOE. Technical Analyst provides per-evaluation assumptions. Manual override. Illustrative ranges: Permian $6&ndash;12/BOE, Eagle Ford $7&ndash;13/BOE, Haynesville $5&ndash;10/BOE, Powder River $8&ndash;14/BOE.</p>
+
+        <h3>11.7 Type Curve Methodology</h3>
+        <p>Select analogs &rarr; normalize to time-zero &rarr; fit modified hyperbolic (Arps) &rarr; P10/P50/P90 &rarr; extend to economic limit. Robust curve fitting, multi-phase handling (oil + gas + water), anomaly filtering.</p>
+
+        <h3>11.8 SMS Integration <span class="new-tag">New in v2.0</span></h3>
+        <p>Cloud SMS gateway (Twilio or equivalent). Outbound: escalation alerts, deadline warnings. Inbound: &ldquo;DELEGATE&rdquo; and &ldquo;APPROVE&rdquo;/&ldquo;DECLINE&rdquo; commands with confirmation step. All SMS interactions logged in audit trail.</p>
+
+        <h3>11.9 Notification System <span class="new-tag">New in v2.0</span></h3>
+        <table>
+            <thead>
+                <tr><th>Event</th><th>In-App</th><th>Email</th><th>SMS</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>AFE auto-detected</td><td>Land Analyst</td><td>Land Analyst</td><td>&mdash;</td></tr>
+                <tr><td>AFE ingested</td><td>Land + Technical</td><td>Land + Technical</td><td>&mdash;</td></tr>
+                <tr><td>Analyst sign-off</td><td>Next stage</td><td>Next stage</td><td>&mdash;</td></tr>
+                <tr><td>Dashboard published</td><td>CAG, Approver</td><td>CAG, Approver</td><td>Approver</td></tr>
+                <tr><td>CAG vote cast</td><td>CAG, Approver</td><td>&mdash;</td><td>&mdash;</td></tr>
+                <tr><td>Escalation triggered</td><td>Next delegate</td><td>Next delegate</td><td>Next delegate</td></tr>
+                <tr><td>Urgent escalation</td><td>All in chain</td><td>All in chain</td><td>All in chain</td></tr>
+                <tr><td>Decision made</td><td>All roles</td><td>All roles</td><td>&mdash;</td></tr>
+                <tr><td>Non-Consent flagged</td><td>All roles</td><td>All roles</td><td>Approver + delegates</td></tr>
+                <tr><td>Send Back</td><td>Target analyst</td><td>Target analyst</td><td>Target analyst</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Urgency gradient:</strong> Normal &rarr; daily reminders (&gt;7 days) &rarr; twice-daily + SMS (&gt;3 days) &rarr; hourly + SMS (&gt;1 day).</p>
+
+        <h3>11.10 Deployment &amp; UI</h3>
+        <p><strong>Cloud-hosted deployment confirmed.</strong> No data sensitivity constraints. Light theme, modern, clean, professional design. Mobile-responsive from day one.</p>
+    </section>
+
+    <!-- SECTION 12: RISKS & ASSUMPTIONS -->
+    <section id="s12" class="page-break">
+        <h2><span class="section-number">12.</span> Risks &amp; Assumptions</h2>
+
+        <h3>Key Risks</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Risk</th>
+                    <th>Likelihood</th>
+                    <th>Impact</th>
+                    <th>Mitigation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>R1</td><td>Enverus CSV format inconsistency</td><td class="risk-medium">Medium</td><td class="risk-medium">Medium</td><td>Flexible column mapping; test with samples early</td></tr>
+                <tr><td>R2</td><td>AFE PDF format variability (~50 operators)</td><td class="risk-medium">Med-High</td><td class="risk-medium">Medium</td><td>Vision-language model; manual correction fallback</td></tr>
+                <tr><td>R3</td><td>Poor type curves in data-sparse areas</td><td class="risk-medium">Medium</td><td class="risk-high">High</td><td>Analyst override; confidence metrics; manual fallback</td></tr>
+                <tr><td>R4</td><td>Stale opex benchmarking data</td><td class="risk-high">High</td><td class="risk-medium">Medium</td><td>TA per-well assumptions; manual override; clear sourcing</td></tr>
+                <tr><td>R5</td><td>Economics engine + deal structure complexity</td><td class="risk-high">High</td><td class="risk-high">High</td><td>Prioritize standard + back-in first; build incrementally</td></tr>
+                <tr><td>R6</td><td>User adoption resistance (Excel preference)</td><td class="risk-medium">Medium</td><td class="risk-high">High</td><td>Augmentation, not replacement; Excel export</td></tr>
+                <tr><td>R7</td><td>Scope creep from v2 features</td><td class="risk-medium">Medium</td><td class="risk-medium">Medium</td><td>Clear MVP boundary; contractual phase separation</td></tr>
+                <tr><td>R8</td><td>Same-day results timing pressure</td><td class="risk-medium">Medium</td><td class="risk-high">High</td><td>Parallel workflow reduces time; system is not the bottleneck</td></tr>
+                <tr><td>R9</td><td>Mobile-responsive adds dev time</td><td class="risk-medium">Medium</td><td class="risk-medium">Medium</td><td>Responsive framework from start; test throughout</td></tr>
+                <tr><td>R10</td><td>Custom deal structures too varied to generalize</td><td class="risk-medium">Medium</td><td class="risk-high">High</td><td>Common patterns first; flexible custom mode; early examples</td></tr>
+                <tr><td>R11</td><td>Email auto-ingestion false positives/negatives</td><td class="risk-medium">Medium</td><td class="risk-medium">Medium</td><td>Rule-based + manual confirmation; manual upload fallback</td></tr>
+                <tr><td>R12</td><td>SMS security risks</td><td class="risk-low">Low</td><td class="risk-high">High</td><td>Confirmation step; audit logging; consider 2FA</td></tr>
+                <tr><td>R13</td><td>Low or perfunctory CAG voting adoption</td><td class="risk-medium">Medium</td><td class="risk-medium">Medium</td><td>Min rationale length; frictionless UI; demonstrate impact</td></tr>
+                <tr><td>R14</td><td>Notification fatigue for executives</td><td class="risk-medium">Medium</td><td class="risk-medium">Medium</td><td>Configurable preferences; quiet hours; snooze; clear thresholds</td></tr>
+                <tr><td>R15</td><td>Slow dashboard recalculation with complex deals</td><td class="risk-medium">Medium</td><td class="risk-high">High</td><td>Optimize for sub-second; pre-compute ranges; WebSocket updates</td></tr>
+                <tr><td>R16</td><td>Non-consent tracking legal/compliance concerns</td><td class="risk-low">Low</td><td class="risk-medium">Medium</td><td>Decision support only; clear disclaimers; legal review</td></tr>
+                <tr><td>R17</td><td>State regulatory data formats change without notice</td><td class="risk-medium">Medium</td><td class="risk-medium">Medium</td><td>Versioned parsers; monitor agency release notes; Enverus CSV fallback</td></tr>
+                <tr><td>R18</td><td>State API rate limits or availability issues (NM, WY)</td><td class="risk-medium">Medium</td><td class="risk-medium">Medium</td><td>Exponential backoff; local cache; bulk download fallback</td></tr>
+                <tr><td>R19</td><td>Data quality inconsistency across multiple sources</td><td class="risk-medium">Medium</td><td class="risk-high">High</td><td>Unified normalization; provenance tags; deduplication; conflict flagging</td></tr>
+                <tr><td>R20</td><td>Louisiana SONRIS never provides programmatic access</td><td class="risk-high">High</td><td class="risk-medium">Medium</td><td>Enverus CSV confirmed fallback; low impact since gap is covered</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Key Assumptions</h3>
+        <table>
+            <thead>
+                <tr><th>#</th><th>Assumption</th><th>Impact if Wrong</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>A1</td><td>Active Enverus subscription with CSV export</td><td>No well data; alternative source needed</td></tr>
+                <tr><td>A2</td><td>AFE PDFs primarily digitally generated</td><td>Scanned docs need different parsing strategy</td></tr>
+                <tr><td>A3</td><td>DOI deck in single clean master Excel</td><td>Multi-source reconciliation effort</td></tr>
+                <tr><td>A4</td><td>US onshore focus: Permian, Eagle Ford, Haynesville, Powder River</td><td>Other basins need additional data curation</td></tr>
+                <tr><td>A5</td><td>Users comfortable with cloud/browser</td><td>Desktop/on-premise architecture change</td></tr>
+                <tr><td>A6</td><td>Deal structures fit predefined templates + custom</td><td>Bespoke calc logic needed for each deal</td></tr>
+                <tr><td>A7</td><td>Shared inbox accessible via API (M365/Google/IMAP)</td><td>Email auto-ingestion falls back to manual only</td></tr>
+                <tr><td>A8</td><td>SMS-capable phone numbers for approval chain</td><td>SMS delegation not available; email/in-app only</td></tr>
+                <tr><td>A9</td><td>Approval hierarchy has at most 3 levels</td><td>Extend chain configuration</td></tr>
+                <tr><td>A10</td><td>Stable CAG membership</td><td>Frequent turnover reduces voting trend value</td></tr>
+                <tr><td>A12</td><td>State regulatory data (TX RRC, NM OCD, WY WOGCC) remains freely available</td><td>If restricted, fall back to Enverus CSV for affected states</td></tr>
+                <tr><td>A13</td><td>NM OCD and WY WOGCC APIs have sufficient uptime for production use</td><td>Bulk download fallback paths available for both</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- SECTION 13: MVP SCOPE -->
+    <section id="s13" class="page-break">
+        <h2><span class="section-number">13.</span> MVP Scope</h2>
+
+        <h3>In Scope (v1)</h3>
+        <table>
+            <thead>
+                <tr><th>Category</th><th>Feature</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Ingestion</td><td>Email auto-ingestion + manual PDF upload</td><td>AI agent + Land Analyst confirmation; vision-language model parsing</td></tr>
+                <tr><td>Admin</td><td>6-role user management + data sources</td><td>Multiple users per role (especially CAG)</td></tr>
+                <tr><td>Admin</td><td>DOI deck upload + approval chain + escalation rules</td><td>Version history; configurable thresholds</td></tr>
+                <tr><td>Land</td><td>DOI validation + Enverus cross-ref + confidence</td><td>Auto-validation; discrepancy flagging; H/M/L sign-off</td></tr>
+                <tr><td>Technical</td><td>Analog search + type curve + opex + confidence</td><td>Multi-criteria scoring; P50 (P10/P90 stretch); H/M/L sign-off</td></tr>
+                <tr><td>Economics</td><td>Engine-driven auto-calc + CA validation + deal structures</td><td>Full cash flow; back-in, sliding scale, promoted, custom; H/M/L sign-off</td></tr>
+                <tr><td>Dashboard</td><td>Comprehensive deal dashboard (live interactive)</td><td>All charts/tables; recommendation with rationale; live recalculation</td></tr>
+                <tr><td>Voting</td><td>CAG 5-point voting + mandatory rationale</td><td>Sentiment summary; all votes visible to Approver</td></tr>
+                <tr><td>Approval</td><td>Delegated chain + SMS delegation</td><td>Approve/Decline/Send Back; 3-level escalation</td></tr>
+                <tr><td>Notifications</td><td>In-app + email + SMS with urgency gradient</td><td>Deadline-aware; configurable thresholds</td></tr>
+                <tr><td>Non-Consent</td><td>Deadline tracking + auto-flag + penalty recording</td><td>Decision support only (no external actions)</td></tr>
+                <tr><td>Workflow</td><td>Parallel analyst processing (Land + Technical)</td><td>Concurrent execution; both gate economics</td></tr>
+                <tr><td>Archive</td><td>Full decision logging + historical import</td><td>Votes, confidence, escalation, non-consent</td></tr>
+                <tr><td>UI</td><td>Mobile-responsive; light, modern, clean, professional</td><td>Phone/tablet; SMS approval actions</td></tr>
+                <tr><td>Deploy</td><td>Cloud-hosted web application</td><td>No data sensitivity constraints</td></tr>
+                <tr><td>Workflow</td><td>Confidence auto-gating <span class="new-tag">v2.1</span></td><td>Low-confidence auto-flags to Approver for acknowledgment</td></tr>
+                <tr><td>Workflow</td><td>Deadline-aware prioritization <span class="new-tag">v2.1</span></td><td>All views sorted by urgency; red/amber/green color coding</td></tr>
+                <tr><td>Workflow</td><td>Stale evaluation detection <span class="new-tag">v2.1</span></td><td>Configurable inactivity threshold; auto-escalate to Admin</td></tr>
+                <tr><td>Economics</td><td>Breakeven auto-calculation <span class="new-tag">v2.1</span></td><td>Oil, gas, capex, opex, WI breakevens on dashboard</td></tr>
+                <tr><td>Dashboard</td><td>Asymmetric risk framing <span class="new-tag">v2.1</span></td><td>P10/P90 analysis; regret matrix; maximum loss</td></tr>
+                <tr><td>Data</td><td>State regulatory data integration <span class="new-tag">v2.1</span></td><td>TX RRC, NM OCD, WY WOGCC; normalization layer</td></tr>
+                <tr><td>Data</td><td>Decision outcome data model <span class="new-tag">v2.1</span></td><td>Outcome records for Drill decisions; seeds v2 analytics</td></tr>
+                <tr><td>Ingestion</td><td>PDF template library <span class="new-tag">v2.1</span></td><td>Cache operator mappings; reduce AI costs</td></tr>
+                <tr><td>Export</td><td>One-click export package <span class="new-tag">v2.1</span></td><td>PDF + Excel + executive slide</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Out of Scope (v1) &mdash; Deferred to v2+</h3>
+        <table>
+            <thead><tr><th>Feature</th><th>Rationale</th></tr></thead>
+            <tbody>
+                <tr><td>Conversational AI chat</td><td>Complex NLU; live dashboard provides full what-if capability</td></tr>
+                <tr><td>Live pricing feed</td><td>Fixed price deck sufficient for MVP</td></tr>
+                <tr><td>Portfolio view + ranking</td><td>Single-AFE workflow is MVP</td></tr>
+                <tr><td>Post-drill variance analysis</td><td>Requires actual production data; long-term</td></tr>
+                <tr><td>Confidence calibration + vote accuracy</td><td>Requires sufficient decision history</td></tr>
+                <tr><td>Automated 10-K opex extraction</td><td>Curated dataset + TA input sufficient</td></tr>
+                <tr><td>Enverus API integration</td><td>CSV is primary; API is upgrade path</td></tr>
+                <tr><td>Agreement-to-asset penalty linking</td><td>Future non-consent enhancement</td></tr>
+                <tr><td>Operator performance scorecards (UI)</td><td>v2 feature; data model built in v1</td></tr>
+                <tr><td>Analyst workload balancing dashboard</td><td>Deferred &mdash; analyst roles may change with integrations</td></tr>
+                <tr><td>CAG vote weighting</td><td>Deferred &mdash; equal votes in MVP; Approver uses judgment</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Indicative MVP Timeline (20 Weeks)</h3>
+        <table>
+            <thead><tr><th>Phase</th><th>Duration</th><th>Focus</th></tr></thead>
+            <tbody>
+                <tr><td>Foundation</td><td>Weeks 1&ndash;4</td><td>Data model (incl. operator scorecard + outcome models), auth, 6-role management, DOI deck, state data integration (TX RRC, NM OCD, WY WOGCC), normalization layer, CSV import, UI shell, notification infra</td></tr>
+                <tr><td>Land + Technical</td><td>Weeks 4&ndash;8</td><td>AFE parsing + PDF template library + email ingestion; land matching + confidence + auto-gating; analog search + type curve + opex + confidence. <strong>Parallel development.</strong></td></tr>
+                <tr><td>Economics Engine</td><td>Weeks 8&ndash;12</td><td>Engine-driven auto-calc + breakeven auto-calc; CA validation UI; deal structure builder; pricing; full cash flow</td></tr>
+                <tr><td>Dashboard + Voting</td><td>Weeks 12&ndash;15</td><td>Live dashboard; breakeven display; asymmetric risk panel; CAG voting; deadline-aware prioritization; recommendation engine</td></tr>
+                <tr><td>Approval + Notifications</td><td>Weeks 15&ndash;17</td><td>Delegated chain; Send Back; SMS; notification system; urgency escalation; non-consent; stale detection; confidence auto-gating</td></tr>
+                <tr><td>Export + Polish</td><td>Weeks 17&ndash;20</td><td>Export package (PDF/Excel/slide); E2E testing; mobile testing; performance; state data sync verification; historical import; UAT</td></tr>
+            </tbody>
+        </table>
+        <p><em>Timeline expanded from 18 to 20 weeks to accommodate state regulatory data integration, PDF template library, breakeven auto-calculation, asymmetric risk framing, stale evaluation detection, confidence auto-gating, export package, and decision outcome data model.</em></p>
+
+        <h3>Non-Functional Requirements</h3>
+        <table>
+            <thead><tr><th>Requirement</th><th>Target</th></tr></thead>
+            <tbody>
+                <tr><td>Automated evaluation time</td><td>Same-day (&lt; 4 hours); parallel processing reduces wall-clock time</td></tr>
+                <tr><td>Dashboard recalculation</td><td>&lt; 2 seconds for full model recalculation</td></tr>
+                <tr><td>Notification delivery</td><td>In-app: real-time; Email: &lt; 5 min; SMS: &lt; 1 min</td></tr>
+                <tr><td>Deployment model</td><td>Cloud-hosted, browser-based</td></tr>
+                <tr><td>Device support</td><td>Desktop, tablet, mobile phone (responsive)</td></tr>
+                <tr><td>Data refresh</td><td>Automated sync for state data (daily/weekly); manual CSV for Enverus; event-driven for AFEs</td></tr>
+                <tr><td>User scale</td><td>Multiple per role (especially CAG); architecture supports growth</td></tr>
+                <tr><td>UI design</td><td>Light theme, modern, clean, professional</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- SECTION 14: OPEN QUESTIONS -->
+    <section id="s14" class="page-break">
+        <h2><span class="section-number">14.</span> Open Questions</h2>
+
+        <h3>Critical (Resolved)</h3>
+        <ol>
+            <li><strong>Enverus Data Access:</strong> <span class="resolved">Resolved</span> &mdash; CSV import primary; API upgrade path.</li>
+            <li><strong>Land Record Format:</strong> <span class="resolved">Resolved</span> &mdash; Single master Excel (DOI deck).</li>
+            <li><strong>AFE Volume:</strong> <span class="resolved">Resolved</span> &mdash; 3&ndash;5/month from ~50 operators.</li>
+            <li><strong>Format Variability:</strong> <span class="resolved">Resolved</span> &mdash; Vision-language model handles it.</li>
+            <li><strong>Deployment:</strong> <span class="resolved">Resolved</span> &mdash; Cloud-hosted, no data sensitivity.</li>
+            <li><strong>Data Sensitivity:</strong> <span class="resolved">Resolved</span> &mdash; Cloud AI services acceptable.</li>
+        </ol>
+
+        <h3>Important (Must Resolve During Early Development)</h3>
+        <ol start="7">
+            <li><strong>Internal Opex Data:</strong> Historical well opex to supplement benchmarks?</li>
+            <li><strong>Type Curve Preferences:</strong> Specific decline models, b-factor constraints?</li>
+            <li><strong>Economic Complexity:</strong> <span class="resolved">Resolved</span> &mdash; Engine-driven auto-calc with full deal structure support.</li>
+            <li><strong>User Count:</strong> <span class="resolved">Resolved (Updated)</span> &mdash; Multiple per role, especially CAG.</li>
+            <li><strong>Tool Integration:</strong> <span class="resolved">Resolved</span> &mdash; None required.</li>
+            <li><strong>Historical Decisions:</strong> <span class="resolved">Resolved</span> &mdash; Spreadsheet import path.</li>
+            <li><strong>Email System:</strong> <span class="new-tag">New</span> &mdash; M365, Google Workspace, or other? API access available?</li>
+            <li><strong>Approval Chain Depth:</strong> <span class="new-tag">New</span> &mdash; Is 3 levels sufficient?</li>
+            <li><strong>CAG Composition:</strong> <span class="new-tag">New</span> &mdash; How many members? Fixed or variable? External advisors?</li>
+            <li><strong>SMS Provider:</strong> <span class="new-tag">New</span> &mdash; Existing gateway or use Twilio?</li>
+            <li><strong>Non-Consent Penalty Data:</strong> <span class="new-tag">New</span> &mdash; Currently tracked in DOI deck? Willing to add?</li>
+            <li><strong>Election Deadline Source:</strong> <span class="new-tag">New</span> &mdash; In the AFE document or from operating agreement?</li>
+        </ol>
+
+        <h3>Nice to Know (Resolved)</h3>
+        <ol start="19">
+            <li><strong>Basin Focus:</strong> <span class="resolved">Resolved</span> &mdash; Permian, Eagle Ford, Haynesville, Powder River.</li>
+            <li><strong>Election Window:</strong> <span class="resolved">Resolved</span> &mdash; 30 days typical, 1 week worst case.</li>
+            <li><strong>Chat Expectations:</strong> <span class="resolved">Resolved</span> &mdash; Deferred to post-MVP.</li>
+        </ol>
+    </section>
+
+    <!-- SECTION 15: GO/NO-GO -->
+    <section id="s15" class="page-break">
+        <h2><span class="section-number">15.</span> GO / NO-GO Conditions</h2>
+
+        <h3>GO Conditions <span class="go-condition go">All Must Be True</span></h3>
+        <table>
+            <thead><tr><th>#</th><th>Condition</th><th>Verification</th><th>Status</th></tr></thead>
+            <tbody>
+                <tr><td>G1</td><td>Enverus CSV export access</td><td>Client confirms</td><td><span class="resolved">Confirmed</span></td></tr>
+                <tr><td>G2</td><td>Sample AFE documents (min. 3 formats)</td><td>Document delivery</td><td>Pending</td></tr>
+                <tr><td>G3</td><td>Sample DOI deck (master Excel)</td><td>Document delivery</td><td>Pending</td></tr>
+                <tr><td>G4</td><td>Web-based delivery agreed</td><td>Written confirmation</td><td><span class="resolved">Confirmed</span></td></tr>
+                <tr><td>G5</td><td>Users identified for all 6 roles</td><td>Named users</td><td>Pending</td></tr>
+                <tr><td>G6</td><td>Cloud-hosted deployment agreed</td><td>Written confirmation</td><td><span class="resolved">Confirmed</span></td></tr>
+                <tr><td>G7</td><td>Parallel 6-role workflow confirmed</td><td>Workshop sign-off</td><td>Pending</td></tr>
+                <tr><td>G8</td><td>MVP scope agreed (voting, approval, live dashboard)</td><td>Written sign-off</td><td>Pending</td></tr>
+                <tr><td>G9</td><td>Budget + timeline approved (20 weeks)</td><td>Contract execution</td><td>Pending</td></tr>
+                <tr><td>G10</td><td>Sample deal structure examples</td><td>Document delivery</td><td>Pending</td></tr>
+                <tr><td>G11</td><td>Email system + API access confirmed</td><td>Technical validation</td><td>Pending</td></tr>
+                <tr><td>G12</td><td>Approval chain structure confirmed</td><td>Workshop</td><td>Pending</td></tr>
+                <tr><td>G13</td><td>CAG membership + voting alignment</td><td>Workshop</td><td>Pending</td></tr>
+            </tbody>
+        </table>
+
+        <h3>NO-GO Conditions <span class="go-condition nogo">Any One Kills the Project</span></h3>
+        <table>
+            <thead><tr><th>#</th><th>Condition</th><th>Reason</th></tr></thead>
+            <tbody>
+                <tr><td>N1</td><td>No Enverus production data AND no CSV exports</td><td>No type curves = no economics = no value</td></tr>
+                <tr><td>N2</td><td>AFE volume &lt; 5/year</td><td>Manual evaluation is adequate</td></tr>
+                <tr><td>N3</td><td>International (non-US) wells in v1</td><td>All methodology calibrated for US onshore</td></tr>
+                <tr><td>N4</td><td>No structured land records available</td><td>Pipeline breaks at Stage 1</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Conditional GO <span class="go-condition conditional">Proceed with Adjusted Scope</span></h3>
+        <table>
+            <thead><tr><th>#</th><th>Condition</th><th>Adjustment</th></tr></thead>
+            <tbody>
+                <tr><td>C1</td><td>Deal structures beyond builder capability</td><td>Add custom scripting; +2&ndash;3 weeks</td></tr>
+                <tr><td>C2</td><td>Highly variable AFE formats</td><td>+2&ndash;3 weeks parser tuning; manual fallback</td></tr>
+                <tr><td>C3</td><td>Enverus API wanted in v1</td><td>+2&ndash;3 weeks; verify subscription</td></tr>
+                <tr><td>C4</td><td>Conversational AI wanted in v1</td><td>+4&ndash;5 weeks; increase NLU budget</td></tr>
+                <tr><td>C5</td><td>Email inbox not API-accessible</td><td>Drop auto-ingestion; manual only (&minus;1 week)</td></tr>
+                <tr><td>C6</td><td>No SMS infrastructure for executives</td><td>Drop SMS; email/in-app only (&minus;1 week)</td></tr>
+                <tr><td>C7</td><td>CAG exceeds 10 people per AFE</td><td>+1 week for voting UI scaling</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- SECTION 16: BA OPTIMIZATION RECOMMENDATIONS - CLIENT DECISIONS -->
+    <section id="s16" class="page-break">
+        <h2><span class="section-number">16.</span> BA Optimization Recommendations &mdash; Client Decisions</h2>
+        <p>Twelve expert recommendations were proposed during discovery. The client reviewed all twelve. Eight were approved for v1, one for v2, two were deferred, and one was skipped. Approved items have been integrated into the relevant sections of this document.</p>
+
+        <h3>Decision Summary</h3>
+        <table>
+            <thead><tr><th>#</th><th>Recommendation</th><th>Decision</th><th>Integration</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>Weighted Confidence Auto-Gating</td><td><span class="decision-badge decision-v1">Approved v1</span></td><td>Sections 5, 7, 13</td></tr>
+                <tr><td>2</td><td>Deadline-Aware Prioritization</td><td><span class="decision-badge decision-v1">Approved v1</span></td><td>Sections 5, 7, 13</td></tr>
+                <tr><td>3</td><td>Quick Take Pre-Screen</td><td><span class="decision-badge decision-skipped">Skipped</span></td><td>Every AFE runs full process</td></tr>
+                <tr><td>4</td><td>Breakeven Auto-Calculation</td><td><span class="decision-badge decision-v1">Approved v1</span></td><td>Sections 7, 8, 9, 13</td></tr>
+                <tr><td>5</td><td>Operator Performance Scorecards</td><td><span class="decision-badge decision-v2">Approved v2</span></td><td>Data model in v1 (Section 6)</td></tr>
+                <tr><td>6</td><td>Asymmetric Risk Framing</td><td><span class="decision-badge decision-v1">Approved v1</span></td><td>Sections 7, 9, 13</td></tr>
+                <tr><td>7</td><td>Analyst Workload Dashboard</td><td><span class="decision-badge decision-deferred">Deferred</span></td><td>Roles may change with integrations</td></tr>
+                <tr><td>8</td><td>CAG Vote Weighting</td><td><span class="decision-badge decision-deferred">Deferred</span></td><td>Equal votes; Approver judgment</td></tr>
+                <tr><td>9</td><td>Stale Evaluation Detection</td><td><span class="decision-badge decision-v1">Approved v1</span></td><td>Sections 5, 7, 13</td></tr>
+                <tr><td>10</td><td>Decision Feedback Loop</td><td><span class="decision-badge decision-v1">Approved v1</span> (data model)</td><td>Data model in Section 6</td></tr>
+                <tr><td>11</td><td>PDF Template Library</td><td><span class="decision-badge decision-v1">Approved v1</span></td><td>Sections 7, 8, 13</td></tr>
+                <tr><td>12</td><td>Export Package</td><td><span class="decision-badge decision-v1">Approved v1</span></td><td>Sections 7, 13</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Approved for v1 (8 items &mdash; integrated into MVP)</h3>
+
+        <div class="optimization-card approved">
+            <div class="opt-title">16.1 Weighted Confidence Auto-Gating <span class="decision-badge decision-v1">Approved v1</span></div>
+            <p>If any analyst signs off with <span class="confidence-badge confidence-low">Low</span> confidence, the system auto-flags the evaluation to the Approver requiring explicit acknowledgment. The Approver must annotate acceptance of the risk. Transforms confidence from passive indicator into active workflow gate.</p>
+        </div>
+
+        <div class="optimization-card approved">
+            <div class="opt-title">16.2 Deadline-Aware Prioritization <span class="decision-badge decision-v1">Approved v1</span></div>
+            <p>All views sorted by election deadline urgency. Color-coded: <span style="color: var(--color-success); font-weight:600;">green</span> (&gt;14 days), <span style="color: var(--color-warning); font-weight:600;">amber</span> (7&ndash;14 days), <span style="color: var(--color-danger); font-weight:600;">red</span> (&lt;3 days). Proactive alerts when deadlines are at risk based on processing time estimates.</p>
+        </div>
+
+        <div class="optimization-card approved">
+            <div class="opt-title">16.4 Breakeven Auto-Calculation <span class="decision-badge decision-v1">Approved v1</span></div>
+            <p>Auto-compute breakeven oil price, gas price, capex, opex, and minimum WI (NPV=0). Displayed on dashboard with &ldquo;margin of safety&rdquo; framing in recommendation rationale.</p>
+        </div>
+
+        <div class="optimization-card approved">
+            <div class="opt-title">16.6 Asymmetric Risk Framing <span class="decision-badge decision-v1">Approved v1</span></div>
+            <p>P10 upside vs P90 downside with regret analysis. 2x2 decision matrix (Drill vs. Drop at P10 vs. P90). Maximum loss (dry hole capex exposure). All values update live. Shifts decision to &ldquo;is the risk-reward acceptable?&rdquo;</p>
+        </div>
+
+        <div class="optimization-card approved">
+            <div class="opt-title">16.9 Stale Evaluation Detection <span class="decision-badge decision-v1">Approved v1</span></div>
+            <p>Flag evaluations with no activity for configurable period. Notify Admin and assigned analyst. Auto-escalate if deadline approaching. Track stale metrics in admin views.</p>
+        </div>
+
+        <div class="optimization-card approved">
+            <div class="opt-title">16.10 Decision Outcome Feedback Loop <span class="decision-badge decision-v1">Approved v1</span> (data model only)</div>
+            <p>For every &ldquo;Drill&rdquo; decision, create pending Outcome Record. Import mechanism for actual production data (state data + Enverus CSV). Auto-match by API number. Status tags. No variance UI in v1 &mdash; data collection only to seed v2 analytics.</p>
+        </div>
+
+        <div class="optimization-card approved">
+            <div class="opt-title">16.11 PDF Template Library <span class="decision-badge decision-v1">Approved v1</span></div>
+            <p>Cache extraction mappings after successful parses. Template-first for repeat operators (fast, cheap, deterministic). Vision-language model fallback for new operators. Reduces AI API costs over time as library grows across ~50 operators.</p>
+        </div>
+
+        <div class="optimization-card approved">
+            <div class="opt-title">16.12 Export Package <span class="decision-badge decision-v1">Approved v1</span></div>
+            <p>One-click: PDF report (all dashboard components), Excel workbook (full economic model), executive summary slide (board-ready). Reflects current dashboard state. Standard deliverable for JV partners and board communication.</p>
+        </div>
+
+        <h3>Approved for v2 (1 item &mdash; data model in v1)</h3>
+
+        <div class="optimization-card" style="border-left-color: #2a4365;">
+            <div class="opt-title">16.5 Operator Performance Scorecards <span class="decision-badge decision-v2">Approved v2</span></div>
+            <p>Full scorecard UI in v2. Data model designed in v1: operator entity with performance tracking fields (EUR, IP-30, IP-90, completion consistency, DOI accuracy, AFE history). Data accumulates automatically as evaluations are processed.</p>
+        </div>
+
+        <h3>Deferred (2 items)</h3>
+
+        <div class="optimization-card deferred">
+            <div class="opt-title">16.7 Analyst Workload Dashboard <span class="decision-badge decision-deferred">Deferred</span></div>
+            <p>Analyst roles may evolve or be reduced as state data integrations and automation become more seamless. Revisit when role structure stabilizes post-MVP.</p>
+        </div>
+
+        <div class="optimization-card deferred">
+            <div class="opt-title">16.8 CAG Vote Weighting <span class="decision-badge decision-deferred">Deferred</span></div>
+            <p>Equal votes in MVP. Approver uses their own judgment to weight advisory input by expertise. May revisit in v2 if CAG grows large enough to warrant formal weighting.</p>
+        </div>
+
+        <h3>Skipped (1 item)</h3>
+
+        <div class="optimization-card skipped">
+            <div class="opt-title">16.3 Quick Take Pre-Screen <span class="decision-badge decision-skipped">Skipped</span></div>
+            <p>Client decision: every AFE runs the full evaluation process. No fast-track or pre-screening.</p>
+        </div>
+    </section>
+
+    <!-- APPENDIX: GLOSSARY -->
+    <section class="page-break">
+        <h2>Appendix A: Glossary</h2>
+        <table class="glossary-table">
+            <thead>
+                <tr>
+                    <th>Term</th>
+                    <th>Definition</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>AFE</td><td>Authorization for Expenditure &mdash; a formal document from an operator proposing a well and requesting capital commitment</td></tr>
+                <tr><td>API Number</td><td>American Petroleum Institute well ID &mdash; unique numeric identifier for every US well</td></tr>
+                <tr><td>Arps Decline</td><td>Empirical decline curve models (exponential, hyperbolic, harmonic) for forecasting well production</td></tr>
+                <tr><td>Back-In</td><td>A contractual provision where a party's working interest increases after a specified payout threshold</td></tr>
+                <tr><td>BOE</td><td>Barrel of Oil Equivalent (6 Mcf = 1 BOE)</td></tr>
+                <tr><td>CAG</td><td>Commercial Advisory Group &mdash; senior advisors who review evaluations and vote on recommendations</td></tr>
+                <tr><td>DCF</td><td>Discounted Cash Flow &mdash; valuation method discounting future cash flows to present value</td></tr>
+                <tr><td>DOI</td><td>Division of Interest &mdash; contractual allocation of revenue/costs among interest holders</td></tr>
+                <tr><td>IRR</td><td>Internal Rate of Return &mdash; discount rate at which NPV equals zero</td></tr>
+                <tr><td>LOE</td><td>Lease Operating Expenses &mdash; recurring costs to operate a producing well</td></tr>
+                <tr><td>NRI</td><td>Net Revenue Interest &mdash; share of production revenue after deducting all burdens</td></tr>
+                <tr><td>NPV</td><td>Net Present Value &mdash; sum of discounted future cash flows minus initial investment</td></tr>
+                <tr><td>Non-Consent</td><td>Decision (or default outcome) to not participate in a proposed well, often carrying penalties</td></tr>
+                <tr><td>NOWI</td><td>Non-Operated Working Interest</td></tr>
+                <tr><td>P10/P50/P90</td><td>Probability percentiles (P50 = median; P10 = high; P90 = low)</td></tr>
+                <tr><td>Promoted Interest</td><td>An arrangement where one party carries another's costs through a defined phase</td></tr>
+                <tr><td>Sliding Scale</td><td>A royalty or override rate that changes based on a trigger variable (price, production, date)</td></tr>
+                <tr><td>Type Curve</td><td>Representative production profile derived from analog wells for forecasting a proposed well</td></tr>
+                <tr><td>WI</td><td>Working Interest &mdash; percentage of ownership obligating the holder to pay their share of costs</td></tr>
+                <tr><td>WTI</td><td>West Texas Intermediate &mdash; US crude oil benchmark (Cushing, OK)</td></tr>
+                <tr><td>HH</td><td>Henry Hub &mdash; US natural gas benchmark (Louisiana)</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="report-footer">
+        <p>Drill or Drop &mdash; Discovery Document v2.1 &mdash; February 9, 2026</p>
+        <p>Prepared by the Business Analyst agent as part of the Crucible product development framework.</p>
+        <p>This document represents the v2.1 revision incorporating client decisions on 12 BA optimization recommendations (8 approved for v1, 1 for v2, 2 deferred, 1 skipped), a state regulatory data strategy leveraging free public data from TX RRC, NM OCD, and WY WOGCC, and expanded MVP scope and timeline (20 weeks). Subject to refinement based on further client feedback, technical validation, and planning phase analysis.</p>
+    </footer>
+
+</div>
+</body>
+</html>
