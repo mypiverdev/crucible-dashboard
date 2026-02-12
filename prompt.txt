@@ -1,0 +1,36 @@
+Generate a complete, self-contained HTML file for a launcher/dashboard page. Output ONLY the raw HTML — no explanations, no markdown code fences, just the HTML from <!DOCTYPE html> to </html>.
+
+This is for "CremoLogix" — an AI-assisted CDFI underwriting platform.
+
+Design requirements:
+- Single self-contained HTML file (all CSS inline in a style tag, no external dependencies)
+- Modern, sophisticated design with dark navy header (gradient), clean white card grid
+- Each portal card has a distinct left-border accent color
+- Responsive grid layout (auto-fill, minmax 320px)
+- Subtle hover animations (lift + shadow) on cards
+- Stats bar showing: 75 Screens, 9 Portals, 1 File Each
+- Footer note: "Self-contained demos — each portal is a single HTML file with all screens embedded."
+- Use Inter/system-ui font stack
+- Date in header: "Interactive Prototype v2 — February 2026"
+
+The 9 portal cards (each with title, role subtitle, description, screen count, and "Launch Demo" button):
+
+1. Borrower Portal | Direct + Broker-Referred Borrowers | Full borrower journey: landing page, application, KYC verification, dashboard, conversational document collection, term sheets, e-signature, and post-closing. | 17 screens (B-01 to B-17) | link: cremologix/demo-borrower.html | accent: #1B4D7A
+
+2. Denied Applicant Portal | Denied Borrower State | Denied applicant nurture: dashboard, subscription management, credit repair resources, re-qualification progress, and reapply flow. | 5 screens (D-01 to D-05) | link: cremologix/demo-denied.html | accent: #DC3545
+
+3. Broker Portal | Loan Brokers | Broker workflow: login, dashboard, new deal submission, packet management, deal detail tracking, notifications, and settings. | 7 screens (BK-01 to BK-07) | link: cremologix/demo-broker.html | accent: #E8943A
+
+4. Intake Agent Portal | Intake Agents | Application review queue, deal review with document verification, completed reviews history, and agent settings. | 4 screens (IA-01 to IA-04) | link: cremologix/demo-intake.html | accent: #6F42C1
+
+5. Underwriter Portal | Underwriters | Core underwriting: dashboard, deal detail feed, financial analysis, manual analysis, escalations, credit memo, route questions, virtual workpapers, and case history. | 10 screens (UW-01 to UW-10) | link: cremologix/demo-underwriter.html | accent: #2E8B57
+
+6. Credit Manager Portal | Credit Managers | Management oversight: dashboard, case assignment, escalation review, final review and decision, all deals view, and team performance. | 6 screens (CM-01 to CM-06) | link: cremologix/demo-cm.html | accent: #0D6EFD
+
+7. External Funding Portal | External Funding Stakeholders | External reviewer access: login, review dashboard, deal review with read-only analysis, and decision actions. | 4 screens (EF-01 to EF-04) | link: cremologix/demo-external.html | accent: #20C997
+
+8. FinOps Resource Portal | Financial Operations Professionals | Post-closing support: login, dashboard, client profiles, financial data review, covenant compliance, gap analysis, messaging, and notes. | 8 screens (FO-01 to FO-08) | link: cremologix/demo-finops.html | accent: #6610F2
+
+9. Administrator Portal | System Administrators | Full system config: dashboard, loan products, scoring, workflows, document checklists, notifications, user management, integrations, system parameters, memo templates, CDFI reporting, fair lending, audit trail, and settings. | 14 screens (AD-01 to AD-14) | link: cremologix/demo-admin.html | accent: #495057
+
+Output ONLY the complete HTML. No other text.
