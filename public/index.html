@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crucible</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #f0f4f8;
+      --surface: #ffffff;
+      --surface-2: #f7f9fc;
+      --surface-3: #edf2f7;
+      --surface-hover: #e8eef6;
+      --border: #d8e2ee;
+      --border-hover: #b0c4de;
+      --text: #1a2b4a;
+      --text-2: #4a6180;
+      --text-3: #8298b5;
+      --accent: #3b6cf5;
+      --accent-light: #5b8af7;
+      --accent-muted: rgba(59,108,245,0.08);
+      --accent-muted-2: rgba(59,108,245,0.15);
+      --green: #0fa573;
+      --green-muted: rgba(15,165,115,0.08);
+      --green-surface: rgba(15,165,115,0.05);
+      --amber: #e0870b;
+      --amber-muted: rgba(224,135,11,0.08);
+      --rose: #e5395a;
+      --rose-muted: rgba(229,57,90,0.08);
+      --teal: #0d9488;
+      --teal-muted: rgba(13,148,136,0.08);
+      --violet: #7c5ce0;
+      --violet-muted: rgba(124,92,224,0.08);
+      --navy: #1e3a5f;
+      --sidebar-bg: #1b2e4a;
+      --sidebar-hover: rgba(255,255,255,0.10);
+      --sidebar-active: rgba(59,108,245,0.25);
+      --sidebar-text: rgba(255,255,255,0.7);
+      --sidebar-text-bright: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ==================== HEADER ==================== */
+    header {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo svg { width: 22px; height: 22px; }
+
+    .logo span {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-stat {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(15,165,115,0.6);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ==================== LAYOUT ==================== */
+    .layout {
+      display: flex;
+      height: calc(100vh - 56px);
+    }
+
+    /* ==================== SIDEBAR ==================== */
+    .sidebar {
+      width: 260px;
+      min-width: 260px;
+      display: flex;
+      flex-direction: column;
+      background: var(--sidebar-bg);
+      overflow-y: auto;
+    }
+
+    .sidebar-section {
+      padding: 16px 12px 8px;
+    }
+
+    .sidebar-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(255,255,255,0.3);
+      padding: 0 8px;
+      margin-bottom: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      font-size: 13px;
+      color: var(--sidebar-text);
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: var(--sidebar-hover);
+      color: var(--sidebar-text-bright);
+    }
+
+    .nav-item.active {
+      background: var(--sidebar-active);
+      color: var(--sidebar-text-bright);
+    }
+
+    .nav-item .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .nav-item .name {
+      flex: 1;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-item .badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .badge-discovery { background: rgba(15,165,115,0.2); color: #4ade80; }
+    .badge-specification { background: rgba(96,165,250,0.2); color: #7cacf8; }
+    .badge-architecture { background: rgba(167,139,250,0.2); color: #c4b5fd; }
+    .badge-build { background: rgba(251,191,36,0.15); color: #fbbf24; }
+    .badge-complete { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.35); }
+    .badge-unknown { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.35); }
+
+    .phase-dots {
+      display: flex;
+      gap: 3px;
+      margin-top: 6px;
+      padding: 0 10px;
+    }
+
+    .phase-dot {
+      flex: 1;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .phase-dot.done { background: #4ade80; }
+    .phase-dot.current { background: #7cacf8; }
+
+    /* ==================== MAIN ==================== */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      background: var(--bg);
+    }
+
+    /* ==================== EMPTY STATE ==================== */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .empty-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .empty-state h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .empty-state p {
+      font-size: 13px;
+      color: var(--text-2);
+      max-width: 320px;
+      line-height: 1.6;
+    }
+
+    .empty-state code {
+      background: var(--accent-muted);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ==================== HOME VIEW ==================== */
+    .home { max-width: 960px; margin: 0 auto; padding: 40px 32px 60px; }
+
+    .greeting { margin-bottom: 32px; }
+    .greeting h1 { font-size: 26px; font-weight: 700; color: var(--navy); letter-spacing: -0.5px; margin-bottom: 6px; }
+    .greeting p { font-size: 15px; color: var(--text-2); line-height: 1.5; }
+    .greeting p strong { color: var(--text); }
+    .greeting .date { font-size: 13px; color: var(--text-3); margin-top: 4px; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(26,43,74,0.04); }
+    .stat-card .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-3); margin-bottom: 8px; }
+    .stat-card .stat-value { font-size: 28px; font-weight: 700; letter-spacing: -1px; }
+    .stat-card .stat-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+    .sv-blue { color: var(--accent); }
+    .sv-green { color: var(--green); }
+    .sv-amber { color: var(--amber); }
+    .sv-violet { color: var(--violet); }
+
+    .home-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+
+    .home-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-3); margin-bottom: 12px; }
+
+    .home-project-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 18px 20px; cursor: pointer; transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(26,43,74,0.04); margin-bottom: 10px;
+    }
+    .home-project-card:hover { border-color: var(--accent); box-shadow: 0 3px 12px rgba(59,108,245,0.08); transform: translateY(-1px); }
+
+    .hpc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .hpc-name { font-size: 15px; font-weight: 600; color: var(--navy); }
+    .hpc-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 100px; }
+    .hpc-badge-discovery { background: rgba(15,165,115,0.08); color: var(--green); border: 1px solid rgba(15,165,115,0.15); }
+    .hpc-badge-specification { background: rgba(59,108,245,0.08); color: var(--accent); border: 1px solid rgba(59,108,245,0.12); }
+    .hpc-badge-architecture { background: rgba(124,92,224,0.08); color: var(--violet); border: 1px solid rgba(124,92,224,0.12); }
+    .hpc-badge-build { background: rgba(224,135,11,0.08); color: var(--amber); border: 1px solid rgba(224,135,11,0.12); }
+    .hpc-badge-unknown { background: var(--surface-3); color: var(--text-3); border: 1px solid var(--border); }
+
+    .hpc-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; margin-bottom: 12px; }
+
+    .hpc-progress { display: flex; gap: 4px; }
+    .hpc-seg { flex: 1; height: 4px; border-radius: 2px; background: var(--surface-3); }
+    .hpc-seg.done { background: var(--green); }
+    .hpc-seg.active { background: var(--accent); }
+
+    .hpc-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+    .hpc-meta { font-size: 12px; color: var(--text-3); }
+    .hpc-deliverables { display: flex; gap: 4px; }
+    .hpc-dd { width: 18px; height: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; background: var(--surface-3); color: var(--text-3); border: 1px solid var(--border); }
+    .hpc-dd.ready { background: var(--green-muted); color: var(--green); border-color: rgba(15,165,115,0.2); }
+
+    .activity-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; box-shadow: 0 1px 3px rgba(26,43,74,0.04); }
+    .activity-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--surface-3); }
+    .activity-item:last-child { border-bottom: none; }
+    .act-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .act-dot.green { background: var(--green); }
+    .act-dot.blue { background: var(--accent); }
+    .act-dot.violet { background: var(--violet); }
+    .act-dot.amber { background: var(--amber); }
+    .act-text { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+    .act-text strong { color: var(--text); font-weight: 600; }
+    .act-time { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+    .tip-banner {
+      background: linear-gradient(135deg, rgba(59,108,245,0.06), rgba(124,92,224,0.06));
+      border: 1px solid rgba(59,108,245,0.12); border-radius: 12px;
+      padding: 18px 22px; display: flex; align-items: center; gap: 14px; margin-top: 16px;
+    }
+    .tip-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .tip-text { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+    .tip-text strong { color: var(--text); }
+    .tip-text code { background: rgba(59,108,245,0.1); padding: 2px 7px; border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--accent); }
+
+    /* ==================== PROJECT VIEW ==================== */
+    .project-header {
+      padding: 32px 40px 0;
+    }
+
+    .project-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .project-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--navy);
+    }
+
+    .project-status-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: var(--green-muted);
+      color: var(--green);
+      border: 1px solid rgba(15,165,115,0.15);
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    /* ==================== PHASE PROGRESS ==================== */
+    .phase-bar {
+      display: flex;
+      align-items: stretch;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin: 0 40px 32px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(26,43,74,0.04);
+    }
+
+    .phase-step {
+      flex: 1;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-right: 1px solid var(--border);
+    }
+
+    .phase-step:last-child { border-right: none; }
+    .phase-step.done { background: var(--green-surface); }
+    .phase-step.active { background: var(--accent-muted); }
+
+    .phase-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+      background: var(--surface-3);
+      color: var(--text-3);
+    }
+
+    .phase-step.done .phase-num { background: var(--green); color: #fff; }
+    .phase-step.active .phase-num {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(59,108,245,0.3);
+    }
+
+    .phase-text .phase-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-3);
+    }
+
+    .phase-step.done .phase-name { color: var(--green); }
+    .phase-step.active .phase-name { color: var(--accent); }
+
+    .phase-text .phase-detail {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 1px;
+    }
+
+    .phase-step.active .phase-detail { color: var(--text-2); }
+
+    /* ==================== CONTENT GRID ==================== */
+    .content-area {
+      padding: 0 40px 40px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 24px;
+    }
+
+    /* ==================== SECTIONS ==================== */
+    .section { margin-bottom: 24px; }
+
+    .section-header {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+
+    /* ==================== DELIVERABLE ROWS ==================== */
+    .doc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .doc-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(26,43,74,0.03);
+    }
+
+    .doc-row:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(59,108,245,0.08);
+      transform: translateY(-1px);
+    }
+
+    .doc-row.disabled {
+      opacity: 0.35;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .doc-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .doc-icon.green { background: var(--green-muted); color: var(--green); }
+    .doc-icon.blue { background: var(--accent-muted-2); color: var(--accent); }
+    .doc-icon.violet { background: var(--violet-muted); color: var(--violet); }
+    .doc-icon.amber { background: var(--amber-muted); color: var(--amber); }
+    .doc-icon.teal { background: var(--teal-muted); color: var(--teal); }
+
+    .doc-info { flex: 1; min-width: 0; }
+    .doc-name { font-size: 13px; font-weight: 600; margin-bottom: 1px; }
+    .doc-desc { font-size: 12px; color: var(--text-3); }
+
+    .doc-arrow {
+      color: var(--text-3);
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: color 0.1s;
+    }
+
+    .doc-row:hover .doc-arrow { color: var(--accent); }
+
+    /* ==================== ACTION CARDS ==================== */
+    .action-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .action-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(26,43,74,0.03);
+    }
+
+    .action-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(59,108,245,0.08);
+      transform: translateY(-1px);
+    }
+
+    .action-card.disabled {
+      opacity: 0.25;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .action-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      color: #fff;
+    }
+
+    .action-icon.demo { background: linear-gradient(135deg, #3b6cf5, #2554d4); }
+    .action-icon.report { background: linear-gradient(135deg, #0fa573, #0b8a5e); }
+    .action-icon.proposal { background: linear-gradient(135deg, #e0870b, #c47508); }
+    .action-icon.build-plan { background: linear-gradient(135deg, #0d9488, #0b7c72); }
+
+    .action-info { flex: 1; }
+    .action-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .action-desc { font-size: 12px; color: var(--text-2); }
+
+    /* ==================== STATUS PANEL ==================== */
+    .status-panel { position: sticky; top: 0; }
+
+    .status-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(26,43,74,0.04);
+    }
+
+    .status-card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-3);
+      margin-bottom: 14px;
+    }
+
+    .status-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .status-row .label { font-size: 13px; color: var(--text-2); }
+    .status-row .value { font-size: 13px; font-weight: 600; color: var(--text); }
+    .status-row .value.green { color: var(--green); }
+    .status-row .value.amber { color: var(--amber); }
+    .status-row .value.accent { color: var(--accent); }
+
+    .progress-track {
+      margin-top: 14px;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--surface-3);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      transition: width 0.3s ease;
+    }
+
+    .progress-label {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-3);
+      text-align: right;
+    }
+
+    /* Gate list */
+    .gate-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .gate-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .gate-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .gate-icon.pass {
+      background: var(--green-muted);
+      color: var(--green);
+      border: 1.5px solid rgba(15,165,115,0.2);
+    }
+
+    .gate-icon.pending {
+      background: var(--surface-3);
+      color: var(--text-3);
+      border: 1.5px solid var(--border);
+    }
+
+    .gate-icon.active {
+      background: var(--accent-muted);
+      color: var(--accent);
+      border: 1.5px solid rgba(59,108,245,0.2);
+    }
+
+    .gate-label { color: var(--text-2); font-weight: 500; }
+    .gate-label.done { color: var(--text-3); }
+
+    /* ==================== MODAL ==================== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,43,74,0.4);
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.open { display: flex; align-items: center; justify-content: center; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: 92vw;
+      max-width: 960px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(26,43,74,0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .modal-header h3 { font-size: 15px; font-weight: 600; color: var(--navy); }
+
+    .modal-close {
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.1s;
+    }
+
+    .modal-close:hover { background: var(--surface-hover); color: var(--text); }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 36px;
+    }
+
+    /* ==================== MARKDOWN REPORT STYLING ==================== */
+    .markdown-body {
+      line-height: 1.7;
+      font-size: 15px;
+      color: #333;
+      max-width: 100%;
+    }
+
+    /* Document title (first h1) */
+    .markdown-body h1:first-child {
+      font-size: 28px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--navy) 0%, #0F1F33 100%);
+      margin: -32px -36px 28px;
+      padding: 40px 36px;
+      border-bottom: none;
+      border-radius: 0;
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+    }
+
+    .markdown-body h1 {
+      font-size: 24px;
+      color: var(--navy);
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin: 36px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent);
+      line-height: 1.3;
+    }
+
+    .markdown-body h2 {
+      font-size: 20px;
+      color: var(--navy);
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      margin: 28px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #d8e2ee;
+    }
+
+    .markdown-body h3 {
+      font-size: 16px;
+      color: var(--navy);
+      font-weight: 600;
+      margin: 22px 0 10px;
+      line-height: 1.3;
+    }
+
+    .markdown-body h4 {
+      font-size: 14px;
+      color: var(--navy);
+      font-weight: 600;
+      margin: 18px 0 8px;
+    }
+
+    .markdown-body p { margin-bottom: 14px; line-height: 1.7; }
+
+    .markdown-body ul, .markdown-body ol {
+      margin-bottom: 16px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .markdown-body ul li, .markdown-body ol li {
+      padding: 6px 0 6px 24px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .markdown-body ul li::before {
+      content: '\25B6';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 8px;
+      top: 11px;
+    }
+
+    .markdown-body ol { counter-reset: item; }
+    .markdown-body ol li { counter-increment: item; }
+    .markdown-body ol li::before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 8px;
+    }
+
+    .markdown-body strong { color: var(--navy); font-weight: 600; }
+
+    .markdown-body code {
+      background: rgba(59,108,245,0.08);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .markdown-body pre {
+      background: #1b2e4a;
+      color: #e2e8f0;
+      border: none;
+      padding: 20px 24px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(26,43,74,0.12);
+    }
+
+    .markdown-body pre code {
+      background: none;
+      padding: 0;
+      color: #e2e8f0;
+      font-size: 13px;
+    }
+
+    .markdown-body blockquote {
+      border-left: 4px solid var(--accent);
+      background: #EBF3FB;
+      padding: 18px 24px;
+      border-radius: 0 10px 10px 0;
+      margin: 20px 0;
+      color: #333;
+    }
+
+    .markdown-body blockquote p:last-child { margin-bottom: 0; }
+
+    .markdown-body blockquote strong {
+      display: block;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    /* Tables — navy header, striped rows, hover */
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .markdown-body thead th {
+      background: var(--navy);
+      color: #fff;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border: 1px solid #15304D;
+    }
+
+    .markdown-body tbody td {
+      padding: 11px 16px;
+      border: 1px solid #dee2e6;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .markdown-body tbody tr:nth-child(even) { background: #f8f9fa; }
+    .markdown-body tbody tr:hover { background: #EBF3FB; }
+
+    .markdown-body hr {
+      border: none;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      margin: 32px 0;
+    }
+
+    /* Images */
+    .markdown-body img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin: 16px 0;
+    }
+
+    /* Links */
+    .markdown-body a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(59,108,245,0.3);
+      transition: border-color 0.15s;
+    }
+    .markdown-body a:hover { border-bottom-color: var(--accent); }
+
+    /* ==================== REPORT VIEWER ==================== */
+    .report-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,43,74,0.5);
+      z-index: 200;
+      backdrop-filter: blur(6px);
+    }
+
+    .report-overlay.open { display: flex; align-items: center; justify-content: center; }
+
+    .report-viewer {
+      background: var(--surface);
+      border-radius: 14px;
+      width: 94vw;
+      max-width: 1100px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(26,43,74,0.25);
+    }
+
+    .report-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .report-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .report-header-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: #fff;
+    }
+
+    .report-header-icon.research { background: linear-gradient(135deg, #0fa573, #0b8a5e); }
+    .report-header-icon.proposal { background: linear-gradient(135deg, #e0870b, #c47508); }
+
+    .report-header h3 { font-size: 15px; font-weight: 600; color: var(--navy); }
+    .report-header .report-project { font-size: 12px; color: var(--text-3); margin-top: 1px; }
+
+    .report-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .report-btn {
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      height: 32px;
+      padding: 0 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 500;
+      transition: all 0.1s;
+    }
+
+    .report-btn:hover { background: var(--surface-hover); color: var(--text); }
+
+    .report-close {
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.1s;
+    }
+
+    .report-close:hover { background: var(--surface-hover); color: var(--text); }
+
+    .report-frame {
+      flex: 1;
+      border: none;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+    }
+
+    /* ==================== DOMAIN FIELD ==================== */
+    .project-domain {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--accent);
+      background: var(--accent-muted);
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    .project-domain a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .project-domain a:hover { text-decoration: underline; }
+
+    /* ==================== ACTION ITEMS PANEL ==================== */
+    .action-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .action-item {
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .action-item.critical {
+      border-color: var(--rose);
+      border-left: 3px solid var(--rose);
+      background: var(--rose-muted);
+    }
+    .ai-top-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .ai-priority {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .ai-priority.p1 { background: var(--rose-muted); color: var(--rose); }
+    .ai-priority.p2 { background: var(--amber-muted); color: var(--amber); }
+    .ai-priority.p3 { background: var(--accent-muted); color: var(--accent); }
+    .ai-critical-badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      background: var(--rose);
+      color: #fff;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .ai-desc { color: var(--text); font-weight: 500; }
+    .ai-meta {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .ai-blocks {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--rose);
+      font-weight: 600;
+    }
+    .ai-overflow {
+      font-size: 12px;
+      color: var(--text-3);
+      text-align: center;
+      padding: 6px 0;
+    }
+
+    /* ==================== SCROLLBAR ==================== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+    /* ==================== HAMBURGER TOGGLE ==================== */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      transition: background 0.1s;
+    }
+    .menu-toggle:hover { background: rgba(255,255,255,0.1); }
+    .menu-toggle svg { width: 22px; height: 22px; display: block; }
+
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 39;
+    }
+    .sidebar-backdrop.open { display: block; }
+
+    /* ==================== RESPONSIVE ==================== */
+
+    /* Tablet: <= 1024px */
+    @media (max-width: 1024px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .home-cols { grid-template-columns: 1fr; }
+      .content-area { grid-template-columns: 1fr; }
+      .status-panel { position: static; }
+      .phase-bar { margin: 0 20px 24px; }
+      .project-header { padding: 24px 20px 0; }
+      .content-area { padding: 0 20px 32px; }
+      .home { padding: 28px 20px 40px; }
+    }
+
+    /* Mobile: <= 768px */
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+
+      .sidebar {
+        position: fixed;
+        top: 56px;
+        left: 0;
+        bottom: 0;
+        z-index: 40;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+      }
+      .sidebar.open { transform: translateX(0); }
+
+      .layout { height: calc(100vh - 56px); }
+
+      .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .stat-card { padding: 14px 16px; }
+      .stat-card .stat-value { font-size: 24px; }
+
+      .phase-bar { margin: 0 16px 20px; flex-wrap: wrap; }
+      .phase-step { min-width: 48%; padding: 12px 14px; }
+      .phase-step:nth-child(2) { border-right: none; }
+
+      .project-header { padding: 20px 16px 0; }
+      .project-title { font-size: 20px; }
+      .project-desc { font-size: 13px; margin-bottom: 20px; }
+      .content-area { padding: 0 16px 28px; gap: 16px; }
+
+      .home { padding: 20px 16px 32px; }
+      .greeting h1 { font-size: 22px; }
+      .greeting p { font-size: 14px; }
+
+      .home-project-card { padding: 14px 16px; }
+      .hpc-name { font-size: 14px; }
+      .hpc-desc { font-size: 12px; margin-bottom: 10px; }
+
+      .doc-row { padding: 10px 12px; gap: 10px; }
+      .doc-icon { width: 32px; height: 32px; font-size: 14px; }
+      .doc-name { font-size: 12px; }
+      .doc-desc { font-size: 11px; }
+
+      .action-card { padding: 14px; gap: 12px; }
+      .action-icon { width: 38px; height: 38px; font-size: 16px; }
+      .action-name { font-size: 13px; }
+
+      .modal { width: 96vw; height: 92vh; border-radius: 10px; }
+      .modal-body { padding: 20px; }
+      .markdown-body h1:first-child { margin: -20px -20px 20px; padding: 28px 20px; font-size: 22px; }
+      .markdown-body h1 { font-size: 20px; }
+      .markdown-body h2 { font-size: 17px; }
+      .markdown-body { font-size: 14px; }
+
+      .report-viewer { width: 96vw; height: 92vh; border-radius: 10px; }
+
+      .tip-banner { padding: 14px 16px; gap: 10px; }
+      .tip-icon { width: 32px; height: 32px; font-size: 15px; border-radius: 8px; }
+      .tip-text { font-size: 12px; }
+    }
+
+    /* Small mobile: <= 480px */
+    @media (max-width: 480px) {
+      header { padding: 0 16px; }
+      .logo span { font-size: 14px; }
+      .header-stat { font-size: 12px; }
+
+      .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .stat-card .stat-label { font-size: 10px; }
+      .stat-card .stat-value { font-size: 20px; }
+      .stat-card .stat-sub { font-size: 11px; }
+
+      .phase-bar { flex-direction: column; }
+      .phase-step { border-right: none; border-bottom: 1px solid var(--border); }
+      .phase-step:last-child { border-bottom: none; }
+
+      .greeting h1 { font-size: 20px; }
+
+      .section-header { font-size: 10px; }
+      .status-card { padding: 16px; }
+      .status-card-title { font-size: 10px; }
+      .gate-item { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <div class="logo" onclick="goHome()" style="cursor:pointer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #7cacf8">
+        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+        <polyline points="2 17 12 22 22 17"/>
+        <polyline points="2 12 12 17 22 12"/>
+      </svg>
+      <span>Crucible</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-stat">
+      <div class="pulse"></div>
+      <span id="project-count">0 projects</span>
+    </div>
+  </div>
+</header>
+
+<!-- Layout -->
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+<div class="layout">
+  <nav class="sidebar" id="sidebar"></nav>
+  <main class="main" id="main-content"></main>
+</div>
+
+<!-- Document Viewer Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Document</h3>
+      <button class="modal-close" id="modal-close">&times;</button>
+    </div>
+    <div class="modal-body markdown-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- Report Viewer Modal -->
+<div class="report-overlay" id="report-overlay">
+  <div class="report-viewer">
+    <div class="report-header">
+      <div class="report-header-left">
+        <div class="report-header-icon" id="report-icon">&#128200;</div>
+        <div>
+          <h3 id="report-title">Report</h3>
+          <div class="report-project" id="report-project"></div>
+        </div>
+      </div>
+      <div class="report-actions">
+        <button class="report-btn" id="report-newtab" title="Open in new tab">&#8599; New Tab</button>
+        <button class="report-close" id="report-close">&times;</button>
+      </div>
+    </div>
+    <iframe class="report-frame" id="report-frame"></iframe>
+  </div>
+</div>
+
+<script>
+  let projects = {};
+  let selectedProject = null;
+
+  // --- Data ---
+  async function loadProjects() {
+    try {
+      const res = await fetch('/api/projects');
+      const data = await res.json();
+      projects = data.projects || {};
+      renderSidebar();
+      if (selectedProject && projects[selectedProject]) {
+        renderDetail(selectedProject);
+      } else {
+        renderHome();
+      }
+      const count = Object.keys(projects).length;
+      document.getElementById('project-count').textContent =
+        `${count} project${count !== 1 ? 's' : ''}`;
+    } catch {
+      projects = {};
+      renderSidebar();
+      renderHome();
+    }
+  }
+
+  // --- Phase helpers ---
+  function getPhaseInfo(state) {
+    if (!state || !state.phases) return { phase: 'unknown', label: 'Unknown', index: -1 };
+
+    // Use state.phase as the primary source of truth
+    const phaseMap = {
+      discovery: { phase: 'discovery', label: 'Discovery', index: 0 },
+      specification: { phase: 'specification', label: 'Specification', index: 1 },
+      architecture: { phase: 'architecture', label: 'Architecture', index: 2 },
+      build: { phase: 'build', label: 'Build', index: 3 },
+      complete: { phase: 'complete', label: 'Complete', index: 4 },
+    };
+
+    if (state.phase && phaseMap[state.phase]) {
+      return phaseMap[state.phase];
+    }
+
+    // Fallback: derive from phases object by finding the latest active/approved phase
+    const phases = state.phases;
+    if (phases.build && (phases.build.status === 'ready' || phases.build.status === 'in_progress')) {
+      return phaseMap.build;
+    }
+    if (phases.architecture && (phases.architecture.feedback_gate === 'passed' || phases.architecture.status === 'approved')) {
+      return phaseMap.build;
+    }
+    if (phases.specification && (phases.specification.feedback_gate === 'passed' || phases.specification.status === 'approved')) {
+      return phaseMap.architecture;
+    }
+    if (phases.discovery && (phases.discovery.feedback_gate === 'passed' || phases.discovery.status === 'approved')) {
+      return phaseMap.specification;
+    }
+
+    return phaseMap.discovery;
+  }
+
+  function getIndicatorColor(phase) {
+    const map = { discovery: '#4ade80', specification: '#7cacf8', architecture: '#c4b5fd', build: '#fbbf24', complete: 'rgba(255,255,255,0.25)', unknown: 'rgba(255,255,255,0.25)' };
+    return map[phase] || map.unknown;
+  }
+
+  function formatTimeAgo(dateStr) {
+    if (!dateStr) return '';
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
+  }
+
+  // --- Sidebar ---
+  function renderSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const entries = Object.entries(projects);
+
+    if (entries.length === 0) {
+      sidebar.innerHTML = `
+        <div class="sidebar-section">
+          <div class="sidebar-label">Projects</div>
+          <div style="padding: 16px 10px; text-align: center; color: var(--sidebar-text); font-size: 12px; line-height: 1.6;">
+            No projects yet.<br>Run <code style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:3px;color:#7cacf8">/crucible</code> to start.
+          </div>
+        </div>`;
+      return;
+    }
+
+    const active = entries.filter(([, d]) => {
+      const p = getPhaseInfo(d.state);
+      return p.phase !== 'complete';
+    });
+    const completed = entries.filter(([, d]) => {
+      const p = getPhaseInfo(d.state);
+      return p.phase === 'complete';
+    });
+
+    let html = '';
+
+    if (active.length > 0) {
+      html += `<div class="sidebar-section"><div class="sidebar-label">Active</div>`;
+      html += active.map(([name, data]) => {
+        const pi = getPhaseInfo(data.state);
+        const isActive = name === selectedProject;
+        return `
+          <div class="nav-item ${isActive ? 'active' : ''}" onclick="selectProject('${name}')">
+            <div class="indicator" style="background: ${getIndicatorColor(pi.phase)}"></div>
+            <span class="name">${name}</span>
+            <span class="badge badge-${pi.phase}">${pi.label}</span>
+          </div>
+          <div class="phase-dots">
+            ${[0,1,2,3].map(i => `<div class="phase-dot ${i < pi.index ? 'done' : ''} ${i === pi.index ? 'current' : ''}"></div>`).join('')}
+          </div>`;
+      }).join('');
+      html += `</div>`;
+    }
+
+    if (completed.length > 0) {
+      html += `<div class="sidebar-section"><div class="sidebar-label">Completed</div>`;
+      html += completed.map(([name]) => `
+        <div class="nav-item ${name === selectedProject ? 'active' : ''}" onclick="selectProject('${name}')">
+          <div class="indicator" style="background: rgba(255,255,255,0.25)"></div>
+          <span class="name">${name}</span>
+          <span class="badge badge-complete">Done</span>
+        </div>`).join('');
+      html += `</div>`;
+    }
+
+    sidebar.innerHTML = html;
+  }
+
+  // --- Navigation ---
+  function goHome() {
+    selectedProject = null;
+    renderSidebar();
+    renderHome();
+  }
+
+  // --- Home View ---
+  function getGreeting() {
+    const h = new Date().getHours();
+    if (h < 12) return 'Good morning';
+    if (h < 17) return 'Good afternoon';
+    return 'Good evening';
+  }
+
+  function renderHome() {
+    const main = document.getElementById('main-content');
+    const entries = Object.entries(projects);
+    const count = entries.length;
+
+    // Compute stats
+    const phaseCount = { discovery: 0, specification: 0, architecture: 0, build: 0 };
+    let totalDeliverables = 0, completedDeliverables = 0, totalGates = 0, passedGates = 0, demosReady = 0;
+
+    entries.forEach(([, data]) => {
+      const pi = getPhaseInfo(data.state);
+      if (phaseCount[pi.phase] !== undefined) phaseCount[pi.phase]++;
+
+      const dKeys = ['discovery', 'specification', 'architecture', 'technology', 'buildPlan'];
+      dKeys.forEach(k => {
+        totalDeliverables++;
+        if (data.deliverables?.[k]) completedDeliverables++;
+      });
+
+      const stPhases = data.state?.phases || {};
+      ['discovery', 'specification', 'architecture', 'build'].forEach(g => {
+        totalGates++;
+        if (stPhases[g]?.feedback_gate === 'passed') passedGates++;
+      });
+
+      if (data.demo) demosReady++;
+    });
+
+    const inBuild = phaseCount.build;
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    // Build activity from what we can derive
+    const activities = [];
+    entries.forEach(([name, data]) => {
+      const pi = getPhaseInfo(data.state);
+      const statePhases = data.state?.phases || {};
+      const phaseColors = { discovery: 'green', specification: 'blue', architecture: 'violet', build: 'amber' };
+      const dotColor = phaseColors[pi.phase] || 'blue';
+
+      if (data.demo) activities.push({ dot: dotColor, html: `<strong>${name}</strong> interactive prototype is ready`, sort: 2 });
+      if (data.researchReport) activities.push({ dot: 'blue', html: `<strong>${name}</strong> research report generated`, sort: 3 });
+      if (data.buildProposal) activities.push({ dot: 'amber', html: `<strong>${name}</strong> build proposal created`, sort: 4 });
+
+      if (statePhases.architecture?.feedback_gate === 'passed') activities.push({ dot: 'green', html: `<strong>${name}</strong> architecture gate approved`, sort: 5 });
+      if (statePhases.specification?.feedback_gate === 'passed') activities.push({ dot: 'green', html: `<strong>${name}</strong> specification gate approved`, sort: 6 });
+      if (statePhases.discovery?.feedback_gate === 'passed') activities.push({ dot: 'green', html: `<strong>${name}</strong> discovery gate approved`, sort: 7 });
+
+      const agent = data.state?.currentAgent;
+      if (agent) activities.push({ dot: dotColor, html: `<strong>${name}</strong> is being worked on by ${agent}`, sort: 1 });
+    });
+
+    activities.sort((a, b) => a.sort - b.sort);
+    const activityHtml = activities.length > 0
+      ? activities.slice(0, 8).map(a => `
+          <div class="activity-item">
+            <div class="act-dot ${a.dot}"></div>
+            <div>
+              <div class="act-text">${a.html}</div>
+            </div>
+          </div>`).join('')
+      : '<div style="padding:12px 0;font-size:13px;color:var(--text-3);text-align:center;">No activity yet. Start a project to see updates here.</div>';
+
+    // No projects at all
+    if (count === 0) {
+      main.innerHTML = `
+        <div class="home">
+          <div class="greeting">
+            <h1>${getGreeting()}, Carlos</h1>
+            <p>Welcome to Crucible. You don't have any projects yet — let's change that.</p>
+            <div class="date">${dateStr}</div>
+          </div>
+          <div class="tip-banner">
+            <div class="tip-icon">&#9889;</div>
+            <div class="tip-text">
+              <strong>Get started:</strong> Run <code>/crucible</code> in Claude Code to kick off your first project. The pipeline will guide you through Discovery, Specification, Architecture, and Build.
+            </div>
+          </div>
+        </div>`;
+      return;
+    }
+
+    // Build project cards
+    const projectCardsHtml = entries.map(([name, data]) => {
+      const pi = getPhaseInfo(data.state);
+      const desc = data.state?.description || data.description || 'Product development project';
+      const dKeys = [
+        { k: 'discovery', l: 'D' }, { k: 'specification', l: 'S' },
+        { k: 'architecture', l: 'A' }, { k: 'technology', l: 'T' }, { k: 'buildPlan', l: 'B' }
+      ];
+
+      return `
+        <div class="home-project-card" onclick="selectProject('${name}')">
+          <div class="hpc-top">
+            <div class="hpc-name">${name}</div>
+            <div class="hpc-badge hpc-badge-${pi.phase}">${pi.label}</div>
+          </div>
+          <div class="hpc-desc">${desc}</div>
+          <div class="hpc-progress">
+            ${[0,1,2,3].map(i => `<div class="hpc-seg ${i < pi.index ? 'done' : ''} ${i === pi.index ? 'active' : ''}"></div>`).join('')}
+          </div>
+          <div class="hpc-footer">
+            <div class="hpc-meta">${pi.label} phase</div>
+            <div class="hpc-deliverables">
+              ${dKeys.map(d => `<div class="hpc-dd ${data.deliverables?.[d.k] ? 'ready' : ''}" title="${d.k}">${d.l}</div>`).join('')}
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    main.innerHTML = `
+      <div class="home">
+        <div class="greeting">
+          <h1>${getGreeting()}, Carlos</h1>
+          <p>You have <strong>${count} active project${count !== 1 ? 's' : ''}</strong> in the pipeline. Here's what's happening.</p>
+          <div class="date">${dateStr}</div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Projects</div>
+            <div class="stat-value sv-blue">${count}</div>
+            <div class="stat-sub">${inBuild > 0 ? inBuild + ' in build phase' : 'all in progress'}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Deliverables</div>
+            <div class="stat-value sv-green">${completedDeliverables}</div>
+            <div class="stat-sub">of ${totalDeliverables} complete</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Gates Passed</div>
+            <div class="stat-value sv-violet">${passedGates}</div>
+            <div class="stat-sub">of ${totalGates} total</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Demos Ready</div>
+            <div class="stat-value sv-amber">${demosReady}</div>
+            <div class="stat-sub">${demosReady === 1 ? '1 prototype' : demosReady + ' prototypes'}</div>
+          </div>
+        </div>
+
+        <div class="home-cols">
+          <div>
+            <div class="home-section-title">Your Projects</div>
+            ${projectCardsHtml}
+          </div>
+          <div>
+            <div class="home-section-title">Activity</div>
+            <div class="activity-card">
+              ${activityHtml}
+            </div>
+            <div class="tip-banner">
+              <div class="tip-icon">&#9889;</div>
+              <div class="tip-text">
+                <strong>Tip:</strong> Run <code>/crucible</code> in Claude Code to start a new project or resume an existing one.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // --- Project Detail ---
+  function selectProject(name) {
+    selectedProject = name;
+    renderSidebar();
+    renderDetail(name);
+  }
+
+  function renderDetail(name) {
+    const data = projects[name];
+    if (!data) return;
+
+    const main = document.getElementById('main-content');
+    const phaseInfo = getPhaseInfo(data.state);
+    const state = data.state || {};
+    // Derive gates from state.phases.{name}.feedback_gate
+    const phases = state.phases || {};
+    const gates = {
+      discovery: phases.discovery?.feedback_gate === 'passed' ? 'approved' : phases.discovery?.status,
+      specification: phases.specification?.feedback_gate === 'passed' ? 'approved' : phases.specification?.status,
+      architecture: phases.architecture?.feedback_gate === 'passed' ? 'approved' : phases.architecture?.status,
+      build: phases.build?.feedback_gate === 'passed' ? 'approved' : phases.build?.status,
+    };
+    const phaseNames = ['Discovery', 'Specification', 'Architecture', 'Build'];
+
+    const docItems = [
+      { key: 'discovery', iconClass: 'green', icon: '&#128203;', name: 'Discovery', desc: 'Business analysis, user roles, market research' },
+      { key: 'specification', iconClass: 'blue', icon: '&#128220;', name: 'Specification', desc: 'Functional requirements, data model, acceptance criteria' },
+      { key: 'architecture', iconClass: 'violet', icon: '&#127959;', name: 'Architecture', desc: 'System design, components, ADRs' },
+      { key: 'technology', iconClass: 'amber', icon: '&#9881;', name: 'Technology', desc: 'Stack recommendation, build vs buy' },
+      { key: 'buildPlan', iconClass: 'teal', icon: '&#128221;', name: 'Build Plan', desc: 'Task breakdown, milestones, CLAUDE.md' },
+    ];
+
+    // Status rows
+    const statusRows = [];
+    if (state.currentAgent) statusRows.push({ label: 'Agent', value: state.currentAgent, cls: 'accent' });
+    if (state.phases?.build?.currentBuildPhase) statusRows.push({ label: 'Build Phase', value: state.phases.build.currentBuildPhase, cls: '' });
+    if (state.phases?.build?.currentTask) statusRows.push({ label: 'Current Task', value: state.phases.build.currentTask, cls: '' });
+    if (state.mode) statusRows.push({ label: 'Mode', value: state.mode, cls: state.mode === 'headless' ? 'green' : '' });
+
+    // Build progress
+    const buildPhase = state.phases?.build;
+    const completedTasks = buildPhase?.completedTasks?.length || 0;
+    const totalTasks = buildPhase?.totalTasks || 0;
+    const pct = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+    // Gate items
+    const gateItems = [
+      { key: 'discovery', label: 'Discovery' },
+      { key: 'specification', label: 'Specification' },
+      { key: 'architecture', label: 'Architecture' },
+      { key: 'build', label: 'MVP Acceptance' },
+    ];
+
+    // Cost
+    const costLog = state.costLog || [];
+    const totalAutoApproved = costLog.reduce((sum, c) => sum + (c.monthlyCost || 0), 0);
+
+    main.innerHTML = `
+      <div class="project-detail">
+        <div class="project-header">
+          <div class="project-title-row">
+            <h1 class="project-title">${name}</h1>
+            <span class="project-status-chip">Active</span>
+          </div>
+          <p class="project-desc">${state.description || 'Product development project'}</p>
+          ${state.domain ? `<div class="project-domain">&#127760; <a href="https://${state.domain}" target="_blank">${state.domain}</a></div>` : ''}
+        </div>
+
+        <!-- Phase Progress -->
+        <div class="phase-bar">
+          ${phaseNames.map((phaseName, i) => {
+            let cls = '';
+            if (i < phaseInfo.index) cls = 'done';
+            else if (i === phaseInfo.index) cls = 'active';
+            const nodeContent = i < phaseInfo.index ? '&#10003;' : (i + 1);
+            const detail = i < phaseInfo.index ? 'Approved' : (i === phaseInfo.index ? (state.currentSkill || 'In progress') : '');
+            return `
+              <div class="phase-step ${cls}">
+                <div class="phase-num">${nodeContent}</div>
+                <div class="phase-text">
+                  <div class="phase-name">${phaseName}</div>
+                  ${detail ? `<div class="phase-detail">${detail}</div>` : ''}
+                </div>
+              </div>`;
+          }).join('')}
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-area">
+          <div>
+            <!-- Deliverables -->
+            <div class="section">
+              <div class="section-header">Deliverables</div>
+              <div class="doc-list">
+                ${docItems.map(d => {
+                  const exists = data.deliverables?.[d.key];
+                  const docName = d.key === 'buildPlan' ? 'build-plan' : d.key;
+                  return `
+                    <a class="doc-row ${exists ? '' : 'disabled'}"
+                       ${exists ? `href="/view/${name}/${docName}" target="_blank"` : ''}
+                       style="text-decoration:none;color:inherit">
+                      <div class="doc-icon ${d.iconClass}">${d.icon}</div>
+                      <div class="doc-info">
+                        <div class="doc-name">${d.name}</div>
+                        <div class="doc-desc">${exists ? d.desc : 'Not yet created'}</div>
+                      </div>
+                      ${exists ? '<span class="doc-arrow">&#8250;</span>' : ''}
+                    </a>`;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Reports & Demo -->
+            <div class="section">
+              <div class="section-header">Reports &amp; Demo</div>
+              <div class="action-cards">
+                <div class="action-card ${data.demo ? '' : 'disabled'}"
+                     ${data.demo ? `onclick="openDemo('${name}')"` : ''}>
+                  <div class="action-icon demo">&#9654;</div>
+                  <div class="action-info">
+                    <div class="action-name">Interactive Prototype</div>
+                    <div class="action-desc">Click through the approved UI prototype</div>
+                  </div>
+                </div>
+                <a class="action-card ${data.researchReport ? '' : 'disabled'}"
+                   ${data.researchReport ? `href="/reports/${data.researchReport}" target="_blank"` : ''}
+                   style="text-decoration:none;color:inherit">
+                  <div class="action-icon report">&#128200;</div>
+                  <div class="action-info">
+                    <div class="action-name">Research Report</div>
+                    <div class="action-desc">Market research, competitor analysis, viability</div>
+                  </div>
+                </a>
+                <a class="action-card ${data.buildProposal ? '' : 'disabled'}"
+                   ${data.buildProposal ? `href="/reports/${data.buildProposal}" target="_blank"` : ''}
+                   style="text-decoration:none;color:inherit">
+                  <div class="action-icon proposal">&#128176;</div>
+                  <div class="action-info">
+                    <div class="action-name">Build Proposal</div>
+                    <div class="action-desc">CapEx, OpEx, timeline, key decisions</div>
+                  </div>
+                </a>
+                <a class="action-card ${data.buildPlanReport ? '' : 'disabled'}"
+                   ${data.buildPlanReport ? `href="/reports/${data.buildPlanReport}" target="_blank"` : ''}
+                   style="text-decoration:none;color:inherit">
+                  <div class="action-icon build-plan">&#128203;</div>
+                  <div class="action-info">
+                    <div class="action-name">Build Plan Report</div>
+                    <div class="action-desc">Task breakdown, milestones, sprint plan</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status Panel -->
+          <div class="status-panel">
+            ${statusRows.length > 0 ? `
+            <div class="status-card">
+              <div class="status-card-title">Current Activity</div>
+              <div class="status-rows">
+                ${statusRows.map(r => `
+                  <div class="status-row">
+                    <span class="label">${r.label}</span>
+                    <span class="value ${r.cls}">${r.value}</span>
+                  </div>`).join('')}
+              </div>
+            </div>` : ''}
+
+            ${totalTasks > 0 ? `
+            <div class="status-card">
+              <div class="status-card-title">Build Progress</div>
+              <div class="status-rows">
+                <div class="status-row">
+                  <span class="label">Tasks</span>
+                  <span class="value">${completedTasks} / ${totalTasks}</span>
+                </div>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: ${pct}%"></div>
+              </div>
+              <div class="progress-label">${pct}% complete</div>
+            </div>` : ''}
+
+            <div class="status-card">
+              <div class="status-card-title">Gates</div>
+              <div class="gate-list">
+                ${gateItems.map(g => {
+                  const status = gates[g.key];
+                  const isApproved = status === 'approved';
+                  const isCurrent = !isApproved && g.key === phaseNames[phaseInfo.index]?.toLowerCase();
+                  return `
+                    <div class="gate-item">
+                      <div class="gate-icon ${isApproved ? 'pass' : (isCurrent ? 'active' : 'pending')}">
+                        ${isApproved ? '&#10003;' : (isCurrent ? '&#9679;' : '')}
+                      </div>
+                      <span class="gate-label ${isApproved ? 'done' : ''}">${g.label}</span>
+                    </div>`;
+                }).join('')}
+              </div>
+            </div>
+
+            ${(() => {
+              const items = (state.actionItems || []).filter(i => i.status === 'pending');
+              items.sort((a, b) => (a.priority || 99) - (b.priority || 99));
+              if (items.length === 0) return '';
+              const shown = items.slice(0, 5);
+              const overflow = items.length - shown.length;
+              return `
+              <div class="status-card">
+                <div class="status-card-title">Action Items</div>
+                <div class="action-items-list">
+                  ${shown.map(item => {
+                    const p = item.priority || 3;
+                    const pLabel = 'P' + p;
+                    const pClass = 'p' + p;
+                    const isCritical = p === 1 && item.blocks;
+                    return `
+                    <div class="action-item ${isCritical ? 'critical' : ''}">
+                      <div class="ai-top-row">
+                        <span class="ai-priority ${pClass}">${pLabel}</span>
+                        ${isCritical ? '<span class="ai-critical-badge">Critical Path</span>' : ''}
+                      </div>
+                      <div class="ai-desc">${item.description || ''}</div>
+                      <div class="ai-meta">
+                        ${item.owner ? '<span>' + item.owner + '</span>' : ''}
+                        ${item.deadline ? '<span>Due: ' + item.deadline + '</span>' : ''}
+                      </div>
+                      ${item.blocks ? '<div class="ai-blocks">Blocks: ' + item.blocks + '</div>' : ''}
+                    </div>`;
+                  }).join('')}
+                  ${overflow > 0 ? '<div class="ai-overflow">+' + overflow + ' more</div>' : ''}
+                </div>
+              </div>`;
+            })()}
+
+            <div class="status-card">
+              <div class="status-card-title">Cost Tracker</div>
+              <div class="status-rows">
+                <div class="status-row">
+                  <span class="label">Auto-approved</span>
+                  <span class="value">$${totalAutoApproved}/mo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // --- Actions ---
+  function openDemo(name) { openInNewTab('/demos/' + name + '.html'); }
+
+  function openReportViewer(url, title, projectName, type) {
+    document.getElementById('report-title').textContent = title;
+    document.getElementById('report-project').textContent = projectName;
+    const icon = document.getElementById('report-icon');
+    icon.className = 'report-header-icon ' + (type === 'proposal' ? 'proposal' : 'research');
+    icon.innerHTML = type === 'proposal' ? '&#128176;' : '&#128200;';
+    document.getElementById('report-frame').src = url;
+    document.getElementById('report-newtab').onclick = () => window.open(url, '_blank');
+    document.getElementById('report-overlay').classList.add('open');
+  }
+
+  function openInNewTab(url) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function openReport(name, filename) {
+    openInNewTab('/reports/' + filename);
+  }
+
+  function openBuildProposal(name, filename) {
+    openInNewTab('/reports/' + filename);
+  }
+
+  async function openDoc(projectName, docName, displayName) {
+    try {
+      const res = await fetch('/api/project/' + projectName + '/doc/' + docName);
+      if (!res.ok) throw new Error('Not found');
+      const md = await res.text();
+      document.getElementById('modal-title').textContent = displayName;
+      document.getElementById('modal-body').innerHTML = marked.parse(md);
+      document.getElementById('modal-overlay').classList.add('open');
+    } catch (err) {
+      alert('Could not load document: ' + err.message);
+    }
+  }
+
+  // Modal close — doc viewer
+  document.getElementById('modal-close').addEventListener('click', () => {
+    document.getElementById('modal-overlay').classList.remove('open');
+  });
+  document.getElementById('modal-overlay').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) e.target.classList.remove('open');
+  });
+
+  // Modal close — report viewer
+  document.getElementById('report-close').addEventListener('click', () => {
+    document.getElementById('report-overlay').classList.remove('open');
+    document.getElementById('report-frame').src = '';
+  });
+  document.getElementById('report-overlay').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) {
+      e.target.classList.remove('open');
+      document.getElementById('report-frame').src = '';
+    }
+  });
+
+  // Escape closes whichever modal is open
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.getElementById('modal-overlay').classList.remove('open');
+      if (document.getElementById('report-overlay').classList.contains('open')) {
+        document.getElementById('report-overlay').classList.remove('open');
+        document.getElementById('report-frame').src = '';
+      }
+    }
+  });
+
+  // --- WebSocket for live updates ---
+  function connectWS() {
+    try {
+      const ws = new WebSocket('ws://' + location.host + '/ws');
+      ws.onmessage = () => loadProjects();
+      ws.onclose = () => setTimeout(connectWS, 3000);
+      ws.onerror = () => {};
+    } catch {}
+  }
+
+  // --- Mobile sidebar toggle ---
+  const menuToggle = document.getElementById('menu-toggle');
+  const sidebarEl = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebar-backdrop');
+
+  function toggleSidebar() {
+    sidebarEl.classList.toggle('open');
+    backdrop.classList.toggle('open');
+  }
+
+  function closeSidebar() {
+    sidebarEl.classList.remove('open');
+    backdrop.classList.remove('open');
+  }
+
+  menuToggle.addEventListener('click', toggleSidebar);
+  backdrop.addEventListener('click', closeSidebar);
+
+  // Close sidebar on project select (mobile)
+  const _origSelectProject = selectProject;
+  selectProject = function(name) {
+    closeSidebar();
+    _origSelectProject(name);
+  };
+
+  const _origGoHome = goHome;
+  goHome = function() {
+    closeSidebar();
+    _origGoHome();
+  };
+
+  // --- Init ---
+  loadProjects();
+  connectWS();
+</script>
+
+</body>
+</html>

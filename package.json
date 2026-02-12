@@ -1,0 +1,14 @@
+{
+  "name": "crucible-dashboard",
+  "version": "1.0.0",
+  "description": "Crucible project dashboard — view projects, reports, and demos",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "chokidar": "^4.0.0"
+  }
+}
