@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CremoLogix — Competitive Landscape Analysis</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #1E3A5F;
+  --blue: #2D7DD2;
+  --green: #28A745;
+  --amber: #F4A261;
+  --red: #E63946;
+  --light-bg: #F8F9FA;
+  --text: #333333;
+  --text-light: #666666;
+  --border: #DEE2E6;
+  --white: #FFFFFF;
+}
+
+@page {
+  size: letter;
+  margin: 0.75in;
+}
+
+html { font-size: 10.5pt; }
+
+body {
+  font-family: system-ui, 'Segoe UI', sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+  background: var(--white);
+}
+
+/* ===== PRINT ===== */
+@media print {
+  body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { box-shadow: none !important; margin: 0 !important; border-radius: 0 !important; }
+  .no-print { display: none !important; }
+  a { text-decoration: none; color: var(--blue); }
+}
+
+/* ===== PAGE STRUCTURE ===== */
+.page {
+  page-break-after: always;
+  min-height: 100vh;
+  position: relative;
+  padding: 0;
+}
+.page:last-child { page-break-after: avoid; }
+
+.page-body {
+  padding: 48px 56px;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1 { font-size: 2.4rem; color: var(--navy); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 16px; }
+h2 { font-size: 1.6rem; color: var(--navy); font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 14px; border-bottom: 2px solid var(--blue); padding-bottom: 8px; }
+h3 { font-size: 1.2rem; color: var(--navy); font-weight: 600; line-height: 1.3; margin-bottom: 10px; }
+h4 { font-size: 1.05rem; color: var(--navy); font-weight: 600; margin-bottom: 8px; }
+p { margin-bottom: 12px; }
+
+.section-number {
+  display: inline-block;
+  background: var(--navy);
+  color: white;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* ===== COVER PAGE ===== */
+.cover {
+  background: linear-gradient(135deg, #1E3A5F 0%, #0F1F33 60%, #162D4A 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(45,125,210,0.12) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(45,125,210,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.cover-content { position: relative; z-index: 1; max-width: 700px; }
+.cover .brand-mark {
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 60px;
+  border: 1px solid rgba(255,255,255,0.2);
+  display: inline-block;
+  padding: 10px 28px;
+  border-radius: 4px;
+}
+.cover h1 {
+  font-size: 3rem;
+  color: white;
+  margin-bottom: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.cover .subtitle {
+  font-size: 1.3rem;
+  color: rgba(255,255,255,0.8);
+  font-weight: 300;
+  margin-bottom: 60px;
+  line-height: 1.5;
+}
+.cover .divider-line {
+  width: 80px;
+  height: 2px;
+  background: var(--blue);
+  margin: 0 auto 40px;
+}
+.cover .meta {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 2;
+}
+.cover .confidential {
+  position: absolute;
+  bottom: 40px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ===== TABLE OF CONTENTS ===== */
+.toc { padding: 48px 56px; }
+.toc h1 { font-size: 2rem; margin-bottom: 36px; }
+.toc-entry {
+  display: flex;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: none;
+  font-size: 1rem;
+}
+.toc-entry.level-1 { font-weight: 600; color: var(--navy); }
+.toc-entry.level-2 { padding-left: 28px; font-weight: 400; color: var(--text); font-size: 0.95rem; }
+.toc-title { white-space: nowrap; }
+.toc-dots { flex: 1; border-bottom: 1.5px dotted #CCC; margin: 0 8px; min-width: 40px; position: relative; top: -4px; }
+.toc-page { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--blue); font-weight: 600; }
+
+/* ===== CALLOUT BOXES ===== */
+.callout {
+  border-left: 4px solid var(--blue);
+  background: #EBF3FB;
+  padding: 20px 24px;
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+}
+.callout.callout-navy {
+  border-left-color: var(--navy);
+  background: #E8ECF0;
+}
+.callout h4 { color: var(--navy); margin-bottom: 8px; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--blue);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+}
+.stat-card .stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.stat-card .stat-label {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+/* ===== PRODUCT CARDS ===== */
+.product-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  page-break-inside: avoid;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.product-card-header {
+  background: var(--navy);
+  color: white;
+  padding: 14px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-card-header h3 { color: white; margin: 0; font-size: 1.1rem; }
+.product-card-header .badge {
+  background: rgba(255,255,255,0.15);
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.product-card-body { padding: 0; }
+.product-card-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.product-card-body table tr { border-bottom: 1px solid #EEE; }
+.product-card-body table tr:last-child { border-bottom: none; }
+.product-card-body table th {
+  text-align: left;
+  padding: 10px 18px;
+  width: 180px;
+  background: #F8F9FA;
+  color: var(--navy);
+  font-weight: 600;
+  vertical-align: top;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.product-card-body table td {
+  padding: 10px 18px;
+  vertical-align: top;
+  line-height: 1.5;
+}
+tr.strength-row td { background: #F0FAF0; }
+tr.limitation-row td { background: #FFF5F5; }
+tr.strength-row th { background: #E6F4E6; }
+tr.limitation-row th { background: #FCE8E8; }
+
+/* ===== COMPARISON MATRIX ===== */
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin: 20px 0;
+}
+.matrix-table th {
+  background: var(--navy);
+  color: white;
+  padding: 10px 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border: 1px solid #15304D;
+}
+.matrix-table th:first-child { text-align: left; padding-left: 14px; }
+.matrix-table td {
+  padding: 9px 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+  font-weight: 500;
+}
+.matrix-table td:first-child {
+  text-align: left;
+  padding-left: 14px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.matrix-table tbody tr:nth-child(even) { background: #F8F9FA; }
+.matrix-table tbody tr:hover { background: #EBF3FB; }
+
+.cell-yes { background: #D4EDDA !important; color: #155724; font-weight: 700; }
+.cell-partial { background: #FFF3CD !important; color: #856404; font-weight: 600; }
+.cell-no { background: #F8D7DA !important; color: #721C24; font-weight: 600; }
+
+/* Last row highlight for CremoLogix */
+.matrix-table tbody tr.cremo-row {
+  background: #EBF3FB !important;
+  border: 2px solid var(--blue);
+}
+.matrix-table tbody tr.cremo-row td { font-weight: 700; }
+
+/* ===== GAP CARDS ===== */
+.gap-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  page-break-inside: avoid;
+  background: var(--white);
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.gap-icon {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  background: var(--navy);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.gap-content h4 { margin-bottom: 6px; }
+.gap-content p { margin-bottom: 0; font-size: 0.95rem; color: var(--text-light); }
+
+/* ===== OPPORTUNITY SECTION ===== */
+.opp-section {
+  margin-bottom: 28px;
+  page-break-inside: avoid;
+}
+.opp-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--blue);
+}
+.opp-section ul {
+  list-style: none;
+  padding: 0;
+}
+.opp-section ul li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  line-height: 1.5;
+}
+.opp-section ul li::before {
+  content: '\25B6';
+  position: absolute;
+  left: 0;
+  color: var(--blue);
+  font-size: 0.65rem;
+  top: 12px;
+}
+
+.opp-highlight {
+  background: linear-gradient(135deg, var(--navy) 0%, #162D4A 100%);
+  color: white;
+  padding: 32px 36px;
+  border-radius: 10px;
+  margin: 24px 0;
+}
+.opp-highlight h3 { color: white; border-bottom-color: rgba(255,255,255,0.3); }
+.opp-highlight ul li::before { color: var(--amber); }
+.opp-highlight ul li { color: rgba(255,255,255,0.9); }
+
+/* ===== SOURCES ===== */
+.source-list {
+  column-count: 1;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.source-list li {
+  margin-bottom: 4px;
+  page-break-inside: avoid;
+}
+.source-list a { color: var(--blue); text-decoration: none; }
+.source-list a:hover { text-decoration: underline; }
+
+/* ===== BACK COVER ===== */
+.back-cover {
+  background: linear-gradient(135deg, #1E3A5F 0%, #0F1F33 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  position: relative;
+}
+.back-cover .brand-mark {
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.back-cover .tagline {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+}
+.back-cover .confidential {
+  position: absolute;
+  bottom: 40px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+}
+
+/* ===== HEADER BAR (non-cover pages) ===== */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 56px;
+  border-bottom: 2px solid var(--navy);
+  font-size: 0.78rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.page-header .logo-text {
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.15em;
+}
+
+/* ===== CATEGORY HEADER ===== */
+.cat-header {
+  background: linear-gradient(135deg, var(--navy), #264E7A);
+  color: white;
+  padding: 28px 36px;
+  border-radius: 10px;
+  margin-bottom: 28px;
+}
+.cat-header h2 { color: white; border-bottom: none; padding-bottom: 0; margin-bottom: 6px; }
+.cat-header p { color: rgba(255,255,255,0.75); margin: 0; font-size: 0.95rem; }
+
+/* ===== PAGE FOOTER ===== */
+.page-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  padding: 12px 56px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #AAA;
+  border-top: 1px solid #EEE;
+}
+
+/* ===== UTILITY ===== */
+.mb-0 { margin-bottom: 0; }
+.mt-20 { margin-top: 20px; }
+.text-center { text-align: center; }
+.accent-bar { width: 60px; height: 3px; background: var(--blue); margin-bottom: 20px; }
+.accent-bar-white { width: 60px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 20px; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1: COVER                                                 -->
+<!-- ============================================================ -->
+<div class="page cover">
+  <div class="cover-content">
+    <div class="brand-mark">CremoLogix</div>
+    <div class="divider-line"></div>
+    <h1>Competitive Landscape Analysis</h1>
+    <p class="subtitle">CDFI Underwriting &amp; Credit Memo Platform Market</p>
+    <div class="divider-line"></div>
+    <div class="meta">
+      <div>February 2026</div>
+      <div>24 Products Analyzed &nbsp;|&nbsp; 4 Market Categories &nbsp;|&nbsp; 40+ Sources</div>
+    </div>
+  </div>
+  <div class="confidential">Confidential &mdash; For Internal Use</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 2: TABLE OF CONTENTS                                     -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Competitive Landscape Analysis</span>
+  </div>
+  <div class="toc" style="padding-top:36px;">
+    <h1>Table of Contents</h1>
+    <div style="margin-top:24px;">
+
+      <div class="toc-entry level-1"><span class="toc-title">1 &nbsp; Executive Summary</span><span class="toc-dots"></span><span class="toc-page">3</span></div>
+      <div class="toc-entry level-1"><span class="toc-title">2 &nbsp; Market Context</span><span class="toc-dots"></span><span class="toc-page">4</span></div>
+      <div class="toc-entry level-1"><span class="toc-title">3 &nbsp; Category 1 &mdash; CDFI-Specific Platforms</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">3.1 &nbsp; DownHome Solutions (DLM)</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">3.2 &nbsp; Ventures Lending / Lenders Cooperative</span><span class="toc-dots"></span><span class="toc-page">5</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">3.3 &nbsp; Builders Patch</span><span class="toc-dots"></span><span class="toc-page">6</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">3.4 &nbsp; LendingFront</span><span class="toc-dots"></span><span class="toc-page">6</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">3.5 &nbsp; SPARK (CRF)</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">3.6 &nbsp; Fundingo</span><span class="toc-dots"></span><span class="toc-page">7</span></div>
+      <div class="toc-entry level-1"><span class="toc-title">4 &nbsp; Category 2 &mdash; Adjacent LOS Platforms</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">4.1 &nbsp; nCino</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">4.2 &nbsp; Abrigo (Sageworks)</span><span class="toc-dots"></span><span class="toc-page">9</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">4.3 &nbsp; Encompass (ICE Mortgage)</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">4.4 &nbsp; LoanPro</span><span class="toc-dots"></span><span class="toc-page">10</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">4.5 &nbsp; Biz2X</span><span class="toc-dots"></span><span class="toc-page">11</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">4.6 &nbsp; FIS Commercial</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">4.7 &nbsp; Salesforce + Craftsman Technology</span><span class="toc-dots"></span><span class="toc-page">12</span></div>
+      <div class="toc-entry level-1"><span class="toc-title">5 &nbsp; Category 3 &mdash; AI-Assisted Underwriting &amp; Credit Memo Tools</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">5.1 &nbsp; Moody&rsquo;s Lending Suite</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">5.2 &nbsp; Zest AI</span><span class="toc-dots"></span><span class="toc-page">14</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">5.3 &nbsp; Underwrite.ai</span><span class="toc-dots"></span><span class="toc-page">15</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">5.4 &nbsp; Decipher Credit</span><span class="toc-dots"></span><span class="toc-page">16</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">5.5 &nbsp; GLIB.ai</span><span class="toc-dots"></span><span class="toc-page">16</span></div>
+      <div class="toc-entry level-1"><span class="toc-title">6 &nbsp; Category 4 &mdash; Financial Spreading Tools</span><span class="toc-dots"></span><span class="toc-page">18</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">6.1 &nbsp; FlashSpread</span><span class="toc-dots"></span><span class="toc-page">18</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">6.2 &nbsp; FISCAL</span><span class="toc-dots"></span><span class="toc-page">18</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">6.3 &nbsp; Moody&rsquo;s CreditLens</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">6.4 &nbsp; Global Wave Group</span><span class="toc-dots"></span><span class="toc-page">19</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">6.5 &nbsp; Cognext</span><span class="toc-dots"></span><span class="toc-page">20</span></div>
+      <div class="toc-entry level-2"><span class="toc-title">6.6 &nbsp; Ocrolus</span><span class="toc-dots"></span><span class="toc-page">20</span></div>
+      <div class="toc-entry level-1"><span class="toc-title">7 &nbsp; Competitive Landscape Summary Matrix</span><span class="toc-dots"></span><span class="toc-page">21</span></div>
+      <div class="toc-entry level-1"><span class="toc-title">8 &nbsp; Key Market Gaps</span><span class="toc-dots"></span><span class="toc-page">22</span></div>
+      <div class="toc-entry level-1"><span class="toc-title">9 &nbsp; Opportunity Assessment</span><span class="toc-dots"></span><span class="toc-page">24</span></div>
+      <div class="toc-entry level-1"><span class="toc-title">10 &nbsp; Sources &amp; References</span><span class="toc-dots"></span><span class="toc-page">25</span></div>
+
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>2</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 3: EXECUTIVE SUMMARY                                     -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Executive Summary</span>
+  </div>
+  <div class="page-body">
+    <h1><span class="section-number">1</span> Executive Summary</h1>
+    <div class="accent-bar"></div>
+
+    <p>Community Development Financial Institutions (CDFIs) are experiencing unprecedented growth and unprecedented strain. Loan originations across the CDFI sector doubled from approximately $33.5 billion in 2018 to over $67 billion by 2022, driven by expanded federal investment, growing demand for community-focused capital, and post-pandemic recovery lending. Yet this growth is colliding with a deepening operational crisis: the Federal Reserve&rsquo;s 2024 CDFI Survey reveals that 72% of CDFIs report inadequate staffing and 69% cite technology limitations as barriers to meeting their mission.</p>
+
+    <p>This report presents a comprehensive competitive landscape analysis spanning 24 products across four market categories: CDFI-Specific Platforms, Adjacent Loan Origination Systems, AI-Assisted Underwriting and Credit Memo Tools, and Financial Spreading Solutions. The research draws on vendor documentation, pricing intelligence, product demonstrations, analyst reports, and federal survey data to construct a detailed map of the current technology landscape available to CDFIs seeking to modernize their underwriting operations.</p>
+
+    <p>The central finding of this analysis is striking in its clarity: <strong>no existing product occupies the intersection of AI-powered credit memo generation, CDFI-specific underwriting workflows, affordable pricing for mission-driven lenders, and human-in-the-loop quality assurance.</strong> CDFI-specific platforms lack AI sophistication. Enterprise AI tools like Moody&rsquo;s Lending Suite offer powerful credit memo automation but at price points ($100K+ annually) that exclude the vast majority of CDFIs. General-purpose AI underwriting tools lack the specialized criteria&mdash;such as community impact metrics, flexible collateral standards, and character-based lending factors&mdash;that define CDFI lending.</p>
+
+    <p>This gap represents a significant and defensible market opportunity for CremoLogix. By combining generative AI credit memo automation with CDFI-specific underwriting intelligence, accessible pricing, and a transparent human-in-the-loop architecture, CremoLogix can occupy a market position that no current competitor can claim. The following analysis provides the evidence base for this positioning and identifies the specific competitive dynamics that inform our go-to-market strategy.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-value">72%</div>
+        <div class="stat-label">of CDFIs report inadequate staffing for underwriting and credit analysis operations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">69%</div>
+        <div class="stat-label">of CDFIs cite technology limitations as a barrier to scaling lending operations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">$67B</div>
+        <div class="stat-label">in CDFI loan originations in 2022 &mdash; doubled from $33.5B in 2018</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">1,000+</div>
+        <div class="stat-label">Treasury-certified CDFIs operating nationwide across all 50 states</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>3</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 4: MARKET CONTEXT                                        -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Market Context</span>
+  </div>
+  <div class="page-body">
+    <h1><span class="section-number">2</span> Market Context</h1>
+    <div class="accent-bar"></div>
+
+    <h3>The CDFI Technology Crisis</h3>
+    <p>The Federal Reserve&rsquo;s 2024 survey of CDFI health and capacity paints a stark picture of an industry outgrowing its infrastructure. CDFIs have long operated with lean teams, manual processes, and technology stacks built for a fraction of their current volume. As federal programs like the CDFI Fund, New Markets Tax Credits, and Emergency Capital Investment Program channel billions into the sector, the gap between mission-driven demand and operational capacity has widened to critical levels.</p>
+
+    <p>The staffing crisis is particularly acute in underwriting and credit analysis. Senior loan officers at CDFIs frequently manage portfolios that would be distributed across specialized teams at conventional banks. Credit memo preparation&mdash;the analytical backbone of every lending decision&mdash;remains a largely manual process that can consume 20 to 40 hours of skilled analyst time per commercial loan. For CDFIs processing hundreds of loans annually with teams of fewer than ten staff members, this bottleneck directly constrains lending capacity and, by extension, community impact.</p>
+
+    <p>Technology adoption in the CDFI sector lags behind conventional banking by an estimated 5 to 10 years. Many CDFIs still rely on spreadsheet-based underwriting, manual financial spreading, and Word document credit memos. The reasons are structural: limited budgets, small IT teams (often zero dedicated IT staff), and a market that has historically treated CDFIs as an afterthought rather than a distinct customer segment with specific needs.</p>
+
+    <div class="callout callout-navy">
+      <h4>Key Insight: The Convergence Problem</h4>
+      <p>CDFIs face a unique convergence of pressures: <strong>growing loan volume</strong>, <strong>increasing regulatory scrutiny</strong>, <strong>staffing shortages</strong>, and <strong>aging technology</strong>&mdash;all while maintaining their mission to serve underbanked communities that conventional lenders have abandoned. Any technology solution for this market must address all four pressures simultaneously while remaining financially accessible to organizations with constrained budgets.</p>
+    </div>
+
+    <h3>Federal Investment Is Accelerating Demand</h3>
+    <p>The Emergency Capital Investment Program (ECIP) alone deployed $8.57 billion to CDFIs and minority depository institutions in 2022. The CDFI Fund&rsquo;s annual awards have grown substantially, and bipartisan support for community development lending continues to drive new capital into the sector. This influx of capital creates an imperative for operational scaling that cannot be met with headcount alone&mdash;the labor market for experienced CDFI underwriters is extremely tight, and training new analysts takes 12 to 24 months.</p>
+
+    <p>The result is a sector that is simultaneously capital-rich and capacity-poor. CDFIs have the money to lend but lack the human and technological infrastructure to originate, underwrite, and service loans at the scale their funding now demands. This is the market context in which CremoLogix enters: not as a nice-to-have efficiency tool, but as a mission-critical capability that directly enables CDFIs to deploy capital into the communities that need it most.</p>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>4</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGES 5-8: CATEGORY 1 — CDFI-SPECIFIC PLATFORMS               -->
+<!-- ============================================================ -->
+
+<!-- PAGE 5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 1: CDFI-Specific Platforms</span>
+  </div>
+  <div class="page-body">
+    <div class="cat-header">
+      <h2>3 &nbsp; Category 1 &mdash; CDFI-Specific Platforms</h2>
+      <p>Loan origination and management systems built specifically for the CDFI market. These platforms understand mission-driven lending but lack modern AI capabilities.</p>
+    </div>
+
+    <!-- Product 1 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>3.1 &nbsp; DownHome Solutions &mdash; DLM (DownHome Loan Manager)</h3>
+        <span class="badge">CDFI-Specific</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>All-in-one loan origination system (LOS) purpose-built for CDFIs, including loan tracking, portfolio management, compliance reporting, and borrower relationship management</td></tr>
+          <tr><th>Target Market</th><td>CDFIs, community loan funds, and mission-driven lenders of all sizes</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; does not generate or assist with credit memo preparation</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>N/A &mdash; no AI or automation features requiring oversight</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; understood to be affordable relative to enterprise LOS platforms, subscription-based</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>25+ years of CDFI-specific development; 400+ lender clients; deep understanding of CDFI reporting requirements (CDFI Fund, AERIS); trusted incumbent brand</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>No AI or automation capabilities; no credit analysis or spreading tools; no credit memo generation; aging technology architecture; limited analytical depth</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>3.2 &nbsp; Ventures Lending Technologies / Lenders Cooperative</h3>
+        <span class="badge">CDFI-Specific</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>End-to-end commercial loan origination and servicing platform with deep roots in the CDFI and CDC (Community Development Corporation) ecosystem</td></tr>
+          <tr><th>Target Market</th><td>CDFIs, CDCs, SBA lenders, and community-focused commercial lenders</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; no automated credit memo; relies on external tools or manual preparation</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>N/A &mdash; no AI-driven processes</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; positioned as cost-effective for community lenders; FlashSpread integration available</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Deep CDFI and CDC domain expertise; integrated FlashSpread financial spreading; strong SBA lending workflows; cooperative governance model through Lenders Cooperative</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>No AI or machine learning capabilities; no automated credit analysis; limited modern UX; credit memo is entirely manual process</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>5</span>
+  </div>
+</div>
+
+<!-- PAGE 6 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 1: CDFI-Specific Platforms</span>
+  </div>
+  <div class="page-body">
+
+    <!-- Product 3 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>3.3 &nbsp; Builders Patch</h3>
+        <span class="badge">CDFI-Specific</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Digital lending platform focused on multifamily affordable housing, combining loan origination with electronic credit memo generation and AI-driven portfolio insights</td></tr>
+          <tr><th>Target Market</th><td>CDFIs and community lenders specializing in multifamily affordable housing development</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Yes &mdash; electronic credit memo capability with structured data capture and AI-driven analytical insights</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Partial &mdash; AI provides insights and analytics that analysts review, but the degree of human oversight integration is not fully documented</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; positioned for the affordable housing CDFI segment</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Only CDFI platform with electronic credit memo; AI-driven insights for portfolio analysis; deep specialization in multifamily housing; modern technology architecture</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Narrow focus limited to multifamily housing only; not applicable to general commercial, small business, or consumer CDFI lending; limited market penetration</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>3.4 &nbsp; LendingFront</h3>
+        <span class="badge">CDFI-Specific</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>End-to-end small business lending platform marketed as the &ldquo;world&rsquo;s only&rdquo; unified platform purpose-built for community and CDFI lenders</td></tr>
+          <tr><th>Target Market</th><td>CDFIs, community banks, and credit unions focused on small business lending</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; focuses on loan origination workflow, not credit analysis or memo generation</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>N/A &mdash; no AI-driven analytical processes</td></tr>
+          <tr><th>Pricing</th><td>Salesforce connector at $5/user/month; core platform pricing not publicly disclosed</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Modern cloud-native architecture; Salesforce integration via connector; strong small business lending workflow; claims only unified CDFI-specific platform</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>No credit memo generation; no AI/ML capabilities; no financial spreading or credit analysis; small business focus may limit commercial lending applicability</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>6</span>
+  </div>
+</div>
+
+<!-- PAGE 7 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 1: CDFI-Specific Platforms</span>
+  </div>
+  <div class="page-body">
+
+    <!-- Product 5 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>3.5 &nbsp; SPARK by Community Reinvestment Fund (CRF)</h3>
+        <span class="badge">CDFI-Specific</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>SBA-compliant lending platform built by a CDFI (CRF) for CDFIs, featuring automated credit grading, compliance workflows, and SBA program management</td></tr>
+          <tr><th>Target Market</th><td>CDFIs participating in SBA lending programs (7(a), 504, microenterprise)</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Partial &mdash; automated credit grading and risk scoring assist the memo process, but full narrative memo generation is not provided</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; automated grading is reviewed by human underwriters before lending decisions</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; built by a CDFI, suggesting mission-aligned and accessible pricing</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Built by a CDFI (CRF) with authentic understanding of the sector; automated credit grading; strong SBA compliance; mission-aligned organizational DNA</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Narrow focus on SBA lending programs; limited applicability for non-SBA commercial or consumer lending; no full credit memo generation; limited AI sophistication</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>3.6 &nbsp; Fundingo</h3>
+        <span class="badge">CDFI-Specific</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Salesforce-native loan origination system designed for CDFIs, nonprofits, and mission-driven lenders, with built-in CDFI Fund reporting and FlashSpread partnership</td></tr>
+          <tr><th>Target Market</th><td>CDFIs, nonprofit lenders, and community development organizations already in or willing to adopt the Salesforce ecosystem</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; focuses on origination and servicing workflows; credit analysis relies on FlashSpread integration</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>N/A &mdash; no AI-driven processes</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; requires Salesforce licensing as a prerequisite, adding to total cost of ownership</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Native Salesforce integration leveraging CRM power; CDFI Fund reporting built in; FlashSpread partnership for spreading; strong nonprofit lending workflows</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Requires Salesforce ecosystem (significant added cost and complexity); no AI capabilities; no credit memo generation; Salesforce dependency limits flexibility</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px;">
+      <h4>Category 1 Summary</h4>
+      <p>CDFI-specific platforms understand the mission-driven lending context but universally lack AI-powered credit analysis and automated credit memo generation. The strongest player, DownHome Solutions, has deep market penetration (400+ lenders) but no analytical capabilities. Builders Patch is the sole exception with electronic credit memo features, but its narrow multifamily housing focus limits its addressable market. <strong>None of these platforms combine AI, credit memo automation, and broad CDFI lending support.</strong></p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>7</span>
+  </div>
+</div>
+
+<!-- Spacer page 8 intentionally omitted — content fits in 5-7 -->
+
+<!-- ============================================================ -->
+<!-- PAGES 9-13: CATEGORY 2 — ADJACENT LOS PLATFORMS               -->
+<!-- ============================================================ -->
+
+<!-- PAGE 9 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 2: Adjacent LOS Platforms</span>
+  </div>
+  <div class="page-body">
+    <div class="cat-header">
+      <h2>4 &nbsp; Category 2 &mdash; Adjacent LOS Platforms</h2>
+      <p>Loan origination systems built for community banks or general commercial lending that CDFIs sometimes adopt, despite not being purpose-built for the CDFI market.</p>
+    </div>
+
+    <!-- Product 7 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>4.1 &nbsp; nCino</h3>
+        <span class="badge">Adjacent LOS</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Cloud banking platform and market leader in commercial loan origination, now featuring Gen AI-powered credit memo drafting, automated financial spreading, and portfolio analytics</td></tr>
+          <tr><th>Target Market</th><td>Community banks, regional banks, and credit unions; 2,700+ financial institution clients globally</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Yes &mdash; Gen AI credit memo drafting introduced in 2024; auto-generates narrative sections from structured loan and financial data</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; AI-generated memos are presented for analyst review and editing before finalization</td></tr>
+          <tr><th>Pricing</th><td>Starts approximately $175/user/month; enterprise pricing scales significantly; total cost of ownership typically $50K&ndash;$200K+ annually</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Market-leading cloud banking platform; Gen AI credit memo is closest competitor to CremoLogix vision; 2,700+ institutional clients; Salesforce-native; automated spreading</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Not CDFI-specific &mdash; lacks mission-driven underwriting criteria; enterprise pricing excludes most CDFIs; complex implementation; no CDFI Fund reporting</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 8 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>4.2 &nbsp; Abrigo (Sageworks)</h3>
+        <span class="badge">Adjacent LOS</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Credit analysis and financial spreading platform with patented Estimated Tax Return Reconstruction (ETRR) technology for analyzing tax returns</td></tr>
+          <tr><th>Target Market</th><td>Community banks and credit unions focused on commercial and small business lending</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Partial &mdash; generates structured credit analysis reports and spreading summaries that feed into the memo process, but not full narrative memos</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; analysts review and interpret ETRR outputs and spreading results</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; positioned for community banking segment; understood to be mid-market pricing</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Patented ETRR technology uniquely valuable for tax return analysis; strong community bank adoption; comprehensive spreading; integrated risk rating</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Not CDFI-specific; no full credit memo narrative generation; no AI/ML-powered insights; does not address CDFI-specific underwriting criteria or reporting</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>9</span>
+  </div>
+</div>
+
+<!-- PAGE 10 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 2: Adjacent LOS Platforms</span>
+  </div>
+  <div class="page-body">
+
+    <!-- Product 9 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>4.3 &nbsp; Encompass by ICE Mortgage Technology</h3>
+        <span class="badge">Adjacent LOS</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Industry-standard mortgage loan origination system providing end-to-end residential mortgage processing, underwriting, closing, and secondary market delivery</td></tr>
+          <tr><th>Target Market</th><td>Mortgage lenders, banks, and credit unions focused on residential mortgage origination</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; mortgage-specific underwriting workflow; not applicable to commercial credit memo process</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>N/A &mdash; automated underwriting rules are mortgage-specific (AUS integration)</td></tr>
+          <tr><th>Pricing</th><td>Enterprise pricing; per-seat and per-loan models available</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Industry standard for mortgage origination; massive market share; comprehensive compliance engine; deep secondary market integration</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Mortgage-only &mdash; not applicable to CDFI commercial, small business, or consumer lending; no credit memo; no relevance to CremoLogix competitive space</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 10 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>4.4 &nbsp; LoanPro</h3>
+        <span class="badge">Adjacent LOS</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>API-first, composable lending platform providing flexible loan management, servicing, and payments infrastructure for modern lenders</td></tr>
+          <tr><th>Target Market</th><td>Fintech lenders, neobanks, and technology-forward lending operations seeking customizable infrastructure</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; focuses on loan management and servicing, not credit analysis or underwriting</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>N/A &mdash; no AI-driven credit analysis functions</td></tr>
+          <tr><th>Pricing</th><td>Usage-based and subscription models; developer-friendly pricing; not publicly detailed</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Exceptionally flexible API-first architecture; modern developer experience; composable design allows best-of-breed integrations; strong servicing capabilities</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>No credit analysis, spreading, or underwriting capabilities; not CDFI-specific; requires significant technical resources to implement; no credit memo support</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>10</span>
+  </div>
+</div>
+
+<!-- PAGE 11 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 2: Adjacent LOS Platforms</span>
+  </div>
+  <div class="page-body">
+
+    <!-- Product 11 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>4.5 &nbsp; Biz2X</h3>
+        <span class="badge">Adjacent LOS</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>AI-powered small business lending platform providing digital loan origination, automated underwriting, and portfolio management with global deployment</td></tr>
+          <tr><th>Target Market</th><td>Banks, NBFCs, and fintech lenders globally; strong presence in emerging markets and SBA lending</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; focuses on automated decisioning and scoring, not narrative credit memo generation</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Partial &mdash; automated decisions can be escalated for manual review; configurable approval thresholds</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; enterprise SaaS model; positioned for mid-market to enterprise lenders</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>AI-driven underwriting delivers 30&ndash;40% faster processing; strong global presence; SBA lending program support; modern digital borrower experience</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Not CDFI-specific; no credit memo generation; AI is scoring-focused rather than analytical; does not address CDFI underwriting criteria or impact reporting</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 12 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>4.6 &nbsp; FIS Commercial Lending</h3>
+        <span class="badge">Adjacent LOS</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Enterprise-grade commercial lending suite providing loan origination, financial spreading, risk rating, and portfolio management for large banking institutions</td></tr>
+          <tr><th>Target Market</th><td>Large commercial banks and enterprise financial institutions; Fortune 500 banking clients</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Partial &mdash; structured credit analysis and spreading outputs support memo preparation, but not full AI-generated narrative memos</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; analyst-driven workflow with system-assisted analysis</td></tr>
+          <tr><th>Pricing</th><td>Enterprise pricing only; typically six- to seven-figure annual contracts; entirely out of reach for CDFIs</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Comprehensive enterprise commercial lending capabilities; deep spreading and risk rating; massive institutional client base; regulatory compliance strength</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Enterprise pricing makes it inaccessible to CDFIs; not CDFI-specific; implementation complexity requires large IT teams; overkill for CDFI-scale operations</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>11</span>
+  </div>
+</div>
+
+<!-- PAGE 12 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 2: Adjacent LOS Platforms</span>
+  </div>
+  <div class="page-body">
+
+    <!-- Product 13 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>4.7 &nbsp; Salesforce + Craftsman Technology Group</h3>
+        <span class="badge">Adjacent LOS</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Custom-built CDFI lending solutions on the Salesforce platform, developed by Craftsman Technology Group, featuring Nintex DocGen for credit memo document generation and CRM-integrated workflows</td></tr>
+          <tr><th>Target Market</th><td>CDFIs and community lenders seeking customized Salesforce-based lending platforms</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Partial &mdash; Nintex DocGen enables template-based credit memo document generation from Salesforce data; not AI-generated but structured document assembly</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; entirely human-driven process; document generation is template-based, not AI-assisted</td></tr>
+          <tr><th>Pricing</th><td>Custom development pricing varies widely; Salesforce licensing adds $25&ndash;$300/user/month; total cost of ownership is substantial for custom builds</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Highly customizable to specific CDFI workflows; Salesforce CRM power for borrower management; Nintex DocGen provides structured memo templates; Craftsman has CDFI domain expertise</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Expensive custom development and ongoing Salesforce licensing; no AI or ML capabilities; template-based memos lack analytical intelligence; dependent on custom developer relationship</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:28px;">
+      <h4>Category 2 Summary</h4>
+      <p>Adjacent LOS platforms offer more sophisticated technology than CDFI-specific tools, but none are built for the CDFI market. <strong>nCino emerges as the most significant competitive reference point</strong> &mdash; its Gen AI credit memo capability is the closest analog to the CremoLogix vision. However, nCino&rsquo;s enterprise pricing ($50K&ndash;$200K+ annually), lack of CDFI-specific underwriting criteria, and complex implementation requirements make it inaccessible to the vast majority of CDFIs. The Salesforce + Craftsman approach offers customization but at high cost and without AI intelligence. The remaining platforms either focus on wrong asset classes (Encompass), lack credit analysis entirely (LoanPro), or are priced for large enterprises (FIS).</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>12</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGES 14-17: CATEGORY 3 — AI-ASSISTED UNDERWRITING            -->
+<!-- ============================================================ -->
+
+<!-- PAGE 14 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 3: AI-Assisted Underwriting &amp; Credit Memo Tools</span>
+  </div>
+  <div class="page-body">
+    <div class="cat-header">
+      <h2>5 &nbsp; Category 3 &mdash; AI-Assisted Underwriting &amp; Credit Memo Tools</h2>
+      <p>Specialized AI and machine learning tools for credit analysis, risk scoring, and credit memo generation. These products offer analytical power but are not built for the CDFI market.</p>
+    </div>
+
+    <!-- Product 14 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>5.1 &nbsp; Moody&rsquo;s Lending Suite (formerly CreditLens AI Memo)</h3>
+        <span class="badge" style="background:rgba(255,255,255,0.25);">FLAGSHIP COMPETITOR</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Enterprise agentic AI platform for commercial credit memo generation, reducing 40-hour manual processes to approximately 2 minutes; backed by Moody&rsquo;s 590M+ entity database and proprietary credit intelligence</td></tr>
+          <tr><th>Target Market</th><td>Large commercial banks, institutional lenders, and enterprise financial services organizations</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Yes &mdash; flagship capability; agentic AI generates comprehensive credit memos from financial documents, borrower data, and Moody&rsquo;s proprietary analytics</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; AI-generated memos are presented for analyst review, editing, and approval before finalization</td></tr>
+          <tr><th>Pricing</th><td>Enterprise-only; estimated six-figure+ annual contracts ($100K&ndash;$500K+); entirely inaccessible to CDFIs</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Most advanced AI credit memo solution on the market; 590M+ entity database; 40 hours to 2 minutes processing; Moody&rsquo;s brand authority; agentic AI architecture</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Enterprise pricing completely excludes CDFIs; not designed for CDFI underwriting criteria (impact, character, flexible collateral); implementation requires enterprise IT infrastructure</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 15 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>5.2 &nbsp; Zest AI</h3>
+        <span class="badge">AI Underwriting</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>AI/ML credit scoring and decisioning platform with strong focus on fair lending compliance and inclusive credit access</td></tr>
+          <tr><th>Target Market</th><td>Credit unions, banks, and auto lenders focused on consumer lending; strong fair lending positioning</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; produces risk scores and fair lending analytics, not credit memos</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Partial &mdash; explainable AI models allow human review of scoring factors and adverse action reasons</td></tr>
+          <tr><th>Pricing</th><td>Estimated $100K+/year; enterprise licensing model; prohibitive for most CDFIs</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>271% approval increase for applicants 62+ years old (fair lending impact); explainable AI for regulatory compliance; strong fair lending narrative; inclusive credit philosophy</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Consumer-focused scoring only, not commercial lending; no credit memo generation; $100K+ pricing excludes CDFIs; does not address CDFI underwriting workflows</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>14</span>
+  </div>
+</div>
+
+<!-- PAGE 15 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 3: AI-Assisted Underwriting &amp; Credit Memo Tools</span>
+  </div>
+  <div class="page-body">
+
+    <!-- Product 16 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>5.3 &nbsp; Underwrite.ai</h3>
+        <span class="badge">AI Underwriting</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Non-linear AI risk modeling platform providing automated credit decisioning and risk scoring with a unique free tier for nonprofit organizations</td></tr>
+          <tr><th>Target Market</th><td>Lenders of all sizes including nonprofits; unique nonprofit-friendly pricing; consumer and small business lending focus</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; produces risk scores and approval/decline recommendations, not narrative credit memos</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Partial &mdash; automated decisions can be overridden; scoring factors are transparent for analyst review</td></tr>
+          <tr><th>Pricing</th><td>Free for nonprofit organizations; $2/application for commercial use; FCRA-compliant</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Free for nonprofits &mdash; exceptional accessibility for CDFIs; $2/app commercial pricing; FCRA-compliant; non-linear AI models may outperform traditional scorecards</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Risk scoring only, no credit memo generation; no financial spreading; no CDFI-specific underwriting criteria; limited to decisioning, not comprehensive analysis</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 17 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>5.4 &nbsp; Decipher Credit</h3>
+        <span class="badge">AI Underwriting</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Generative AI credit memo generation platform for commercial lending, automating the creation of narrative credit memo sections from loan and financial data</td></tr>
+          <tr><th>Target Market</th><td>Community banks and commercial lenders seeking to accelerate credit memo preparation</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Yes &mdash; core capability; GenAI auto-generates credit memo narrative sections including business overview, financial analysis, risk assessment, and recommendation</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; generated memo sections are reviewed and edited by credit analysts before submission</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; positioned for community banking market, suggesting more accessible than enterprise solutions</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Purpose-built GenAI credit memo generation; commercial lending focus; human-in-the-loop design; modern AI architecture; community bank positioning</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Not CDFI-specific; does not incorporate mission-driven underwriting criteria; no CDFI Fund reporting; no impact measurement integration; early-stage product</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>15</span>
+  </div>
+</div>
+
+<!-- PAGE 16 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 3: AI-Assisted Underwriting &amp; Credit Memo Tools</span>
+  </div>
+  <div class="page-body">
+
+    <!-- Product 18 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>5.5 &nbsp; GLIB.ai</h3>
+        <span class="badge">AI Underwriting</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>AI-powered financial analysis and credit memo generation platform supporting 25+ languages, combining automated financial spreading with narrative memo generation and human-in-the-loop workflows</td></tr>
+          <tr><th>Target Market</th><td>Commercial banks and lending institutions globally; strong international presence with multilingual capabilities</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Yes &mdash; AI generates credit memo narratives from financial data and analysis; supports structured memo templates</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; explicit human-in-the-loop architecture; AI outputs are reviewed and approved by analysts</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; international SaaS model</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Combined AI spreading + credit memo generation; 25+ language support; explicit human-in-the-loop design; financial analysis depth; modern AI architecture</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Not CDFI-specific; international focus may not align with US CDFI regulatory context; no CDFI underwriting criteria; no impact or compliance reporting for CDFIs</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:28px;">
+      <h4>Category 3 Summary</h4>
+      <p>AI-assisted underwriting tools represent the most technologically advanced segment of the competitive landscape. <strong>Moody&rsquo;s Lending Suite is the gold standard</strong> for AI credit memo generation, but its enterprise pricing ($100K&ndash;$500K+) makes it entirely inaccessible to CDFIs. Decipher Credit and GLIB.ai offer GenAI credit memo capabilities at potentially more accessible price points, but neither is CDFI-specific. Underwrite.ai stands out for its free nonprofit pricing but provides only risk scoring, not credit memos. <strong>The critical gap remains: no AI credit memo tool is designed for CDFI-specific underwriting workflows, criteria, or reporting requirements.</strong></p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>16</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGES 18-20: CATEGORY 4 — FINANCIAL SPREADING TOOLS           -->
+<!-- ============================================================ -->
+
+<!-- PAGE 18 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 4: Financial Spreading Tools</span>
+  </div>
+  <div class="page-body">
+    <div class="cat-header">
+      <h2>6 &nbsp; Category 4 &mdash; Financial Spreading Tools</h2>
+      <p>Specialized tools for extracting and structuring financial data from documents. These products handle a critical piece of the underwriting workflow but do not provide end-to-end credit analysis.</p>
+    </div>
+
+    <!-- Product 19 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>6.1 &nbsp; FlashSpread</h3>
+        <span class="badge">Spreading Tool</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Automated tax return and financial statement extraction and spreading, processing documents in under 1 minute with 96% time reduction versus manual spreading</td></tr>
+          <tr><th>Target Market</th><td>Community banks, credit unions, CDFIs, and SBA lenders; strong CDFI ecosystem integration through partnerships</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; spreading and extraction only; financial data must be exported to other tools for memo preparation</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; extracted data is reviewed by analysts for accuracy before use in credit analysis</td></tr>
+          <tr><th>Pricing</th><td>Accessible pricing for community lenders; per-document or subscription models available</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Sub-1-minute processing; 96% faster than manual spreading; integrated with CDFI platforms (DownHome, Fundingo, Ventures Lending); strong CDFI ecosystem presence</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Spreading only &mdash; no credit analysis, no credit memo, no risk assessment; must be paired with other tools; no AI-driven insights beyond extraction</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 20 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>6.2 &nbsp; FISCAL by Automated Financial Systems</h3>
+        <span class="badge">Spreading Tool</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Financial statement spreading and analysis platform with 30+ years in market, featuring Excel-like interface, ratio analysis, and Word-based credit memo templates</td></tr>
+          <tr><th>Target Market</th><td>Community banks, credit unions, and commercial lenders seeking traditional spreading tools</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Partial &mdash; offers Word-based credit memo templates populated from spreading data; not AI-generated</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; entirely human-driven; Word templates are manually edited and completed by analysts</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; traditional licensing model; positioned for community banking market</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>30+ years of market presence; familiar Excel-like interface; comprehensive ratio analysis; Word credit memo templates provide structured starting point</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>No AI or automation; legacy technology architecture; Word-based memo templates are rudimentary; no modern cloud deployment; manual data entry required</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>18</span>
+  </div>
+</div>
+
+<!-- PAGE 19 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 4: Financial Spreading Tools</span>
+  </div>
+  <div class="page-body">
+
+    <!-- Product 21 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>6.3 &nbsp; Moody&rsquo;s CreditLens (Spreading Module)</h3>
+        <span class="badge">Spreading Tool</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Enterprise commercial credit assessment platform with automated financial spreading, covenant monitoring, and risk rating capabilities</td></tr>
+          <tr><th>Target Market</th><td>Large commercial banks, institutional lenders, and enterprise financial organizations</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Partial &mdash; structured credit assessment outputs support memo preparation; full AI memo generation is in the newer Lending Suite product</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; analyst review is integral to credit assessment workflow</td></tr>
+          <tr><th>Pricing</th><td>Enterprise-only pricing; six-figure annual contracts; not accessible to CDFIs</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Moody&rsquo;s proprietary data and analytics; comprehensive spreading and risk assessment; covenant monitoring; institutional credibility</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Enterprise pricing excludes CDFIs entirely; not CDFI-specific; complex implementation; designed for large institutional portfolios</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 22 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>6.4 &nbsp; Global Wave Group</h3>
+        <span class="badge">Spreading Tool</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>AI-automated financial spreading platform with &gt;97% OCR accuracy, credit memo generation capability, and integration with major LOS platforms</td></tr>
+          <tr><th>Target Market</th><td>Commercial banks, credit unions, and lending institutions seeking AI-powered spreading automation</td></tr>
+          <tr><th>Credit Memo Generation</th><td>Partial &mdash; credit memo capability available as part of the platform; combines spreading outputs with structured memo generation</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; >97% OCR accuracy still requires analyst validation; memo outputs are reviewed before use</td></tr>
+          <tr><th>Pricing</th><td>Not publicly disclosed; positioned for the community and commercial banking market</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>&gt;97% OCR accuracy; AI-automated spreading reduces manual effort; credit memo capability; LOS integration; modern AI architecture</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Not CDFI-specific; credit memo capability is spreading-derived, not comprehensive underwriting analysis; no CDFI criteria or impact reporting</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>19</span>
+  </div>
+</div>
+
+<!-- PAGE 20 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Category 4: Financial Spreading Tools</span>
+  </div>
+  <div class="page-body">
+
+    <!-- Product 23 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>6.5 &nbsp; Cognext</h3>
+        <span class="badge">Spreading Tool</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>Deep learning-powered financial document digitization and spreading platform, using computer vision and NLP to extract data from complex financial documents</td></tr>
+          <tr><th>Target Market</th><td>Enterprise banks and international financial institutions with high-volume document processing needs</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; focuses on document digitization and data extraction; no credit memo or analytical output</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Partial &mdash; extracted data is validated by analysts; confidence scoring highlights items needing review</td></tr>
+          <tr><th>Pricing</th><td>Enterprise pricing; not publicly disclosed; positioned for large institutional deployments</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Advanced deep learning document understanding; handles complex international financial formats; high extraction accuracy; scalable architecture</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Enterprise and international focus; not relevant to CDFI market; no credit analysis or memo generation; overkill for CDFI document volumes</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Product 24 -->
+    <div class="product-card">
+      <div class="product-card-header">
+        <h3>6.6 &nbsp; Ocrolus</h3>
+        <span class="badge">Spreading Tool</span>
+      </div>
+      <div class="product-card-body">
+        <table>
+          <tr><th>Core Functionality</th><td>AI-powered document processing and analysis platform combining OCR, ML classification, and human-in-the-loop validation to extract data from bank statements, tax returns, and financial documents</td></tr>
+          <tr><th>Target Market</th><td>Fintech lenders, banks, and financial services companies requiring high-accuracy document processing</td></tr>
+          <tr><th>Credit Memo Generation</th><td>No &mdash; document processing and data extraction only; provides structured financial data for downstream analysis</td></tr>
+          <tr><th>Human-in-the-Loop</th><td>Yes &mdash; combines AI extraction with human validation for exceptional accuracy; hybrid AI + human processing model</td></tr>
+          <tr><th>Pricing</th><td>Per-document pricing model; volume discounts available; accessible for various lender sizes</td></tr>
+          <tr class="strength-row"><th>Key Strengths</th><td>Exceptional accuracy through AI + human hybrid model; 8,500 hours/year saved per client; broad document type support; strong API integration</td></tr>
+          <tr class="limitation-row"><th>Key Limitations</th><td>Document processing only &mdash; no credit analysis, spreading, or memo generation; must be paired with analytical tools; not CDFI-specific</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px;">
+      <h4>Category 4 Summary</h4>
+      <p>Financial spreading tools handle a critical but narrow piece of the underwriting workflow. <strong>FlashSpread has the strongest CDFI ecosystem positioning</strong> through integrations with DownHome, Fundingo, and Ventures Lending. Global Wave Group offers the most comprehensive capability set with spreading + credit memo. However, none of these tools provide the end-to-end AI-powered credit analysis and memo generation that CDFIs need. They are best understood as potential integration partners rather than competitors to CremoLogix.</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>20</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 21: COMPETITIVE LANDSCAPE SUMMARY MATRIX                 -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Competitive Landscape Summary Matrix</span>
+  </div>
+  <div class="page-body">
+    <h1><span class="section-number">7</span> Competitive Landscape Summary Matrix</h1>
+    <div class="accent-bar"></div>
+    <p style="margin-bottom:18px; color: var(--text-light); font-size:0.9rem;">Comparative assessment of 16 key platforms across six critical capability dimensions. Green indicates full capability, amber indicates partial capability, and red indicates absence. The final row illustrates CremoLogix&rsquo;s target positioning.</p>
+
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th style="width:170px;">Platform</th>
+          <th>CDFI-Specific</th>
+          <th>Credit Memo Gen.</th>
+          <th>AI / ML</th>
+          <th>Financial Spreading</th>
+          <th>Human-in-Loop</th>
+          <th>Affordable for CDFIs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>DownHome (DLM)</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">N/A</td>
+          <td class="cell-yes">Yes</td>
+        </tr>
+        <tr>
+          <td>Ventures Lending</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-no">N/A</td>
+          <td class="cell-yes">Yes</td>
+        </tr>
+        <tr>
+          <td>Builders Patch</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-no">No</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-partial">Maybe</td>
+        </tr>
+        <tr>
+          <td>LendingFront</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">N/A</td>
+          <td class="cell-yes">Yes</td>
+        </tr>
+        <tr>
+          <td>SPARK (CRF)</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+        </tr>
+        <tr>
+          <td>Fundingo</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-no">N/A</td>
+          <td class="cell-partial">Maybe</td>
+        </tr>
+        <tr>
+          <td>nCino</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+        </tr>
+        <tr>
+          <td>Abrigo</td>
+          <td class="cell-no">No</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-partial">Maybe</td>
+        </tr>
+        <tr>
+          <td>Biz2X</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-partial">Maybe</td>
+        </tr>
+        <tr>
+          <td>SF + Craftsman</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+        </tr>
+        <tr>
+          <td>Moody&rsquo;s Lending Suite</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+        </tr>
+        <tr>
+          <td>Zest AI</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-no">No</td>
+        </tr>
+        <tr>
+          <td>Underwrite.ai</td>
+          <td class="cell-no">No</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-yes">Yes</td>
+        </tr>
+        <tr>
+          <td>Decipher Credit</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-partial">Maybe</td>
+        </tr>
+        <tr>
+          <td>GLIB.ai</td>
+          <td class="cell-no">No</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-partial">Maybe</td>
+        </tr>
+        <tr>
+          <td>FlashSpread</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-no">No</td>
+          <td class="cell-partial">Partial</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+          <td class="cell-yes">Yes</td>
+        </tr>
+        <tr class="cremo-row">
+          <td style="color: var(--blue);">CremoLogix (Target)</td>
+          <td class="cell-yes"><strong>Yes</strong></td>
+          <td class="cell-yes"><strong>Yes</strong></td>
+          <td class="cell-yes"><strong>Yes</strong></td>
+          <td class="cell-yes"><strong>Yes</strong></td>
+          <td class="cell-yes"><strong>Yes</strong></td>
+          <td class="cell-yes"><strong>Yes</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-navy" style="margin-top:16px;">
+      <h4>The White Space Is Clear</h4>
+      <p>No existing platform achieves &ldquo;Yes&rdquo; across all six dimensions. The closest competitors &mdash; Moody&rsquo;s Lending Suite, nCino, and GLIB.ai &mdash; deliver strong technology but fail on CDFI specificity and/or affordability. CDFI-specific platforms deliver market understanding but lack AI sophistication. <strong>CremoLogix is positioned to be the first and only platform to occupy the full intersection.</strong></p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>21</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGES 22-23: KEY MARKET GAPS                                  -->
+<!-- ============================================================ -->
+
+<!-- PAGE 22 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Key Market Gaps</span>
+  </div>
+  <div class="page-body">
+    <h1><span class="section-number">8</span> Key Market Gaps</h1>
+    <div class="accent-bar"></div>
+    <p style="margin-bottom:24px; color: var(--text-light);">Six critical gaps identified across all four market categories, each representing a distinct opportunity for CremoLogix to deliver differentiated value.</p>
+
+    <!-- Gap 1 -->
+    <div class="gap-card">
+      <div class="gap-icon">1</div>
+      <div class="gap-content">
+        <h4>No AI-Powered Credit Memo Tool Built for CDFIs</h4>
+        <p>While Moody&rsquo;s, Decipher Credit, and GLIB.ai offer AI credit memo generation, none incorporate CDFI-specific underwriting criteria such as community impact assessment, character-based lending factors, or flexible collateral standards. CDFIs are forced to choose between powerful AI tools that do not understand their mission and CDFI-specific tools that lack analytical depth.</p>
+      </div>
+    </div>
+
+    <!-- Gap 2 -->
+    <div class="gap-card">
+      <div class="gap-icon">2</div>
+      <div class="gap-content">
+        <h4>CDFI Platforms Lack AI and Analytical Depth</h4>
+        <p>The six CDFI-specific platforms analyzed (DownHome, Ventures Lending, Builders Patch, LendingFront, SPARK, and Fundingo) collectively serve hundreds of CDFIs but offer minimal or no AI capability. Only Builders Patch provides electronic credit memo generation, and even that is limited to multifamily housing. The CDFI technology stack has not kept pace with the AI revolution transforming commercial lending.</p>
+      </div>
+    </div>
+
+    <!-- Gap 3 -->
+    <div class="gap-card">
+      <div class="gap-icon">3</div>
+      <div class="gap-content">
+        <h4>Affordable AI for Resource-Constrained Organizations</h4>
+        <p>Enterprise AI solutions like Moody&rsquo;s ($100K&ndash;$500K+/year), Zest AI ($100K+/year), and nCino ($50K&ndash;$200K+/year) are priced for institutional budgets that dwarf typical CDFI technology spending. The only affordable AI option, Underwrite.ai (free for nonprofits), provides risk scoring only&mdash;not the comprehensive credit analysis and memo generation that CDFIs need to scale.</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>22</span>
+  </div>
+</div>
+
+<!-- PAGE 23 -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Key Market Gaps</span>
+  </div>
+  <div class="page-body" style="padding-top:40px;">
+
+    <!-- Gap 4 -->
+    <div class="gap-card">
+      <div class="gap-icon">4</div>
+      <div class="gap-content">
+        <h4>Flexible Underwriting Criteria Beyond Traditional Metrics</h4>
+        <p>CDFI lending decisions incorporate factors that conventional underwriting platforms do not support: community impact potential, borrower character references, non-traditional income verification, and flexible collateral standards. No AI underwriting tool on the market is trained to evaluate or weigh these CDFI-specific factors in its analysis or credit memo output.</p>
+      </div>
+    </div>
+
+    <!-- Gap 5 -->
+    <div class="gap-card">
+      <div class="gap-icon">5</div>
+      <div class="gap-content">
+        <h4>Tax Return and Non-Standard Document Processing</h4>
+        <p>CDFIs frequently underwrite borrowers who submit non-standard financial documentation: personal tax returns used for business income verification, handwritten financial statements, and informal records. While FlashSpread and Abrigo (ETRR) address tax return processing, no tool combines tax return extraction with AI-driven analysis and credit memo generation in a single CDFI-optimized workflow.</p>
+      </div>
+    </div>
+
+    <!-- Gap 6 -->
+    <div class="gap-card">
+      <div class="gap-icon">6</div>
+      <div class="gap-content">
+        <h4>Integrated Impact and Compliance Reporting</h4>
+        <p>CDFIs must report to the CDFI Fund, AERIS, investors, and various government programs on both financial performance and community impact. No AI underwriting or credit memo tool integrates impact measurement into its analytical output. Credit memos at CDFIs must justify loans not only on financial merit but on mission alignment&mdash;a dimension entirely absent from current AI tools.</p>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg, var(--navy), #264E7A); color:white; padding:24px 28px; border-radius:10px; margin-top:24px;">
+      <h4 style="color:white; margin-bottom:8px;">Implication for CremoLogix</h4>
+      <p style="color:rgba(255,255,255,0.85); margin:0; font-size:0.95rem;">These six gaps are not incidental market imperfections &mdash; they are structural features of a market that has never treated CDFIs as a priority technology customer. CremoLogix&rsquo;s product strategy is designed to address each gap simultaneously, creating a solution that no existing vendor can replicate without fundamentally redesigning their product for a market they have historically ignored.</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>23</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 24: OPPORTUNITY ASSESSMENT                                -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Opportunity Assessment</span>
+  </div>
+  <div class="page-body">
+    <h1><span class="section-number">9</span> Opportunity Assessment</h1>
+    <div class="accent-bar"></div>
+
+    <div class="opp-section">
+      <h3><span style="color:var(--green); font-size:1.3rem; margin-right:4px;">&#9650;</span> Demand Signals</h3>
+      <ul>
+        <li><strong>72% of CDFIs report inadequate staffing</strong> for loan underwriting and credit analysis, creating urgent demand for tools that amplify analyst productivity (Federal Reserve, 2024).</li>
+        <li><strong>CDFI loan originations doubled from $33.5B to $67B</strong> between 2018 and 2022, with origination volume continuing to outpace operational capacity and headcount growth.</li>
+        <li><strong>Federal investment is accelerating:</strong> the $8.57B Emergency Capital Investment Program and expanded CDFI Fund awards are flooding the sector with capital that must be deployed efficiently.</li>
+        <li><strong>69% of CDFIs cite technology limitations</strong> as a barrier to mission delivery, indicating willingness to adopt new solutions that address current pain points.</li>
+      </ul>
+    </div>
+
+    <div class="opp-highlight">
+      <h3><span style="color:var(--amber); font-size:1.3rem; margin-right:4px;">&#9670;</span> Competitive White Space</h3>
+      <ul>
+        <li><strong>Zero products at the intersection:</strong> no existing platform combines AI-powered credit memo generation + CDFI-specific underwriting + affordable pricing + human-in-the-loop design.</li>
+        <li><strong>CDFI incumbents are AI-absent:</strong> the dominant CDFI platforms (DownHome at 400+ clients, Ventures Lending, Fundingo) have no AI roadmap, creating an integration or displacement opportunity.</li>
+        <li><strong>Enterprise AI is CDFI-inaccessible:</strong> the most capable AI tools (Moody&rsquo;s, nCino) start at $50K&ndash;$500K+ annually &mdash; 10x to 100x the technology budget of a typical CDFI.</li>
+        <li><strong>Decipher Credit and GLIB.ai are nearest threats</strong> but lack CDFI domain expertise, creating a window for CremoLogix to establish market position before potential pivots.</li>
+      </ul>
+    </div>
+
+    <div class="opp-section">
+      <h3><span style="color:var(--blue); font-size:1.3rem; margin-right:4px;">&#9654;</span> Potential Positioning</h3>
+      <ul>
+        <li><strong>&ldquo;The Moody&rsquo;s Lending Suite for CDFIs&rdquo;</strong> &mdash; enterprise-grade AI credit memo generation at a price point designed for mission-driven lenders.</li>
+        <li><strong>Integration-first strategy:</strong> partner with FlashSpread for spreading, DownHome/Fundingo for LOS, creating an ecosystem play rather than a rip-and-replace.</li>
+        <li><strong>Human-in-the-loop as a feature, not a limitation:</strong> position analyst oversight as a quality and compliance advantage in a market wary of fully automated credit decisions.</li>
+        <li><strong>Impact-integrated underwriting:</strong> be the only credit memo tool that natively incorporates community impact analysis, CDFI Fund compliance, and mission-alignment scoring.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>24</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 25: SOURCES                                              -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo-text">CremoLogix</span>
+    <span>Sources &amp; References</span>
+  </div>
+  <div class="page-body">
+    <h1><span class="section-number">10</span> Sources &amp; References</h1>
+    <div class="accent-bar"></div>
+
+    <ol class="source-list" style="padding-left:20px;">
+      <li>Federal Reserve. (2024). <em>CDFI Survey: Health, Capacity, and Challenges.</em> <a href="https://fedcommunities.org/research/cdfi-survey/">fedcommunities.org/research/cdfi-survey/</a></li>
+      <li>U.S. Department of the Treasury. (2023). <em>CDFI Fund Annual Report and Certification Data.</em> <a href="https://www.cdfifund.gov/">cdfifund.gov</a></li>
+      <li>Opportunity Finance Network. (2023). <em>OFN Member Data: CDFI Industry Snapshot.</em> <a href="https://www.ofn.org/">ofn.org</a></li>
+      <li>U.S. Treasury ECIP Program. (2022). <em>Emergency Capital Investment Program Awards.</em> <a href="https://home.treasury.gov/policy-issues/coronavirus/assistance-for-small-businesses/emergency-capital-investment-program">home.treasury.gov</a></li>
+      <li>DownHome Solutions. (2025). <em>DLM Platform Overview and Client Data.</em> <a href="https://downhomesolutions.com/">downhomesolutions.com</a></li>
+      <li>Ventures Lending Technologies. (2025). <em>Platform Documentation and CDFI Integration.</em> <a href="https://www.ventureslending.com/">ventureslending.com</a></li>
+      <li>Lenders Cooperative. (2025). <em>Cooperative Lending Platform Overview.</em> <a href="https://www.lenderscooperative.com/">lenderscooperative.com</a></li>
+      <li>Builders Patch. (2025). <em>Multifamily Affordable Housing Platform.</em> <a href="https://www.builderspatch.com/">builderspatch.com</a></li>
+      <li>LendingFront. (2025). <em>Small Business Lending Platform for CDFIs.</em> <a href="https://www.lendingfront.com/">lendingfront.com</a></li>
+      <li>Community Reinvestment Fund (CRF). (2025). <em>SPARK Lending Platform.</em> <a href="https://www.crfusa.com/">crfusa.com</a></li>
+      <li>Fundingo. (2025). <em>Salesforce-Native LOS for CDFIs.</em> <a href="https://www.fundingo.com/">fundingo.com</a></li>
+      <li>nCino, Inc. (2025). <em>Cloud Banking Platform and Gen AI Credit Memo.</em> <a href="https://www.ncino.com/">ncino.com</a></li>
+      <li>nCino, Inc. (2024). <em>Annual Report and Investor Presentation: 2,700+ Institution Clients.</em></li>
+      <li>Abrigo (Sageworks). (2025). <em>Credit Analysis and ETRR Technology.</em> <a href="https://www.abrigo.com/">abrigo.com</a></li>
+      <li>ICE Mortgage Technology. (2025). <em>Encompass LOS Platform.</em> <a href="https://www.icemortgagetechnology.com/">icemortgagetechnology.com</a></li>
+      <li>LoanPro. (2025). <em>API-First Lending Platform.</em> <a href="https://www.loanpro.io/">loanpro.io</a></li>
+      <li>Biz2X. (2025). <em>AI Small Business Lending Platform.</em> <a href="https://www.biz2x.com/">biz2x.com</a></li>
+      <li>FIS. (2025). <em>Commercial Lending Solutions.</em> <a href="https://www.fisglobal.com/">fisglobal.com</a></li>
+      <li>Craftsman Technology Group. (2025). <em>Salesforce CDFI Solutions and Nintex DocGen Integration.</em> <a href="https://www.craftsmantechnology.com/">craftsmantechnology.com</a></li>
+      <li>Moody&rsquo;s Analytics. (2025). <em>Lending Suite: Agentic AI Credit Memo Generation.</em> <a href="https://www.moodys.com/">moodys.com</a></li>
+      <li>Moody&rsquo;s Analytics. (2024). <em>CreditLens Platform and 590M+ Entity Database.</em></li>
+      <li>Zest AI. (2025). <em>AI Credit Scoring and Fair Lending Platform.</em> <a href="https://www.zest.ai/">zest.ai</a></li>
+      <li>Zest AI. (2024). <em>Case Study: 271% Approval Increase for 62+ Applicants.</em></li>
+      <li>Underwrite.ai. (2025). <em>AI Risk Modeling Platform &mdash; Free for Nonprofits.</em> <a href="https://www.underwrite.ai/">underwrite.ai</a></li>
+      <li>Decipher Credit. (2025). <em>GenAI Credit Memo Generation Platform.</em> <a href="https://www.deciphercredit.com/">deciphercredit.com</a></li>
+      <li>GLIB.ai. (2025). <em>AI Financial Analysis and Credit Memo Platform.</em> <a href="https://www.glib.ai/">glib.ai</a></li>
+      <li>FlashSpread. (2025). <em>Automated Tax Return Spreading.</em> <a href="https://www.flashspread.com/">flashspread.com</a></li>
+      <li>Automated Financial Systems. (2025). <em>FISCAL Spreading Platform.</em> <a href="https://www.afsvision.com/">afsvision.com</a></li>
+      <li>Moody&rsquo;s Analytics. (2025). <em>CreditLens Commercial Credit Assessment.</em> <a href="https://www.moodys.com/web/en/us/about/solutions/creditlens.html">moodys.com</a></li>
+      <li>Global Wave Group. (2025). <em>AI-Automated Financial Spreading.</em> <a href="https://www.globalwavegroup.com/">globalwavegroup.com</a></li>
+      <li>Cognext. (2025). <em>Deep Learning Financial Digitization.</em> <a href="https://www.cognext.ai/">cognext.ai</a></li>
+      <li>Ocrolus. (2025). <em>AI Document Processing Platform.</em> <a href="https://www.ocrolus.com/">ocrolus.com</a></li>
+      <li>Ocrolus. (2024). <em>Case Study: 8,500 Hours/Year Saved Per Client.</em></li>
+      <li>AERIS. (2024). <em>CDFI Assessment and Rating System.</em> <a href="https://aerisinsight.com/">aerisinsight.com</a></li>
+      <li>National Association of CDFI Intermediaries. (2024). <em>Industry Capacity Report.</em></li>
+      <li>Federal Reserve Bank of New York. (2023). <em>Community Development Lending Trends.</em></li>
+      <li>CDFI Coalition. (2024). <em>Policy Priorities and Sector Data.</em> <a href="https://cdfi.org/">cdfi.org</a></li>
+      <li>SBA Office of Advocacy. (2024). <em>Small Business Lending Statistics.</em> <a href="https://advocacy.sba.gov/">advocacy.sba.gov</a></li>
+      <li>McKinsey &amp; Company. (2024). <em>The State of AI in Financial Services.</em></li>
+      <li>Deloitte. (2024). <em>Banking Technology Outlook: AI in Lending.</em></li>
+      <li>American Banker. (2024). <em>CDFI Technology Adoption Survey Results.</em></li>
+      <li>Salesforce. (2025). <em>Financial Services Cloud Documentation.</em> <a href="https://www.salesforce.com/financial-services/">salesforce.com</a></li>
+    </ol>
+  </div>
+  <div class="page-footer">
+    <span>Confidential</span>
+    <span>25</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- BACK COVER                                                    -->
+<!-- ============================================================ -->
+<div class="page back-cover" style="page-break-after:avoid;">
+  <div>
+    <div class="brand-mark">CremoLogix</div>
+    <div class="accent-bar-white"></div>
+    <div class="tagline">AI-Powered Underwriting for Mission-Driven Lenders</div>
+  </div>
+  <div class="confidential">Confidential &mdash; For Internal Use &nbsp;&bull;&nbsp; February 2026</div>
+</div>
+
+</body>
+</html>

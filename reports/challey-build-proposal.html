@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Challey — Build Proposal</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 18mm 20mm 18mm;
+  }
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page-break { page-break-before: always; }
+    .no-break { page-break-inside: avoid; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #1a1a2e;
+    background: #fff;
+  }
+
+  /* Cover Page */
+  .cover {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    color: #fff;
+  }
+  .cover h1 {
+    font-size: 42pt;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .cover .subtitle {
+    font-size: 16pt;
+    font-weight: 300;
+    color: #8ecae6;
+    margin-bottom: 48px;
+  }
+  .cover .meta {
+    font-size: 10pt;
+    color: #a0b4c0;
+    line-height: 2;
+  }
+  .cover .verdict {
+    margin-top: 48px;
+    padding: 20px 28px;
+    background: rgba(255,255,255,0.08);
+    border-left: 4px solid #2ecc71;
+    border-radius: 0 8px 8px 0;
+  }
+  .cover .verdict .label {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #8ecae6;
+    margin-bottom: 4px;
+  }
+  .cover .verdict .value {
+    font-size: 18pt;
+    font-weight: 600;
+    color: #2ecc71;
+  }
+
+  /* Content Pages */
+  .content {
+    padding: 0 12px;
+  }
+  h2 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #0f2027;
+    margin: 36px 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  h3 {
+    font-size: 13pt;
+    font-weight: 600;
+    color: #203a43;
+    margin: 24px 0 10px 0;
+  }
+  h4 {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #2c5364;
+    margin: 16px 0 8px 0;
+  }
+  p {
+    margin-bottom: 12px;
+  }
+  ul, ol {
+    margin: 8px 0 16px 24px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px 0;
+    font-size: 10pt;
+  }
+  th {
+    background: #f0f4f8;
+    color: #203a43;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid #d0d8e0;
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #e8ecf0;
+    vertical-align: top;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  .total-row td {
+    font-weight: 700;
+    background: #f0f4f8;
+    border-top: 2px solid #d0d8e0;
+    border-bottom: 2px solid #d0d8e0;
+  }
+
+  /* Callout Boxes */
+  .callout {
+    padding: 16px 20px;
+    border-radius: 6px;
+    margin: 16px 0;
+  }
+  .callout-blue {
+    background: #edf6ff;
+    border-left: 4px solid #3498db;
+  }
+  .callout-green {
+    background: #edfff4;
+    border-left: 4px solid #2ecc71;
+  }
+  .callout-amber {
+    background: #fff9ed;
+    border-left: 4px solid #f39c12;
+  }
+  .callout-red {
+    background: #fff0f0;
+    border-left: 4px solid #e74c3c;
+  }
+  .callout .callout-title {
+    font-weight: 600;
+    font-size: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  /* Cost Cards */
+  .cost-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0 24px 0;
+  }
+  .cost-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+  .cost-card .cost-label {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+  .cost-card .cost-value {
+    font-size: 22pt;
+    font-weight: 700;
+    color: #0f2027;
+  }
+  .cost-card .cost-note {
+    font-size: 9pt;
+    color: #94a3b8;
+    margin-top: 6px;
+  }
+
+  /* Scale Tiers */
+  .scale-tier {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0 24px 0;
+  }
+  .tier-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .tier-header {
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 10pt;
+    text-align: center;
+  }
+  .tier-launch .tier-header { background: #edf6ff; color: #2563eb; }
+  .tier-growth .tier-header { background: #fef3c7; color: #d97706; }
+  .tier-scale .tier-header { background: #fce7f3; color: #db2777; }
+  .tier-body {
+    padding: 16px;
+  }
+  .tier-body .tier-metric {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 10pt;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .tier-body .tier-metric:last-child { border-bottom: none; }
+  .tier-body .tier-cost {
+    text-align: center;
+    font-size: 20pt;
+    font-weight: 700;
+    color: #0f2027;
+    padding: 16px 0 4px 0;
+  }
+  .tier-body .tier-annual {
+    text-align: center;
+    font-size: 9pt;
+    color: #64748b;
+    padding-bottom: 8px;
+  }
+
+  /* Timeline */
+  .timeline {
+    margin: 16px 0 24px 0;
+  }
+  .timeline-phase {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 0;
+  }
+  .timeline-marker {
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .timeline-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #2c5364;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .timeline-line {
+    width: 2px;
+    flex-grow: 1;
+    background: #d0d8e0;
+  }
+  .timeline-content {
+    flex-grow: 1;
+    padding: 0 0 24px 12px;
+  }
+  .timeline-content .phase-title {
+    font-weight: 600;
+    font-size: 11pt;
+    color: #0f2027;
+  }
+  .timeline-content .phase-desc {
+    font-size: 10pt;
+    color: #475569;
+    margin-top: 4px;
+  }
+  .timeline-content .phase-deliverable {
+    font-size: 9pt;
+    color: #2ecc71;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 9pt;
+    color: #94a3b8;
+    text-align: center;
+  }
+
+  /* Section numbers */
+  .section-num {
+    color: #94a3b8;
+    font-weight: 400;
+    margin-right: 8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <h1>Challey</h1>
+  <div class="subtitle">Build Proposal — Chore Tracking & Rewards App</div>
+  <div class="meta">
+    Prepared: February 11, 2026<br>
+    Version: 1.0<br>
+    Classification: Confidential
+  </div>
+  <div class="verdict">
+    <div class="label">Recommendation</div>
+    <div class="value">Proceed to Build</div>
+  </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="content page-break">
+  <h2><span class="section-num">01</span> Executive Summary</h2>
+
+  <p>Challey is a mobile-friendly chore tracking app that lets parents assign chores with rewards and lets teens report completed work for verification. It solves a simple problem: teens do chores but have no easy way to communicate that to their parents.</p>
+
+  <div class="callout callout-blue">
+    <div class="callout-title">What We're Building</div>
+    <p>A web application with two views — one for parents (assign chores, verify work, grant rewards) and one for teens (see chores, mark complete, track rewards). The core loop is: <strong>Assign → Complete → Verify → Reward</strong>, designed to take less than 30 seconds per interaction.</p>
+  </div>
+
+  <h3>Key Numbers</h3>
+  <div class="cost-grid">
+    <div class="cost-card">
+      <div class="cost-label">Build Investment</div>
+      <div class="cost-value">$3,200</div>
+      <div class="cost-note">One-time cost to launch MVP</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-label">Monthly Running Cost</div>
+      <div class="cost-value">$0</div>
+      <div class="cost-note">At launch (free tiers)</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-label">First Paid Tier Trigger</div>
+      <div class="cost-value">500+</div>
+      <div class="cost-note">Families before costs increase</div>
+    </div>
+  </div>
+
+  <div class="callout callout-green">
+    <div class="callout-title">Recommendation</div>
+    <p><strong>Proceed to build.</strong> Challey's MVP is small, well-scoped, and technically straightforward. The teen-first design angle is a genuine market gap. The application can launch on entirely free infrastructure tiers and only begins incurring costs at meaningful scale.</p>
+  </div>
+</div>
+
+<!-- SOLUTION OVERVIEW -->
+<div class="content page-break">
+  <h2><span class="section-num">02</span> What You're Getting</h2>
+
+  <h3>The Problem</h3>
+  <p>Teens do chores but have no structured way to report completed work to parents. This leads to forgotten tasks, repeated reminders, disputes about what was done, and a lack of recognition that demotivates responsible behavior.</p>
+
+  <h3>The Solution</h3>
+  <p>A simple app with a four-step core loop:</p>
+  <ol>
+    <li><strong>Dad assigns a chore</strong> — name, description, reward amount, optional due date</li>
+    <li><strong>Maggie sees it and does it</strong> — clear list of what's assigned and what each is worth</li>
+    <li><strong>Maggie marks it complete</strong> — one tap, optional note</li>
+    <li><strong>Dad verifies and rewards</strong> — checks the work, approves or requests changes</li>
+  </ol>
+
+  <h3>Who Uses It</h3>
+  <table>
+    <tr>
+      <th>User</th>
+      <th>What They Do</th>
+      <th>Device</th>
+      <th>Key Need</th>
+    </tr>
+    <tr>
+      <td><strong>Parent (Dad)</strong></td>
+      <td>Assigns chores, verifies work, grants rewards</td>
+      <td>Phone</td>
+      <td>Fast — under 30 seconds per action</td>
+    </tr>
+    <tr>
+      <td><strong>Teen (Maggie)</strong></td>
+      <td>Views chores, marks complete, tracks rewards</td>
+      <td>Phone</td>
+      <td>Recognition — see effort acknowledged</td>
+    </tr>
+  </table>
+
+  <h3>What's Included in Version 1</h3>
+  <table>
+    <tr>
+      <th>Feature</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>Chore assignment</td>
+      <td>Create chores with name, description, reward, due date</td>
+      <td>MVP</td>
+    </tr>
+    <tr>
+      <td>Chore board</td>
+      <td>See all active chores by status (pending, in progress, awaiting review)</td>
+      <td>MVP</td>
+    </tr>
+    <tr>
+      <td>Mark complete</td>
+      <td>One-tap submission with optional note</td>
+      <td>MVP</td>
+    </tr>
+    <tr>
+      <td>Verify & reward</td>
+      <td>Approve, reject with feedback, grant reward</td>
+      <td>MVP</td>
+    </tr>
+    <tr>
+      <td>Reward tracking</td>
+      <td>Earned this week, all time, pending approval, history</td>
+      <td>MVP</td>
+    </tr>
+    <tr>
+      <td>Activity feed</td>
+      <td>Timeline of assignments, completions, approvals</td>
+      <td>MVP</td>
+    </tr>
+    <tr>
+      <td>Notifications</td>
+      <td>Alerts for new chores, completions, approvals</td>
+      <td>MVP</td>
+    </tr>
+    <tr>
+      <td>Family login</td>
+      <td>Simple family code — no complex account setup</td>
+      <td>MVP</td>
+    </tr>
+  </table>
+
+  <h3>What's NOT in Version 1</h3>
+  <p>These are parked for future versions based on user feedback:</p>
+  <ul>
+    <li>Recurring chores (auto-assign weekly tasks)</li>
+    <li>Photo proof of completion</li>
+    <li>Allowance tracking and banking integration</li>
+    <li>Calendar sync</li>
+    <li>Gamification (badges, levels, streaks)</li>
+    <li>Smart home integration</li>
+  </ul>
+</div>
+
+<!-- TECHNOLOGY APPROACH -->
+<div class="content page-break">
+  <h2><span class="section-num">03</span> How We'll Build It</h2>
+
+  <p>We're recommending a modern web application that works great on phones without needing to download anything from the App Store. This keeps things simple and fast to launch.</p>
+
+  <div class="callout callout-blue">
+    <div class="callout-title">Plain-Language Summary</div>
+    <p>Challey will be a <strong>web app</strong> that looks and feels like a phone app. Users open it in their browser, and it works on any device — iPhone, Android, tablet, or computer. We can add it to the App Store later if needed, using the same codebase.</p>
+  </div>
+
+  <h3>Technology Choices</h3>
+  <table>
+    <tr>
+      <th>What</th>
+      <th>Our Choice</th>
+      <th>Why (In Plain English)</th>
+    </tr>
+    <tr>
+      <td><strong>App framework</strong></td>
+      <td>Next.js (React)</td>
+      <td>Used by Netflix, TikTok, and Notion. Huge developer community means easy to find help and hire talent. Fast to build, fast for users.</td>
+    </tr>
+    <tr>
+      <td><strong>Database</strong></td>
+      <td>Supabase (PostgreSQL)</td>
+      <td>Like a spreadsheet on steroids. Stores all chores, users, and rewards. Has built-in real-time sync so Dad sees updates the moment Maggie marks a chore done. Free tier is generous.</td>
+    </tr>
+    <tr>
+      <td><strong>Login system</strong></td>
+      <td>Supabase Auth</td>
+      <td>Comes free with the database. Supports family code login for MVP. Can upgrade to Google/Apple sign-in later.</td>
+    </tr>
+    <tr>
+      <td><strong>Hosting</strong></td>
+      <td>Vercel</td>
+      <td>Made by the same team as Next.js, so it's the smoothest pairing. Deploys automatically when code is updated. Free tier handles thousands of users.</td>
+    </tr>
+    <tr>
+      <td><strong>Notifications</strong></td>
+      <td>In-app first, push later</td>
+      <td>Start with notifications inside the app (like a bell icon with a badge). Add phone push notifications in a future version once the core workflow is proven.</td>
+    </tr>
+  </table>
+
+  <h3>Why This Approach?</h3>
+  <ul>
+    <li><strong>Fast to launch</strong> — this stack has the fastest setup-to-first-feature time of all options evaluated</li>
+    <li><strong>Free to run at launch</strong> — all services have generous free tiers that cover a single family easily</li>
+    <li><strong>Scales affordably</strong> — costs grow gradually with usage, no sudden jumps</li>
+    <li><strong>Future-proof</strong> — can evolve to a native mobile app, add more features, and scale to thousands of families without rewriting</li>
+  </ul>
+</div>
+
+<!-- CAPEX -->
+<div class="content page-break">
+  <h2><span class="section-num">04</span> Build Investment (One-Time Cost)</h2>
+
+  <p>This is the one-time cost to build and launch Challey's MVP. After this, the app is live and usable.</p>
+
+  <h3>Build Phases</h3>
+  <div class="timeline">
+    <div class="timeline-phase">
+      <div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="phase-title">Phase 0: Project Setup</div>
+        <div class="phase-desc">Set up the codebase, database, hosting, and development environment. Configure login system.</div>
+        <div class="phase-deliverable">Deliverable: Empty app that loads, with login working</div>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="phase-title">Phase 1: Database & Data Layer</div>
+        <div class="phase-desc">Create database tables for families, users, chores, and rewards. Set up real-time sync between devices.</div>
+        <div class="phase-deliverable">Deliverable: Data foundation ready for all features</div>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="phase-title">Phase 2: Parent Experience</div>
+        <div class="phase-desc">Build Dad's view: dashboard, create chore form, verification screen, reward granting.</div>
+        <div class="phase-deliverable">Deliverable: Parent can assign chores and verify completed work</div>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="phase-title">Phase 3: Teen Experience</div>
+        <div class="phase-desc">Build Maggie's view: chore list, mark complete flow, reward tracker, activity feed.</div>
+        <div class="phase-deliverable">Deliverable: Full core loop working — assign, complete, verify, reward</div>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-marker"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+      <div class="timeline-content">
+        <div class="phase-title">Phase 4: Notifications & Polish</div>
+        <div class="phase-desc">Add in-app notifications, empty states, error handling, mobile optimization, and overall polish.</div>
+        <div class="phase-deliverable">Deliverable: Launch-ready MVP</div>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-marker"><div class="timeline-dot"></div></div>
+      <div class="timeline-content">
+        <div class="phase-title">Phase 5: Testing & Launch</div>
+        <div class="phase-desc">Test with Maggie's family. Fix bugs. Deploy to production.</div>
+        <div class="phase-deliverable">Deliverable: Live application</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Cost Breakdown</h3>
+  <table>
+    <tr>
+      <th>Category</th>
+      <th>Item</th>
+      <th>Cost</th>
+    </tr>
+    <tr>
+      <td>Development</td>
+      <td>Full-stack development (Phases 0–5)</td>
+      <td>$2,800</td>
+    </tr>
+    <tr>
+      <td>Design</td>
+      <td>UI/UX design and branding (included in prototype phase)</td>
+      <td>$0*</td>
+    </tr>
+    <tr>
+      <td>Infrastructure Setup</td>
+      <td>Vercel project, Supabase project, domain name, SSL</td>
+      <td>$15</td>
+    </tr>
+    <tr>
+      <td>Third-Party Setup</td>
+      <td>No upfront fees — all services are usage-based or free tier</td>
+      <td>$0</td>
+    </tr>
+    <tr>
+      <td>Testing</td>
+      <td>Included in Phase 5</td>
+      <td>$0</td>
+    </tr>
+    <tr class="total-row">
+      <td colspan="2"><strong>Total Build Investment</strong></td>
+      <td><strong>~$2,815</strong></td>
+    </tr>
+  </table>
+
+  <p style="font-size:9pt; color:#64748b;">*Design is produced during the Crucible discovery and prototyping phases at no additional cost.</p>
+
+  <div class="callout callout-green no-break">
+    <div class="callout-title">What You Get for This Investment</div>
+    <p>A fully working, live application that your family can use immediately. It's hosted on the internet with a real URL, works on any phone or computer, and includes the complete assign → complete → verify → reward workflow with notifications.</p>
+  </div>
+</div>
+
+<!-- OPEX -->
+<div class="content page-break">
+  <h2><span class="section-num">05</span> Running Costs (Monthly)</h2>
+
+  <p>Once built, Challey needs hosting and services to stay online. Here's what that costs — and how costs change as more families use the app.</p>
+
+  <h3>Service-by-Service Breakdown</h3>
+  <table>
+    <tr>
+      <th>Service</th>
+      <th>What It Does</th>
+      <th>Free Tier Limit</th>
+      <th>First Paid Tier</th>
+    </tr>
+    <tr>
+      <td><strong>Vercel</strong> (hosting)</td>
+      <td>Serves the app to users</td>
+      <td>100GB bandwidth/mo</td>
+      <td>$20/mo after limit</td>
+    </tr>
+    <tr>
+      <td><strong>Supabase</strong> (database)</td>
+      <td>Stores all data, handles login, real-time sync</td>
+      <td>500MB storage, 50K auth users</td>
+      <td>$25/mo after limit</td>
+    </tr>
+    <tr>
+      <td><strong>Domain name</strong></td>
+      <td>challey.app or similar</td>
+      <td>—</td>
+      <td>$12/year (~$1/mo)</td>
+    </tr>
+  </table>
+
+  <h3>Cost at Scale</h3>
+  <p>Here's what running Challey costs as it grows from your family to a real product:</p>
+
+  <div class="scale-tier">
+    <div class="tier-card tier-launch">
+      <div class="tier-header">Launch</div>
+      <div class="tier-body">
+        <div class="tier-metric"><span>Families</span><span>1–10</span></div>
+        <div class="tier-metric"><span>Users</span><span>2–30</span></div>
+        <div class="tier-metric"><span>Chores/month</span><span>~200</span></div>
+        <div class="tier-cost">$1/mo</div>
+        <div class="tier-annual">$12/year (domain only)</div>
+      </div>
+    </div>
+    <div class="tier-card tier-growth">
+      <div class="tier-header">Growth (6 months)</div>
+      <div class="tier-body">
+        <div class="tier-metric"><span>Families</span><span>50–200</span></div>
+        <div class="tier-metric"><span>Users</span><span>150–600</span></div>
+        <div class="tier-metric"><span>Chores/month</span><span>~5,000</span></div>
+        <div class="tier-cost">$26/mo</div>
+        <div class="tier-annual">$312/year</div>
+      </div>
+    </div>
+    <div class="tier-card tier-scale">
+      <div class="tier-header">Scale (12 months)</div>
+      <div class="tier-body">
+        <div class="tier-metric"><span>Families</span><span>500–2,000</span></div>
+        <div class="tier-metric"><span>Users</span><span>1,500–6,000</span></div>
+        <div class="tier-metric"><span>Chores/month</span><span>~50,000</span></div>
+        <div class="tier-cost">$75/mo</div>
+        <div class="tier-annual">$900/year</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-amber no-break">
+    <div class="callout-title">What Triggers Cost Increases</div>
+    <ul style="margin-bottom:0;">
+      <li><strong>Database storage exceeds 500MB</strong> → Supabase paid tier ($25/mo). This happens around 200+ active families.</li>
+      <li><strong>Bandwidth exceeds 100GB/mo</strong> → Vercel paid tier ($20/mo). This happens around 500+ active families.</li>
+      <li><strong>Push notifications added</strong> → Future cost of ~$0–$25/mo depending on provider and volume.</li>
+    </ul>
+  </div>
+
+  <h3>Revenue vs. Cost (If Commercialized)</h3>
+  <p>If Challey charges families, here's how the economics look:</p>
+  <table>
+    <tr>
+      <th>Scale</th>
+      <th>Families</th>
+      <th>Monthly Revenue (at $2.99/mo)</th>
+      <th>Monthly Cost</th>
+      <th>Monthly Profit</th>
+    </tr>
+    <tr>
+      <td>Launch</td>
+      <td>10</td>
+      <td>$30</td>
+      <td>$1</td>
+      <td style="color:#2ecc71; font-weight:600;">+$29</td>
+    </tr>
+    <tr>
+      <td>Growth</td>
+      <td>200</td>
+      <td>$598</td>
+      <td>$26</td>
+      <td style="color:#2ecc71; font-weight:600;">+$572</td>
+    </tr>
+    <tr>
+      <td>Scale</td>
+      <td>2,000</td>
+      <td>$5,980</td>
+      <td>$75</td>
+      <td style="color:#2ecc71; font-weight:600;">+$5,905</td>
+    </tr>
+  </table>
+  <p style="font-size:9pt; color:#64748b;">Note: Revenue projection assumes $2.99/mo subscription. Alternative models (one-time $9.99, freemium) would differ. These are illustrative, not forecasts.</p>
+</div>
+
+<!-- KEY DECISIONS -->
+<div class="content page-break">
+  <h2><span class="section-num">06</span> Key Decisions</h2>
+
+  <h3>Decisions Made by Approving This Proposal</h3>
+  <table>
+    <tr>
+      <th>Decision</th>
+      <th>What It Means</th>
+      <th>Can We Change Later?</th>
+    </tr>
+    <tr>
+      <td><strong>Web app first</strong></td>
+      <td>Users access via browser, no App Store download needed</td>
+      <td>Yes — can add native app later using same codebase</td>
+    </tr>
+    <tr>
+      <td><strong>Family code login</strong></td>
+      <td>Simple shared code to join a family, not individual email/password</td>
+      <td>Yes — can upgrade to Google/Apple sign-in later</td>
+    </tr>
+    <tr>
+      <td><strong>In-app notifications only</strong></td>
+      <td>No phone push notifications in v1 — alerts appear inside the app</td>
+      <td>Yes — push notifications can be added in a future version</td>
+    </tr>
+    <tr>
+      <td><strong>Money rewards only</strong></td>
+      <td>Rewards are dollar amounts, not points or privileges</td>
+      <td>Yes — can add reward types later</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-blue no-break">
+    <div class="callout-title">Good News</div>
+    <p>All decisions above are reversible. The technology choices are designed so that nothing locks you in — every decision can be changed or expanded later without rebuilding from scratch.</p>
+  </div>
+
+  <h3>Decisions That Need Your Input During Build</h3>
+  <ul>
+    <li><strong>Domain name</strong> — what URL should the app live at? (e.g., challey.app, getchalley.com)</li>
+    <li><strong>Color scheme & branding</strong> — finalized during prototype phase</li>
+    <li><strong>Default reward amounts</strong> — any suggested defaults when creating chores?</li>
+    <li><strong>Auto-approve setting</strong> — should parents be able to set certain chores to auto-approve?</li>
+  </ul>
+</div>
+
+<!-- RISKS -->
+<div class="content">
+  <h2><span class="section-num">07</span> Risks</h2>
+
+  <table>
+    <tr>
+      <th>Risk</th>
+      <th>Likelihood</th>
+      <th>Impact</th>
+      <th>How We Handle It</th>
+    </tr>
+    <tr>
+      <td><strong>Dad doesn't adopt</strong> — if the parent doesn't use the app, the teen can't either</td>
+      <td>Medium</td>
+      <td>Critical</td>
+      <td>Make parent actions extremely fast (&lt;30 sec). Strong notifications. Test with real family first.</td>
+    </tr>
+    <tr>
+      <td><strong>Feature creep</strong> — requests for calendars, banking, gamification before core is solid</td>
+      <td>High</td>
+      <td>High</td>
+      <td>Frozen MVP scope. "Yes, later" roadmap for future features. Launch simple, iterate from feedback.</td>
+    </tr>
+    <tr>
+      <td><strong>Real-time sync issues</strong> — dad and teen see different data</td>
+      <td>Low</td>
+      <td>High</td>
+      <td>Supabase has built-in real-time subscriptions. Tested in thousands of production apps.</td>
+    </tr>
+    <tr>
+      <td><strong>Competing with texts/sticky notes</strong> — "why use an app when I can just tell Dad?"</td>
+      <td>Medium</td>
+      <td>Medium</td>
+      <td>Reward history and recognition features provide value texts can't. Visible progress motivates teens.</td>
+    </tr>
+    <tr>
+      <td><strong>Supabase pricing changes</strong> — free tier could become paid</td>
+      <td>Low</td>
+      <td>Low</td>
+      <td>Standard PostgreSQL database — can migrate to any provider if needed.</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-green no-break">
+    <div class="callout-title">Overall Risk Assessment</div>
+    <p><strong>Low technical risk, medium adoption risk.</strong> The technology is proven and straightforward. The main risk is human — will the family actually use the app consistently? That's why we recommend testing with Maggie's family first before any broader launch.</p>
+  </div>
+</div>
+
+<!-- BUILD PHASES -->
+<div class="content page-break">
+  <h2><span class="section-num">08</span> Build Schedule</h2>
+
+  <p>Here's the order we'll build in, and what's usable after each phase:</p>
+
+  <table>
+    <tr>
+      <th>Phase</th>
+      <th>What Gets Built</th>
+      <th>What's Usable After</th>
+      <th>Relative Effort</th>
+    </tr>
+    <tr>
+      <td><strong>0</strong></td>
+      <td>Project setup, hosting, login</td>
+      <td>App loads, users can sign in</td>
+      <td style="color:#2ecc71;">Low</td>
+    </tr>
+    <tr>
+      <td><strong>1</strong></td>
+      <td>Database, data layer, real-time sync</td>
+      <td>Data foundation (not user-visible)</td>
+      <td style="color:#2ecc71;">Low</td>
+    </tr>
+    <tr>
+      <td><strong>2</strong></td>
+      <td>Parent: dashboard, create chore, verify, reward</td>
+      <td>Parent can assign chores and manage them</td>
+      <td style="color:#f39c12;">Medium</td>
+    </tr>
+    <tr>
+      <td><strong>3</strong></td>
+      <td>Teen: chore list, mark complete, rewards, activity feed</td>
+      <td><strong>Full core loop working end-to-end</strong></td>
+      <td style="color:#f39c12;">Medium</td>
+    </tr>
+    <tr>
+      <td><strong>4</strong></td>
+      <td>Notifications, empty states, error handling, mobile polish</td>
+      <td>Polished, launch-ready experience</td>
+      <td style="color:#f39c12;">Medium</td>
+    </tr>
+    <tr>
+      <td><strong>5</strong></td>
+      <td>Family testing, bug fixes, deployment</td>
+      <td><strong>Live application</strong></td>
+      <td style="color:#2ecc71;">Low</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-blue no-break">
+    <div class="callout-title">Incremental Value</div>
+    <p>After Phase 3, the app is functionally complete — Maggie's family could start using it. Phases 4–5 add polish, notifications, and reliability, but the core loop works from Phase 3 onward.</p>
+  </div>
+</div>
+
+<!-- RECOMMENDATION -->
+<div class="content">
+  <h2><span class="section-num">09</span> Recommendation</h2>
+
+  <div class="callout callout-green">
+    <div class="callout-title">Proceed to Build</div>
+    <p style="font-size: 12pt;"><strong>We recommend building Challey.</strong></p>
+    <p>The MVP is tightly scoped, technically straightforward, and addresses a genuine gap in the market (teen-first design). The build investment is modest, the running costs start at zero, and every technology decision is reversible.</p>
+  </div>
+
+  <h3>Conditions</h3>
+  <ol>
+    <li>Scope stays frozen as defined in this proposal. New feature requests go to the roadmap, not the build.</li>
+    <li>Maggie's family commits to testing the app during and after build — real usage feedback is critical.</li>
+    <li>Domain name is registered before build begins.</li>
+  </ol>
+
+  <h3>Next Steps (If Approved)</h3>
+  <ol>
+    <li>Client confirms "proceed" — build authorization granted</li>
+    <li>Build Planner creates detailed task breakdown and developer guide</li>
+    <li>Developer begins Phase 0 (project setup)</li>
+    <li>Automated milestone reviews at key checkpoints</li>
+    <li>Family testing at Phase 3 completion</li>
+    <li>Launch after Phase 5</li>
+  </ol>
+
+  <div class="footer">
+    <p>This document is confidential and prepared for the intended recipient only.</p>
+    <p>Generated by Crucible — Product Development Pipeline</p>
+  </div>
+</div>
+
+</body>
+</html>

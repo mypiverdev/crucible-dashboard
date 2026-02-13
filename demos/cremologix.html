@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CremoLogix - Interactive Prototype Launcher</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; background: #F5F7FA; color: #1A1A2E; min-height: 100vh; }
+  header { background: linear-gradient(135deg, #1B4D7A 0%, #0D2B45 100%); color: #fff; padding: 48px 32px 40px; text-align: center; }
+  header h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+  header .tagline { font-size: 16px; opacity: 0.8; font-weight: 400; }
+  header .meta { margin-top: 16px; font-size: 13px; opacity: 0.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px 64px; }
+  .stats { display: flex; justify-content: center; gap: 40px; margin: -24px 0 32px; }
+  .stat { background: #fff; border-radius: 10px; padding: 16px 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); text-align: center; }
+  .stat .num { font-size: 28px; font-weight: 700; color: #1B4D7A; }
+  .stat .label { font-size: 12px; color: #6C757D; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.15s, box-shadow 0.15s; border-left: 4px solid transparent; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .card.borrower { border-left-color: #1B4D7A; }
+  .card.denied { border-left-color: #DC3545; }
+  .card.broker { border-left-color: #E8943A; }
+  .card.intake { border-left-color: #6F42C1; }
+  .card.underwriter { border-left-color: #2E8B57; }
+  .card.cm { border-left-color: #0D6EFD; }
+  .card.external { border-left-color: #20C997; }
+  .card.finops { border-left-color: #6610F2; }
+  .card.admin { border-left-color: #495057; }
+  .card h3 { font-size: 18px; margin-bottom: 4px; }
+  .card .role { font-size: 12px; color: #6C757D; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .card .desc { font-size: 14px; color: #495057; line-height: 1.5; margin-bottom: 16px; }
+  .card .screens { font-size: 13px; color: #6C757D; margin-bottom: 16px; }
+  .card a { display: inline-block; background: #1B4D7A; color: #fff; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.15s; }
+  .card a:hover { background: #0D2B45; }
+  .note { text-align: center; margin-top: 40px; font-size: 13px; color: #6C757D; }
+  .note code { background: #E9ECEF; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CremoLogix</h1>
+  <div class="tagline">Intelligent Lending. Lasting Impact.</div>
+  <div class="meta">Interactive Prototype v2 &mdash; February 9, 2026</div>
+</header>
+
+<div class="container">
+  <div class="stats">
+    <div class="stat"><div class="num">75</div><div class="label">Screens</div></div>
+    <div class="stat"><div class="num">9</div><div class="label">Portals</div></div>
+    <div class="stat"><div class="num">1</div><div class="label">File Each</div></div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card borrower">
+      <h3>Borrower Portal</h3>
+      <div class="role">Direct + Broker-Referred Borrowers</div>
+      <div class="desc">Full borrower journey: landing page, application, KYC verification, dashboard, conversational document collection, term sheets, e-signature, and post-closing.</div>
+      <div class="screens">17 screens (B-01 through B-17)</div>
+      <a href="cremologix/demo-borrower.html">Launch Demo</a>
+    </div>
+
+    <div class="card denied">
+      <h3>Denied Applicant Portal</h3>
+      <div class="role">Denied Borrower State</div>
+      <div class="desc">Denied applicant nurture: dashboard, subscription management, credit repair resources, re-qualification progress, and reapply flow.</div>
+      <div class="screens">5 screens (D-01 through D-05)</div>
+      <a href="cremologix/demo-denied.html">Launch Demo</a>
+    </div>
+
+    <div class="card broker">
+      <h3>Broker Portal</h3>
+      <div class="role">Loan Brokers</div>
+      <div class="desc">Broker workflow: login, dashboard, new deal submission, packet management, deal detail tracking, notifications, and settings.</div>
+      <div class="screens">7 screens (BK-01 through BK-07)</div>
+      <a href="cremologix/demo-broker.html">Launch Demo</a>
+    </div>
+
+    <div class="card intake">
+      <h3>Intake Agent Portal</h3>
+      <div class="role">Intake Agents</div>
+      <div class="desc">Application review queue, deal review with document verification, completed reviews history, and agent settings.</div>
+      <div class="screens">4 screens (IA-01 through IA-04)</div>
+      <a href="cremologix/demo-intake.html">Launch Demo</a>
+    </div>
+
+    <div class="card underwriter">
+      <h3>Underwriter Portal</h3>
+      <div class="role">Underwriters</div>
+      <div class="desc">Core underwriting: dashboard, deal detail feed, financial analysis, manual analysis, escalations, credit memo, route questions, virtual workpapers, and case history.</div>
+      <div class="screens">10 screens (UW-01 through UW-10)</div>
+      <a href="cremologix/demo-underwriter.html">Launch Demo</a>
+    </div>
+
+    <div class="card cm">
+      <h3>Credit Manager Portal</h3>
+      <div class="role">Credit Managers</div>
+      <div class="desc">Management oversight: dashboard, case assignment, escalation review, final review and decision, all deals view, and team performance.</div>
+      <div class="screens">6 screens (CM-01 through CM-06)</div>
+      <a href="cremologix/demo-cm.html">Launch Demo</a>
+    </div>
+
+    <div class="card external">
+      <h3>External Funding Portal</h3>
+      <div class="role">External Funding Stakeholders</div>
+      <div class="desc">External reviewer access: login, review dashboard, deal review with read-only analysis, and decision actions.</div>
+      <div class="screens">4 screens (EF-01 through EF-04)</div>
+      <a href="cremologix/demo-external.html">Launch Demo</a>
+    </div>
+
+    <div class="card finops">
+      <h3>FinOps Resource Portal</h3>
+      <div class="role">Financial Operations Professionals</div>
+      <div class="desc">Post-closing support: login, dashboard, client profiles, financial data review, covenant compliance, gap analysis, messaging, and notes.</div>
+      <div class="screens">8 screens (FO-01 through FO-08)</div>
+      <a href="cremologix/demo-finops.html">Launch Demo</a>
+    </div>
+
+    <div class="card admin">
+      <h3>Administrator Portal</h3>
+      <div class="role">System Administrators</div>
+      <div class="desc">Full system config: dashboard, loan products, scoring, workflows, document checklists, notifications, user management, integrations, system parameters, memo templates, CDFI reporting, fair lending, audit trail, and settings.</div>
+      <div class="screens">14 screens (AD-01 through AD-14)</div>
+      <a href="cremologix/demo-admin.html">Launch Demo</a>
+    </div>
+
+  </div>
+
+  <div class="note">
+    Self-contained demos &mdash; each portal is a single HTML file with all screens embedded.
+  </div>
+</div>
+
+</body>
+</html>

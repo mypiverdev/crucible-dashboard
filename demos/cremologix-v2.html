@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CremoLogix v2 - Interactive Prototype Launcher</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #F5F7FA; color: #1A1A2E; min-height: 100vh; }
+  header { background: linear-gradient(135deg, #0A2540 0%, #006D77 100%); color: #fff; padding: 48px 32px 40px; text-align: center; position: relative; overflow: hidden; }
+  header::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 70%, rgba(42,157,143,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(0,109,119,0.1) 0%, transparent 50%); }
+  header h1 { font-size: 38px; font-weight: 700; margin-bottom: 8px; position: relative; letter-spacing: -0.5px; }
+  header .tagline { font-size: 17px; opacity: 0.85; font-weight: 400; position: relative; }
+  header .meta { margin-top: 16px; font-size: 13px; opacity: 0.6; position: relative; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px 64px; }
+  .stats { display: flex; justify-content: center; gap: 40px; margin: -24px 0 32px; position: relative; z-index: 1; }
+  .stat { background: #fff; border-radius: 10px; padding: 16px 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); text-align: center; }
+  .stat .num { font-size: 28px; font-weight: 700; color: #0A2540; }
+  .stat .label { font-size: 12px; color: #6C757D; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.15s, box-shadow 0.15s; border-left: 4px solid transparent; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .card.borrower { border-left-color: #0A2540; }
+  .card.underwriter { border-left-color: #2A9D8F; }
+  .card.portfolio { border-left-color: #006D77; }
+  .card.admin { border-left-color: #495057; }
+  .card.broker { border-left-color: #F4A261; }
+  .card.external { border-left-color: #6F42C1; }
+  .card.loanofficer { border-left-color: #0D6EFD; }
+  .card h3 { font-size: 18px; margin-bottom: 4px; color: #0A2540; }
+  .card .role { font-size: 12px; color: #6C757D; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .card .desc { font-size: 14px; color: #495057; line-height: 1.5; margin-bottom: 16px; }
+  .card .screens { font-size: 13px; color: #6C757D; margin-bottom: 16px; }
+  .card a { display: inline-block; background: #0A2540; color: #fff; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500; transition: background 0.15s; }
+  .card a:hover { background: #006D77; }
+  .note { text-align: center; margin-top: 40px; font-size: 13px; color: #6C757D; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CremoLogix v2</h1>
+  <div class="tagline">Intelligent Lending. Lasting Impact.</div>
+  <div class="meta">Interactive Prototype &mdash; February 2026</div>
+</header>
+
+<div class="container">
+  <div class="stats">
+    <div class="stat"><div class="num">75</div><div class="label">Screens</div></div>
+    <div class="stat"><div class="num">7</div><div class="label">Portals</div></div>
+    <div class="stat"><div class="num">1</div><div class="label">File Each</div></div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card borrower">
+      <h3>Borrower Portal</h3>
+      <div class="role">Direct Borrowers &amp; Broker-Referred</div>
+      <div class="desc">Full borrower journey: landing, account creation, progressive kill gates (Intent &rarr; Credit &rarr; KYC &rarr; Business &rarr; Financial Snapshot &rarr; Deep Collection), tiered term reveals, analysis, clarifications, approval/denial, closing, funded dashboard, mentorship, and financial health monitoring.</div>
+      <div class="screens">22 screens (CL-01 through CL-22)</div>
+      <a href="cremologix-v2/demo-borrower.html">Launch Demo</a>
+    </div>
+
+    <div class="card underwriter">
+      <h3>Underwriter Portal</h3>
+      <div class="role">Underwriters &amp; Senior Analysts</div>
+      <div class="desc">AI-assisted underwriting: case queue with deal health scores, mini-dashboards (financial analysis, industry comparison, risk assessment), batched clarification workflow, credit memo generation, escalation handling, decision history, and virtual workpapers.</div>
+      <div class="screens">10 screens</div>
+      <a href="cremologix-v2/demo-underwriter.html">Launch Demo</a>
+    </div>
+
+    <div class="card portfolio">
+      <h3>Portfolio Manager Portal</h3>
+      <div class="role">Credit Managers &amp; Loan Servicing</div>
+      <div class="desc">Post-funding powerhouse: continuous monitoring via persistent Plaid/Codat connections, predictive delinquency engine, covenant monitoring, collections workflow, pre-approved one-click renewals, Metro 2 credit bureau reporting, portfolio analytics, and AI-delivered technical assistance.</div>
+      <div class="screens">10 screens</div>
+      <a href="cremologix-v2/demo-portfolio.html">Launch Demo</a>
+    </div>
+
+    <div class="card loanofficer">
+      <h3>Loan Officer Portal</h3>
+      <div class="role">Relationship Managers &amp; Originators</div>
+      <div class="desc">Front-line origination: pipeline dashboard with funnel visualization, application tracking, borrower assist tools, universal deal intake (12 channels through one Normalizer), broker relationship management, performance analytics, and task center.</div>
+      <div class="screens">8 screens</div>
+      <a href="cremologix-v2/demo-loanofficer.html">Launch Demo</a>
+    </div>
+
+    <div class="card broker">
+      <h3>Broker Portal</h3>
+      <div class="role">Loan Brokers &amp; Partners</div>
+      <div class="desc">Broker workflow: dashboard with performance metrics, universal deal submission, Kanban pipeline tracking, deal detail with communication, commission tracker with tiered structure, document center, CDFI directory with matching, and white-label settings.</div>
+      <div class="screens">8 screens</div>
+      <a href="cremologix-v2/demo-broker.html">Launch Demo</a>
+    </div>
+
+    <div class="card external">
+      <h3>External Stakeholder Portal</h3>
+      <div class="role">Government &amp; Guarantee Partners</div>
+      <div class="desc">Guarantee review workflow: approved package review with condensed credit memo, single and batch approval of guarantee percentages, structured communication with CDFIs, and portfolio-level reporting on all guaranteed loans.</div>
+      <div class="screens">5 screens</div>
+      <a href="cremologix-v2/demo-external.html">Launch Demo</a>
+    </div>
+
+    <div class="card admin">
+      <h3>Administrator Portal</h3>
+      <div class="role">System Administrators</div>
+      <div class="desc">Full platform configuration: user management with RBAC, lending parameter setup, progressive kill gate thresholds, analytical engine config (ratio library, benchmarks), document templates, integration settings (Plaid, Codat, credit bureaus), SLA rules, audit trail, and reporting.</div>
+      <div class="screens">12 screens</div>
+      <a href="cremologix-v2/demo-admin.html">Launch Demo</a>
+    </div>
+
+  </div>
+
+  <div class="note">
+    Self-contained demos &mdash; each portal is a single HTML file with all screens embedded. Responsive webapp design.
+  </div>
+</div>
+
+</body>
+</html>

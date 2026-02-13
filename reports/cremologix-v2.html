@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CremoLogix v2 - Market Research & Feasibility Analysis</title>
+    <style>
+        /* Base Typography & Layout */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: letter;
+            margin: 0.75in 1in;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 11pt;
+            line-height: 1.7;
+            color: #2C3E50;
+            background: #ffffff;
+        }
+
+        /* Color Palette */
+        :root {
+            --navy: #0A2540;
+            --teal: #006D77;
+            --gold: #F4A261;
+            --light-gray: #F8F9FA;
+            --red: #E63946;
+            --amber: #F77F00;
+            --green: #06D6A0;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 50px,
+                rgba(255,255,255,0.03) 50px,
+                rgba(255,255,255,0.03) 100px
+            );
+        }
+
+        .cover-page .logo {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 0.3em;
+            z-index: 1;
+        }
+
+        .cover-page .title {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 0.3em;
+            z-index: 1;
+        }
+
+        .cover-page .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 1.5em;
+            font-weight: 300;
+            max-width: 80%;
+            z-index: 1;
+        }
+
+        .cover-page .report-type {
+            font-size: 1.1em;
+            margin-bottom: 3em;
+            font-weight: 300;
+            max-width: 70%;
+            line-height: 1.6;
+            z-index: 1;
+        }
+
+        .cover-page .date {
+            font-size: 1em;
+            margin-bottom: 0.5em;
+            z-index: 1;
+        }
+
+        .cover-page .confidential {
+            font-size: 0.9em;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        /* Table of Contents */
+        .toc-page {
+            page-break-after: always;
+            padding: 2em 0;
+        }
+
+        .toc-page h2 {
+            font-size: 2em;
+            color: var(--navy);
+            border-bottom: 3px solid var(--teal);
+            padding-bottom: 0.5em;
+            margin-bottom: 1em;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5em 0;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .toc-item .section-num {
+            font-weight: bold;
+            color: var(--teal);
+            margin-right: 0.5em;
+        }
+
+        .toc-item .section-title {
+            flex: 1;
+        }
+
+        .toc-item .page-num {
+            font-weight: bold;
+            color: var(--navy);
+        }
+
+        /* Section Headers */
+        .section-page {
+            page-break-before: always;
+            padding: 1em 0;
+        }
+
+        .section-header {
+            background: var(--navy);
+            color: white;
+            padding: 2em;
+            margin: -1em -1em 2em -1em;
+            font-size: 2.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: var(--navy);
+            margin: 1.5em 0 0.5em 0;
+            border-left: 6px solid var(--teal);
+            padding-left: 0.5em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: var(--teal);
+            margin: 1.3em 0 0.5em 0;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 0.3em;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            color: var(--navy);
+            margin: 1em 0 0.5em 0;
+            font-weight: 600;
+        }
+
+        /* Executive Summary */
+        .exec-summary {
+            background: var(--light-gray);
+            padding: 2em;
+            border-radius: 8px;
+            border-left: 6px solid var(--gold);
+            margin: 2em 0;
+        }
+
+        .exec-summary h2 {
+            margin-top: 0;
+            border: none;
+        }
+
+        /* Metric Callout Boxes */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5em;
+            margin: 2em 0;
+        }
+
+        .metric-box {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5em;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--teal);
+        }
+
+        .metric-box.navy { border-top-color: var(--navy); }
+        .metric-box.gold { border-top-color: var(--gold); }
+        .metric-box.teal { border-top-color: var(--teal); }
+        .metric-box.green { border-top-color: var(--green); }
+        .metric-box.amber { border-top-color: var(--amber); }
+        .metric-box.red { border-top-color: var(--red); }
+
+        .metric-box .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--navy);
+            margin-bottom: 0.2em;
+        }
+
+        .metric-box .label {
+            font-size: 0.9em;
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5em 0;
+            font-size: 0.95em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        thead {
+            background: var(--navy);
+            color: white;
+        }
+
+        thead th {
+            padding: 1em 0.8em;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        tbody td {
+            padding: 0.9em 0.8em;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tbody tr:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        tbody tr:hover {
+            background: #f0f7f8;
+        }
+
+        tbody tr.highlight {
+            background: #d4edda;
+            font-weight: 600;
+        }
+
+        tbody tr.critical {
+            background: #f8d7da;
+        }
+
+        tbody tr.warning {
+            background: #fff3cd;
+        }
+
+        /* Feature Matrix */
+        .feature-matrix td {
+            text-align: center;
+        }
+
+        .feature-matrix .check-full {
+            color: var(--green);
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .feature-matrix .check-partial {
+            color: var(--amber);
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .feature-matrix .check-none {
+            color: var(--red);
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            padding: 1.5em;
+            margin: 1.5em 0;
+            border-radius: 6px;
+            border-left: 5px solid;
+            page-break-inside: avoid;
+        }
+
+        .callout.info {
+            background: #e7f3ff;
+            border-color: var(--teal);
+        }
+
+        .callout.success {
+            background: #d4edda;
+            border-color: var(--green);
+        }
+
+        .callout.warning {
+            background: #fff3cd;
+            border-color: var(--amber);
+        }
+
+        .callout.critical {
+            background: #f8d7da;
+            border-color: var(--red);
+        }
+
+        .callout h3 {
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+
+        /* Bar Charts (CSS) */
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin: 0.8em 0;
+        }
+
+        .chart-bar .label {
+            width: 30%;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .chart-bar .bar-container {
+            flex: 1;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-bar .bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--teal), var(--navy));
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1em;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            border-radius: 15px;
+        }
+
+        /* Risk Matrix */
+        .risk-matrix {
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            gap: 0;
+            margin: 2em 0;
+        }
+
+        .risk-matrix .axis-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--navy);
+            background: var(--light-gray);
+            padding: 1em;
+        }
+
+        .risk-matrix .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5em;
+        }
+
+        .risk-matrix .cell {
+            padding: 1em;
+            text-align: center;
+            font-weight: 600;
+            border-radius: 4px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .risk-matrix .cell.low { background: #d4edda; color: #155724; }
+        .risk-matrix .cell.medium { background: #fff3cd; color: #856404; }
+        .risk-matrix .cell.high { background: #f8d7da; color: #721c24; }
+        .risk-matrix .cell.critical { background: #dc3545; color: white; font-size: 1.1em; }
+
+        /* Lists */
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+
+        li {
+            margin: 0.5em 0;
+        }
+
+        /* Priority Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.3em 0.8em;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.critical { background: var(--red); color: white; }
+        .badge.high { background: var(--gold); color: white; }
+        .badge.medium { background: var(--amber); color: white; }
+        .badge.low { background: var(--teal); color: white; }
+
+        /* Page Breaks */
+        .page-break {
+            page-break-before: always;
+        }
+
+        .no-break {
+            page-break-inside: avoid;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                font-size: 10pt;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+
+            .no-break {
+                page-break-inside: avoid;
+            }
+
+            table, .callout, .metric-box {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Header/Footer for body pages */
+        @media print {
+            @page {
+                @bottom-left {
+                    content: "CremoLogix v2 | Market Research & Feasibility Analysis";
+                    font-size: 8pt;
+                    color: #666;
+                }
+                @bottom-right {
+                    content: counter(page);
+                    font-size: 8pt;
+                    color: #666;
+                }
+            }
+        }
+
+        /* Timeline Visualization */
+        .timeline {
+            position: relative;
+            padding-left: 3em;
+            margin: 2em 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1em;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--teal);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 1em 0 1em 1em;
+            margin-bottom: 1em;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5em;
+            top: 1.5em;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--navy);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--teal);
+        }
+
+        .timeline-item .year {
+            font-weight: bold;
+            color: var(--navy);
+            font-size: 1.1em;
+            margin-bottom: 0.3em;
+        }
+
+        .timeline-item .milestone {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+    <div class="logo">CREMOLOGIX</div>
+    <div class="title">CremoLogix v2</div>
+    <div class="subtitle">Private Lending Platform for Community Development Financial Institutions</div>
+    <div class="report-type">Discovery Research Report<br>Market Analysis, Competitive Landscape, Financial Model & Risk Assessment</div>
+    <div class="date">February 2026</div>
+    <div class="confidential">CONFIDENTIAL — For Internal Use Only</div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc-page">
+    <h2>Table of Contents</h2>
+
+    <div class="toc-item">
+        <span class="section-num">1.</span>
+        <span class="section-title">Executive Summary</span>
+        <span class="page-num">3</span>
+    </div>
+
+    <div class="toc-item">
+        <span class="section-num">2.</span>
+        <span class="section-title">Market Research</span>
+        <span class="page-num">5</span>
+    </div>
+
+    <div class="toc-item">
+        <span class="section-num">3.</span>
+        <span class="section-title">Competitive Landscape</span>
+        <span class="page-num">9</span>
+    </div>
+
+    <div class="toc-item">
+        <span class="section-num">4.</span>
+        <span class="section-title">Technical Feasibility</span>
+        <span class="page-num">12</span>
+    </div>
+
+    <div class="toc-item">
+        <span class="section-num">5.</span>
+        <span class="section-title">Financial Model</span>
+        <span class="page-num">15</span>
+    </div>
+
+    <div class="toc-item">
+        <span class="section-num">6.</span>
+        <span class="section-title">Risk Assessment</span>
+        <span class="page-num">20</span>
+    </div>
+
+    <div class="toc-item">
+        <span class="section-num">7.</span>
+        <span class="section-title">Optimization Recommendations</span>
+        <span class="page-num">24</span>
+    </div>
+
+    <div class="toc-item">
+        <span class="section-num">8.</span>
+        <span class="section-title">Appendix: Questions for Client Discussion</span>
+        <span class="page-num">28</span>
+    </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="section-page">
+    <div class="section-header">1. Executive Summary</div>
+
+    <div class="exec-summary">
+        <p><strong>CremoLogix v2</strong> is positioned to become the first purpose-built, end-to-end lending platform specifically designed for Community Development Financial Institutions (CDFIs). The platform addresses a significant market gap with 1,500 CDFIs in the United States managing $272 billion in cumulative lending volume, yet relying on spreadsheets, generic loan software, or paper processes.</p>
+    </div>
+
+    <h2>Key Metrics</h2>
+
+    <div class="metrics-grid">
+        <div class="metric-box navy">
+            <div class="value">$40B</div>
+            <div class="label">Annual CDFI Lending</div>
+        </div>
+        <div class="metric-box teal">
+            <div class="value">16%</div>
+            <div class="label">YoY Growth</div>
+        </div>
+        <div class="metric-box gold">
+            <div class="value">1,500</div>
+            <div class="label">Certified CDFIs</div>
+        </div>
+        <div class="metric-box navy">
+            <div class="value">$3.6-25M</div>
+            <div class="label">Total Addressable Market (ARR)</div>
+        </div>
+        <div class="metric-box teal">
+            <div class="value">$600-800K</div>
+            <div class="label">Optimized MVP Cost</div>
+        </div>
+        <div class="metric-box gold">
+            <div class="value">Year 5-6</div>
+            <div class="label">Break-Even Projection</div>
+        </div>
+    </div>
+
+    <h2>Market Opportunity</h2>
+    <p>The CDFI market presents a compelling opportunity for a purpose-built solution:</p>
+    <ul>
+        <li><strong>Total Addressable Market:</strong> 600 CDFI loan funds with $3.6-25M ARR potential at full adoption</li>
+        <li><strong>Realistic Serviceable Market:</strong> $2.59M ARR at 20% penetration (120 CDFIs) over 5 years</li>
+        <li><strong>Digital Lending Market Growth:</strong> $28.2B in 2026, growing at 17-23% CAGR to $104-192B by 2032-2035</li>
+        <li><strong>Strong Demand Signals:</strong> 76% of CDFIs report increased demand, with technology and staffing cited as top operational challenges</li>
+    </ul>
+
+    <div class="callout success">
+        <h3>Key Recommendation</h3>
+        <p><strong>PROCEED</strong> with CremoLogix v2 development with critical optimizations: simplified MVP scope (6-9 months, $600-800K), design partner program (3-5 CDFIs), tiered integration strategy (50-65% cost reduction), opt-in monitoring model, and hybrid pricing. These optimizations reduce capital requirements from $10.9M to $7-8M while accelerating time to market by 67%.</p>
+    </div>
+
+    <h2>Competitive Differentiation</h2>
+    <p><strong>No direct competition exists.</strong> Generic platforms (LoanPro, Numerated, Salesforce) lack CDFI-specific features. CDFI-focused platforms (LendingFront, Fundingo) lack innovation. CremoLogix's 20 unique mechanisms create defensible differentiation:</p>
+
+    <div class="metrics-grid">
+        <div class="metric-box green">
+            <div class="value">5</div>
+            <div class="label">Unique Capabilities from Persistent Connections</div>
+        </div>
+        <div class="metric-box green">
+            <div class="value">0</div>
+            <div class="label">Competitors with Continuous Monitoring</div>
+        </div>
+        <div class="metric-box green">
+            <div class="value">0</div>
+            <div class="label">Competitors with Mentorship Integration</div>
+        </div>
+    </div>
+</div>
+
+<!-- MARKET RESEARCH -->
+<div class="section-page page-break">
+    <div class="section-header">2. Market Research</div>
+
+    <h2>CDFI Industry Overview</h2>
+
+    <h3>Market Size & Growth</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+                <th>Source</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Certified CDFIs (US)</td>
+                <td><strong>1,500</strong></td>
+                <td>CDFI Fund Data 2023</td>
+            </tr>
+            <tr>
+                <td>Annual Loan Originations (2023)</td>
+                <td><strong>$40 billion</strong></td>
+                <td>CDFI Fund Data</td>
+            </tr>
+            <tr>
+                <td>Year-over-Year Growth</td>
+                <td><strong>16%</strong></td>
+                <td>CDFI Fund Data</td>
+            </tr>
+            <tr>
+                <td>Cumulative Lending Volume (2005-2023)</td>
+                <td><strong>$272.3 billion</strong></td>
+                <td>CDFI Fund Data</td>
+            </tr>
+            <tr>
+                <td>Capital Deployment Growth (2024-2026)</td>
+                <td><strong>64%</strong> ($1.07B → $1.76B)</td>
+                <td>Mastercard Strive USA</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Lending Volume Breakdown by Institution Type (2023)</h3>
+
+    <div class="chart-bar">
+        <div class="label">CDFI Credit Unions</div>
+        <div class="bar-container">
+            <div class="bar" style="width: 68%">$33.1B (68%)</div>
+        </div>
+    </div>
+
+    <div class="chart-bar">
+        <div class="label">Other</div>
+        <div class="bar-container">
+            <div class="bar" style="width: 20%">$9.5B (20%)</div>
+        </div>
+    </div>
+
+    <div class="chart-bar">
+        <div class="label">Loan Funds</div>
+        <div class="bar-container">
+            <div class="bar" style="width: 10%">$5.0B (10%)</div>
+        </div>
+    </div>
+
+    <div class="chart-bar">
+        <div class="label">Banks/Thrifts</div>
+        <div class="bar-container">
+            <div class="bar" style="width: 2%">$860M (2%)</div>
+        </div>
+    </div>
+
+    <h3>Demand Trends (2025-2026)</h3>
+
+    <div class="callout info no-break">
+        <h3>Strong Demand Growth</h3>
+        <ul>
+            <li><strong>76%</strong> of loan fund respondents reported increased demand in 2025</li>
+            <li><strong>75%</strong> expect continued demand growth throughout 2025-2026</li>
+            <li><strong>88%</strong> cite new customers as primary demand driver</li>
+            <li><strong>68%</strong> report expanded needs from existing customers</li>
+        </ul>
+        <p><em>Source: 2025 Federal Reserve CDFI Survey (Richmond Fed)</em></p>
+    </div>
+
+    <h3>Key Operational Challenges</h3>
+
+    <div class="callout warning no-break">
+        <h3>Top Barriers Facing CDFIs</h3>
+        <ol>
+            <li><strong>Staffing Shortages</strong> — Lack of qualified candidates, limited training resources, difficulty retaining talent</li>
+            <li><strong>Technology Limitations</strong> — High costs, legacy systems, limited digital capabilities, integration challenges</li>
+            <li><strong>Capital Constraints</strong> — Cost of debt capital, insufficient operational funding, limited ability to meet surging demand</li>
+        </ol>
+        <p><strong>Technology Innovation Priority:</strong> OFN positioning CDFIs to leverage ethical AI, shared services models, and technology to improve productivity. Digital lending market projected at <strong>$20.5 billion by 2026</strong> (double 2021 levels).</p>
+    </div>
+
+    <h3>Digital Lending Platform Market</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Market Size</th>
+                <th>CAGR</th>
+                <th>Growth Driver</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2025</td>
+                <td>$23.28 billion</td>
+                <td>—</td>
+                <td>Post-COVID acceleration</td>
+            </tr>
+            <tr>
+                <td>2026</td>
+                <td>$28.2 billion</td>
+                <td>21%</td>
+                <td>Cloud adoption, API-first solutions</td>
+            </tr>
+            <tr>
+                <td>2032</td>
+                <td>$104.04 billion</td>
+                <td>17.29%</td>
+                <td>Fintech-bank collaboration</td>
+            </tr>
+            <tr>
+                <td>2035 (alt.)</td>
+                <td>$192.16 billion</td>
+                <td>23.5%</td>
+                <td>AI/ML adoption, instant processing</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Market Opportunity Analysis</h3>
+
+    <div class="metrics-grid no-break">
+        <div class="metric-box navy">
+            <div class="value">600</div>
+            <div class="label">CDFI Loan Funds (Primary Target)</div>
+        </div>
+        <div class="metric-box teal">
+            <div class="value">$500-3,500</div>
+            <div class="label">Monthly SaaS Pricing Range</div>
+        </div>
+        <div class="metric-box gold">
+            <div class="value">$3.6-25M</div>
+            <div class="label">TAM (100% Adoption)</div>
+        </div>
+    </div>
+
+    <div class="callout success no-break">
+        <h3>Realistic Serviceable Addressable Market (SAM)</h3>
+        <p><strong>Target: 20% of CDFI loan funds over 5 years = 120 CDFIs</strong></p>
+        <ul>
+            <li>Blended average price: $1,800/month</li>
+            <li><strong>SAM: $2.59M ARR</strong> at 20% penetration</li>
+        </ul>
+
+        <p><strong>Secondary Markets (Future Expansion):</strong></p>
+        <ul>
+            <li>CDFI Credit Unions (~300)</li>
+            <li>Small community banks (~4,500)</li>
+            <li>Nonprofit microlenders (~500)</li>
+            <li><strong>Expanded TAM: $50M+ ARR potential</strong></li>
+        </ul>
+    </div>
+</div>
+
+<!-- COMPETITIVE LANDSCAPE -->
+<div class="section-page page-break">
+    <div class="section-header">3. Competitive Landscape</div>
+
+    <h2>Competitive Positioning Matrix</h2>
+
+    <table class="feature-matrix">
+        <thead>
+            <tr>
+                <th>Platform</th>
+                <th>Origination</th>
+                <th>Servicing</th>
+                <th>Continuous Monitoring</th>
+                <th>Mentorship</th>
+                <th>CDFI Focus</th>
+                <th>Network Effects</th>
+                <th>Pricing</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="highlight">
+                <td><strong>CremoLogix</strong></td>
+                <td><span class="check-full">✓✓✓</span></td>
+                <td><span class="check-full">✓✓✓</span></td>
+                <td><span class="check-full">✓✓✓</span></td>
+                <td><span class="check-full">✓✓✓</span></td>
+                <td><span class="check-full">✓✓✓</span></td>
+                <td><span class="check-full">✓✓✓</span></td>
+                <td>$$</td>
+            </tr>
+            <tr>
+                <td>LoanPro</td>
+                <td><span class="check-partial">✓✓</span></td>
+                <td><span class="check-full">✓✓✓</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td>$$$</td>
+            </tr>
+            <tr>
+                <td>Numerated</td>
+                <td><span class="check-full">✓✓✓</span></td>
+                <td><span class="check-partial">✓✓</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td>$$$$</td>
+            </tr>
+            <tr>
+                <td>Salesforce FSC</td>
+                <td><span class="check-partial">✓✓</span></td>
+                <td><span class="check-partial">✓</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td>$$$$$</td>
+            </tr>
+            <tr>
+                <td>LendingFront</td>
+                <td><span class="check-partial">✓✓</span></td>
+                <td><span class="check-partial">✓✓</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-partial">✓✓</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td>$$</td>
+            </tr>
+            <tr>
+                <td>Fundingo</td>
+                <td><span class="check-partial">✓</span></td>
+                <td><span class="check-partial">✓✓</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td><span class="check-partial">✓✓</span></td>
+                <td><span class="check-none">✗</span></td>
+                <td>$$$</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="font-size: 0.9em; color: #666; margin-top: 1em;"><strong>Legend:</strong> ✓✓✓ = Best-in-class | ✓✓ = Strong | ✓ = Basic | ✗ = Not offered</p>
+
+    <h2>Five Key Competitive Gaps</h2>
+
+    <div class="metrics-grid no-break">
+        <div class="metric-box green">
+            <div class="value">1</div>
+            <div class="label">Continuous Post-Closing Monitoring</div>
+        </div>
+        <div class="metric-box green">
+            <div class="value">2</div>
+            <div class="label">Mentorship Integration (Denials → Pipeline)</div>
+        </div>
+        <div class="metric-box green">
+            <div class="value">3</div>
+            <div class="label">Network Effects (Anonymous Benchmarking)</div>
+        </div>
+        <div class="metric-box green">
+            <div class="value">4</div>
+            <div class="label">Purpose-Built for CDFIs</div>
+        </div>
+        <div class="metric-box green">
+            <div class="value">5</div>
+            <div class="label">Predictive Delinquency Engine</div>
+        </div>
+    </div>
+
+    <div class="callout success no-break">
+        <h3>CremoLogix Competitive Advantage</h3>
+        <p><strong>Persistent data connections</strong> enable 5 unique capabilities no competitor offers:</p>
+        <ol>
+            <li><strong>Continuous Monitoring:</strong> Real-time health score tracking post-closing</li>
+            <li><strong>Predictive Delinquency:</strong> Alert lenders 30-60 days before payment issues (proactive vs. reactive)</li>
+            <li><strong>Virtual CFO:</strong> Monthly insights delivered to borrowers to help them grow</li>
+            <li><strong>Pre-Approved Renewal:</strong> No new application required at maturity</li>
+            <li><strong>Covenant Compliance:</strong> Automated tracking, alerts when thresholds approached</li>
+        </ol>
+        <p><strong>Mentorship-to-loan pipeline</strong> creates revenue and future origination from denied applicants—no competitor has this.</p>
+        <p><strong>Anonymous benchmarking network</strong> creates competitive moat—value increases with every CDFI added.</p>
+    </div>
+
+    <h2>Competitor Profiles</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Competitor</th>
+                <th>Positioning</th>
+                <th>Key Strengths</th>
+                <th>Key Weaknesses</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>LoanPro</strong></td>
+                <td>Cloud-native LMS for tech-forward lenders</td>
+                <td>Modern architecture, strong API, 30M+ accounts</td>
+                <td>Servicing-focused (not origination-first), no CDFI features</td>
+            </tr>
+            <tr>
+                <td><strong>Numerated</strong></td>
+                <td>Digital lending for banks & credit unions</td>
+                <td>$50B processed, fast deployment (48 hours)</td>
+                <td>Bank-focused (not CDFI), enterprise pricing</td>
+            </tr>
+            <tr>
+                <td><strong>Salesforce FSC</strong></td>
+                <td>Enterprise CRM with digital lending module</td>
+                <td>Enterprise-grade, highly extensible, AI (Einstein)</td>
+                <td>Requires customization, expensive ($150-300/user), overkill for CDFIs</td>
+            </tr>
+            <tr>
+                <td><strong>LendingFront</strong></td>
+                <td>"Only end-to-end business lending for CDFIs"</td>
+                <td>CDFI-specific focus</td>
+                <td>Limited innovation, no monitoring/mentorship/network effects</td>
+            </tr>
+            <tr>
+                <td><strong>Fundingo</strong></td>
+                <td>Salesforce-based CDFI solution</td>
+                <td>CDFI focus, cloud-based SaaS</td>
+                <td>Built on Salesforce (inherits cost/complexity issues)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- TECHNICAL FEASIBILITY -->
+<div class="section-page page-break">
+    <div class="section-header">4. Technical Feasibility</div>
+
+    <h2>Integration Validation</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Integration</th>
+                <th>Purpose</th>
+                <th>Feasibility</th>
+                <th>Risk Level</th>
+                <th>Key Findings</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="highlight">
+                <td><strong>Plaid</strong></td>
+                <td>Banking data, continuous monitoring</td>
+                <td><span class="badge low">Highly Feasible</span></td>
+                <td><span class="badge low">Low</span></td>
+                <td>Webhooks enable real-time monitoring, cursors valid 1+ year, 9,697+ institutions</td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Codat</strong></td>
+                <td>Accounting (QB, Xero, 35+ platforms)</td>
+                <td><span class="badge low">Highly Feasible</span></td>
+                <td><span class="badge low">Low</span></td>
+                <td>Real-time sync, standardized data model, SOC 2 compliant</td>
+            </tr>
+            <tr class="warning">
+                <td><strong>Ocrolus</strong></td>
+                <td>Document parsing, fraud detection</td>
+                <td><span class="badge medium">Feasible with Caveats</span></td>
+                <td><span class="badge medium">Medium</span></td>
+                <td>Claims >99% accuracy, but mixed real-world results; require validation workflows</td>
+            </tr>
+            <tr class="warning">
+                <td><strong>IRS IVES</strong></td>
+                <td>Tax transcripts</td>
+                <td><span class="badge medium">Feasible but Expensive</span></td>
+                <td><span class="badge high">High Cost</span></td>
+                <td>Near real-time delivery, but $25-50/transcript = 71% of integration costs</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout success no-break">
+        <h3>Persistent Connection Architecture: VALIDATED</h3>
+        <p>The core architectural decision—keeping Plaid and Codat connections active post-closing—is <strong>not only feasible but represents best practice in modern fintech</strong>. Both APIs are designed for persistent, ongoing connections with:</p>
+        <ul>
+            <li><strong>Webhooks</strong> for real-time event notifications (no polling needed)</li>
+            <li><strong>Connection management dashboards</strong> for monitoring and control</li>
+            <li><strong>Borrower consent mechanisms</strong> built-in</li>
+            <li><strong>Token-based authentication</strong> with encryption at rest and in transit</li>
+            <li><strong>Connection lifecycle management</strong> (handle disconnects, re-auth, expiration)</li>
+        </ul>
+        <p><strong>This single architectural decision enables five unique capabilities:</strong> Continuous Monitoring, Predictive Delinquency, Virtual CFO, Pre-Approved Renewal, Covenant Compliance.</p>
+    </div>
+
+    <h2>Predictive Delinquency Engine</h2>
+
+    <div class="callout info no-break">
+        <h3>Feasibility: Achievable with Phased Approach</h3>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="year">Phase 1 (MVP)</div>
+                <div class="milestone"><strong>Rule-Based Alerts</strong> — Revenue down 3 consecutive months, cash reserves below threshold, new debt detected, margin compression >15%</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">Phase 2 (6-12 months)</div>
+                <div class="milestone"><strong>ML Model (Basic)</strong> — Trained on 200+ loans with outcomes, supervised learning (gradient boosting), features: cash flow trends, revenue trends, transaction velocity</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">Phase 3 (18-24 months)</div>
+                <div class="milestone"><strong>Sophisticated ML Model</strong> — Trained on 500+ loans, continuous retraining, neural network, predictive accuracy >75%</div>
+            </div>
+        </div>
+
+        <p><strong>Data Requirements:</strong> Continuous transaction data (Plaid), accounting data (Codat), historical loan performance, credit monitoring data.</p>
+        <p><strong>Model Type:</strong> Supervised learning with target variable = delinquency within 30-60 days.</p>
+    </div>
+
+    <h2>Security & Compliance Roadmap</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Requirement</th>
+                <th>Standard</th>
+                <th>Annual Cost</th>
+                <th>Priority</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>SOC 2 Type II Certification</td>
+                <td>Industry standard for SaaS security</td>
+                <td>$50-100K</td>
+                <td><span class="badge critical">Critical</span></td>
+            </tr>
+            <tr>
+                <td>GLBA Compliance</td>
+                <td>Privacy notices, safeguarding rules</td>
+                <td>Included in legal</td>
+                <td><span class="badge critical">Critical</span></td>
+            </tr>
+            <tr>
+                <td>FCRA Compliance</td>
+                <td>Credit report usage, adverse action</td>
+                <td>Included in legal</td>
+                <td><span class="badge critical">Critical</span></td>
+            </tr>
+            <tr>
+                <td>ECOA Compliance</td>
+                <td>Fair lending, no discrimination</td>
+                <td>Included in legal</td>
+                <td><span class="badge critical">Critical</span></td>
+            </tr>
+            <tr>
+                <td>Penetration Testing</td>
+                <td>Quarterly security audits</td>
+                <td>$20-40K</td>
+                <td><span class="badge high">High</span></td>
+            </tr>
+            <tr>
+                <td>Cyber Insurance</td>
+                <td>$5M+ coverage</td>
+                <td>$25-50K</td>
+                <td><span class="badge high">High</span></td>
+            </tr>
+            <tr>
+                <td>Security Infrastructure</td>
+                <td>AES-256, TLS 1.3, MFA, audit trails</td>
+                <td>$200-300K (build)</td>
+                <td><span class="badge critical">Critical</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="metrics-grid no-break">
+        <div class="metric-box red">
+            <div class="value">$445-740K</div>
+            <div class="label">Annual Security & Compliance Cost</div>
+        </div>
+        <div class="metric-box amber">
+            <div class="value">27%</div>
+            <div class="label">Of Breaches Target Fintech</div>
+        </div>
+        <div class="metric-box red">
+            <div class="value">$5.9M</div>
+            <div class="label">Average Breach Cost</div>
+        </div>
+    </div>
+
+    <h2>Technology Stack Recommendation</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Layer</th>
+                <th>Technology</th>
+                <th>Rationale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Frontend</td>
+                <td>React (web), PWA (mobile)</td>
+                <td>Industry standard, large talent pool, excellent for complex UIs</td>
+            </tr>
+            <tr>
+                <td>Backend</td>
+                <td>Node.js + Express</td>
+                <td>Fast, event-driven (good for real-time), large ecosystem</td>
+            </tr>
+            <tr>
+                <td>Database</td>
+                <td>PostgreSQL</td>
+                <td>Mature, ACID-compliant, excellent for financial data</td>
+            </tr>
+            <tr>
+                <td>Cache</td>
+                <td>Redis</td>
+                <td>High-performance, session management, pub/sub for real-time</td>
+            </tr>
+            <tr>
+                <td>Cloud</td>
+                <td>AWS (multi-region)</td>
+                <td>Market leader, best fintech compliance support, broad service portfolio</td>
+            </tr>
+            <tr>
+                <td>AI/ML</td>
+                <td>TensorFlow/PyTorch, OpenAI API</td>
+                <td>Industry standard ML frameworks, GPT for credit memos/clarifications</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout success">
+        <h3>Assessment: SOLID, STANDARD FINTECH STACK</h3>
+        <p>This stack is low-risk, hire-able, and used by successful lending platforms (LoanPro, Numerated). No exotic technologies. All components proven at scale in fintech environments.</p>
+    </div>
+</div>
+
+<!-- FINANCIAL MODEL -->
+<div class="section-page page-break">
+    <div class="section-header">5. Financial Model</div>
+
+    <h2>MVP Development Cost Breakdown</h2>
+
+    <h3>Team Composition (9 months)</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Count</th>
+                <th>Annual Salary</th>
+                <th>9-Month Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Engineering Manager / Tech Lead</td>
+                <td>1</td>
+                <td>$180-220K</td>
+                <td>$135-165K</td>
+            </tr>
+            <tr>
+                <td>Senior Full-Stack Engineers</td>
+                <td>3</td>
+                <td>$160-200K each</td>
+                <td>$360-450K</td>
+            </tr>
+            <tr>
+                <td>Senior Backend Engineer (Integrations)</td>
+                <td>1</td>
+                <td>$170-210K</td>
+                <td>$128-158K</td>
+            </tr>
+            <tr>
+                <td>DevOps Engineer</td>
+                <td>1</td>
+                <td>$150-180K</td>
+                <td>$113-135K</td>
+            </tr>
+            <tr>
+                <td>QA Engineer</td>
+                <td>1</td>
+                <td>$120-140K</td>
+                <td>$90-105K</td>
+            </tr>
+            <tr>
+                <td>UI/UX Designer</td>
+                <td>1</td>
+                <td>$130-160K</td>
+                <td>$98-120K</td>
+            </tr>
+            <tr>
+                <td>Product Manager</td>
+                <td>1</td>
+                <td>$150-180K</td>
+                <td>$113-135K</td>
+            </tr>
+            <tr class="highlight">
+                <td colspan="3"><strong>Total Team Cost (9 months)</strong></td>
+                <td><strong>$1.04-1.27M</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Additional MVP Costs</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Infrastructure (AWS, staging/prod)</td>
+                <td>$15-25K</td>
+            </tr>
+            <tr>
+                <td>Third-party services (Plaid, monitoring, email)</td>
+                <td>$10-15K</td>
+            </tr>
+            <tr>
+                <td>Legal/compliance consultation</td>
+                <td>$50-75K</td>
+            </tr>
+            <tr>
+                <td>Design/branding</td>
+                <td>$25-40K</td>
+            </tr>
+            <tr>
+                <td>Security audit</td>
+                <td>$30-50K</td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Additional Costs Total</strong></td>
+                <td><strong>$130-205K</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="metrics-grid no-break">
+        <div class="metric-box red">
+            <div class="value">$1.18-1.48M</div>
+            <div class="label">Original MVP Cost (Full Scope)</div>
+        </div>
+        <div class="metric-box green">
+            <div class="value">$600-800K</div>
+            <div class="label">Optimized MVP Cost (Simplified Scope)</div>
+        </div>
+        <div class="metric-box gold">
+            <div class="value">33-50%</div>
+            <div class="label">Cost Reduction</div>
+        </div>
+    </div>
+
+    <h2>Integration Cost Analysis (100 Applications/Month)</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Integration</th>
+                <th>Monthly Cost</th>
+                <th>Annual Cost</th>
+                <th>% of Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="critical">
+                <td><strong>IRS Transcripts (2 per application)</strong></td>
+                <td>$7,000</td>
+                <td>$84,000</td>
+                <td><strong>71%</strong></td>
+            </tr>
+            <tr>
+                <td>Plaid (100 new + 200 ongoing connections)</td>
+                <td>$600</td>
+                <td>$7,200</td>
+                <td>6%</td>
+            </tr>
+            <tr>
+                <td>Codat (50 new + 100 ongoing connections)</td>
+                <td>$350</td>
+                <td>$4,200</td>
+                <td>4%</td>
+            </tr>
+            <tr>
+                <td>Credit pulls & monitoring</td>
+                <td>$600</td>
+                <td>$7,200</td>
+                <td>6%</td>
+            </tr>
+            <tr>
+                <td>Argyle (payroll verification)</td>
+                <td>$300</td>
+                <td>$3,600</td>
+                <td>3%</td>
+            </tr>
+            <tr>
+                <td>Other (KYC, property, docs, e-sign, etc.)</td>
+                <td>$990</td>
+                <td>$11,880</td>
+                <td>10%</td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>TOTAL</strong></td>
+                <td><strong>$9,840</strong></td>
+                <td><strong>$118,080</strong></td>
+                <td><strong>100%</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout critical no-break">
+        <h3>Key Finding: IRS Transcripts Dominate Integration Costs</h3>
+        <p>At $70/borrower (2 transcripts × $35), IRS IVES represents <strong>71% of per-application integration costs</strong>. This validates the need for:</p>
+        <ul>
+            <li><strong>Tiered integration strategy</strong> — Not all loans need IRS verification (microloans, existing customers)</li>
+            <li><strong>Application fee</strong> — $100-250 to cover integration costs</li>
+            <li><strong>Pass-through pricing</strong> — Build integration costs into pricing model</li>
+        </ul>
+        <p><strong>Optimization Impact:</strong> Tiered strategy reduces annual integration costs from <strong>$118K to $40-60K (50-65% reduction)</strong>.</p>
+    </div>
+
+    <h2>Annual Operating Costs (Post-Launch)</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Annual Cost</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Engineering (5-6 engineers post-MVP)</td>
+                <td>$900K - $1.1M</td>
+                <td>Ongoing development, maintenance, features</td>
+            </tr>
+            <tr>
+                <td>Infrastructure (AWS at scale)</td>
+                <td>$240K - $480K</td>
+                <td>100 CDFIs, 200K loans, multi-region redundancy</td>
+            </tr>
+            <tr>
+                <td>Integrations (at scale)</td>
+                <td>$40-60K (optimized)</td>
+                <td>With tiered integration strategy</td>
+            </tr>
+            <tr>
+                <td>Compliance & Security</td>
+                <td>$170K - $315K</td>
+                <td>SOC 2, pen testing, legal, cyber insurance</td>
+            </tr>
+            <tr>
+                <td>Customer Success</td>
+                <td>$290K - $370K</td>
+                <td>2 CSMs, 1 support engineer</td>
+            </tr>
+            <tr>
+                <td>Sales & Marketing</td>
+                <td>$470K - $700K</td>
+                <td>2 sales reps, 1 marketing manager, campaigns</td>
+            </tr>
+            <tr>
+                <td>Executive & Operations</td>
+                <td>$680K - $950K</td>
+                <td>CEO, COO/CFO, BA, office/admin</td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>TOTAL ANNUAL OPERATING COSTS</strong></td>
+                <td><strong>$2.8M - $4.0M</strong></td>
+                <td>Scale adjusts based on growth</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Revenue Model & Pricing Tiers</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tier</th>
+                <th>Loans/Year</th>
+                <th>Portfolio Size</th>
+                <th>Monthly Price</th>
+                <th>Annual Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Starter</strong></td>
+                <td>Up to 25</td>
+                <td>$5M</td>
+                <td>$500</td>
+                <td>$6,000</td>
+            </tr>
+            <tr>
+                <td><strong>Growth</strong></td>
+                <td>Up to 100</td>
+                <td>$20M</td>
+                <td>$1,500</td>
+                <td>$18,000</td>
+            </tr>
+            <tr>
+                <td><strong>Scale</strong></td>
+                <td>Up to 500</td>
+                <td>$100M</td>
+                <td>$3,500</td>
+                <td>$42,000</td>
+            </tr>
+            <tr>
+                <td><strong>Enterprise</strong></td>
+                <td>Unlimited</td>
+                <td>Custom</td>
+                <td>Custom</td>
+                <td>Custom (negotiated)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout info">
+        <h3>Hybrid Pricing Alternative (Recommended Optimization)</h3>
+        <p><strong>Lower base SaaS fee + success fee per funded loan</strong></p>
+        <ul>
+            <li>Starter: $250/month + $100/funded loan</li>
+            <li>Growth: $750/month + $75/funded loan</li>
+            <li>Scale: $1,500/month + $50/funded loan</li>
+        </ul>
+        <p><strong>Benefits:</strong> Lower barrier to entry, aligns incentives, scales with usage. Small CDFIs pay less, high-volume CDFIs pay more.</p>
+    </div>
+
+    <h2>5-Year Revenue & Break-Even Projection</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>CDFIs</th>
+                <th>Avg Price</th>
+                <th>ARR</th>
+                <th>Total Revenue</th>
+                <th>Operating Costs</th>
+                <th>Net Income</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>10</td>
+                <td>$12,000</td>
+                <td>$120K</td>
+                <td>$132K</td>
+                <td>$2.87M</td>
+                <td style="color: var(--red);"><strong>-$2.74M</strong></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>30</td>
+                <td>$15,000</td>
+                <td>$450K</td>
+                <td>$485K</td>
+                <td>$3.0M</td>
+                <td style="color: var(--red);"><strong>-$2.52M</strong></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>60</td>
+                <td>$18,000</td>
+                <td>$1.08M</td>
+                <td>$1.15M</td>
+                <td>$3.2M</td>
+                <td style="color: var(--red);"><strong>-$2.05M</strong></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>100</td>
+                <td>$20,000</td>
+                <td>$2.0M</td>
+                <td>$2.12M</td>
+                <td>$3.4M</td>
+                <td style="color: var(--red);"><strong>-$1.28M</strong></td>
+            </tr>
+            <tr class="warning">
+                <td><strong>5</strong></td>
+                <td><strong>150</strong></td>
+                <td><strong>$22,000</strong></td>
+                <td><strong>$3.3M</strong></td>
+                <td><strong>$3.48M</strong></td>
+                <td><strong>$3.6M</strong></td>
+                <td style="color: var(--amber);"><strong>-$120K</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>6</strong></td>
+                <td><strong>200+</strong></td>
+                <td><strong>$25,000</strong></td>
+                <td><strong>$5M+</strong></td>
+                <td><strong>$5.24M</strong></td>
+                <td><strong>$3.8M</strong></td>
+                <td style="color: var(--green);"><strong>+$1.44M</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="metrics-grid no-break">
+        <div class="metric-box red">
+            <div class="value">$7.3M</div>
+            <div class="label">Cumulative Losses (Years 1-5)</div>
+        </div>
+        <div class="metric-box amber">
+            <div class="value">$7-8M</div>
+            <div class="label">Total Capital Required (with buffer)</div>
+        </div>
+        <div class="metric-box green">
+            <div class="value">Year 5-6</div>
+            <div class="label">Break-Even Projection</div>
+        </div>
+    </div>
+
+    <div class="callout critical no-break">
+        <h3>Capital Raising Strategy</h3>
+        <ul>
+            <li><strong>Seed Round ($2M):</strong> MVP development + Year 1 operations → <strong>Milestone:</strong> 10 design partners, MVP live</li>
+            <li><strong>Series A ($5-6M):</strong> Years 2-4 operations + scale → <strong>Milestone:</strong> 30 CDFIs, proven unit economics, clear path to 100 CDFIs</li>
+            <li><strong>Break-Even:</strong> Year 5-6 at 150-200 CDFIs assuming 25-30% CAGR and 5% annual churn</li>
+        </ul>
+    </div>
+</div>
+
+<!-- RISK ASSESSMENT -->
+<div class="section-page page-break">
+    <div class="section-header">6. Risk Assessment</div>
+
+    <h2>Risk Matrix Overview</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Risk</th>
+                <th>Probability</th>
+                <th>Impact</th>
+                <th>Severity</th>
+                <th>Mitigation Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="critical">
+                <td><strong>1. Cash Runway Depletion</strong></td>
+                <td>Medium</td>
+                <td>Catastrophic</td>
+                <td><span class="badge critical">CRITICAL</span></td>
+                <td>$7-8M capital requirement</td>
+            </tr>
+            <tr class="critical">
+                <td><strong>2. Data Security Breach</strong></td>
+                <td>Medium</td>
+                <td>Catastrophic</td>
+                <td><span class="badge critical">CRITICAL</span></td>
+                <td>$445-740K annually</td>
+            </tr>
+            <tr class="warning">
+                <td><strong>3. CDFI Adoption Resistance</strong></td>
+                <td>High</td>
+                <td>High</td>
+                <td><span class="badge high">HIGH</span></td>
+                <td>$540-730K annually</td>
+            </tr>
+            <tr class="warning">
+                <td><strong>4. AI Bias / Fair Lending Violation</strong></td>
+                <td>Medium</td>
+                <td>High</td>
+                <td><span class="badge high">HIGH</span></td>
+                <td>$115-205K annually</td>
+            </tr>
+            <tr>
+                <td><strong>5. Integration Cost Overruns</strong></td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td><span class="badge medium">MEDIUM</span></td>
+                <td>Pass-through pricing model</td>
+            </tr>
+            <tr>
+                <td><strong>6. Regulatory Changes</strong></td>
+                <td>Low</td>
+                <td>High</td>
+                <td><span class="badge medium">MEDIUM</span></td>
+                <td>$75-125K annually</td>
+            </tr>
+            <tr>
+                <td><strong>7. Technical Talent Retention</strong></td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td><span class="badge medium">MEDIUM</span></td>
+                <td>Built into compensation</td>
+            </tr>
+            <tr>
+                <td><strong>8. Competitive Response</strong></td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td><span class="badge medium">MEDIUM</span></td>
+                <td>Network effects moat</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Critical Risk 1: Data Security Breach</h2>
+
+    <div class="callout critical no-break">
+        <h3>Industry Context (2025)</h3>
+        <div class="metrics-grid">
+            <div class="metric-box red">
+                <div class="value">27%</div>
+                <div class="label">Of All Breaches Target Fintech</div>
+            </div>
+            <div class="metric-box red">
+                <div class="value">$5.9M</div>
+                <div class="label">Average Breach Cost</div>
+            </div>
+            <div class="metric-box red">
+                <div class="value">40%</div>
+                <div class="label">Fintechs Hit by Ransomware (2025)</div>
+            </div>
+        </div>
+
+        <p><strong>CremoLogix Specific Vulnerabilities:</strong></p>
+        <ul>
+            <li><strong>Persistent data connections</strong> = larger attack surface (ongoing access to bank/accounting data)</li>
+            <li><strong>Multi-tenant architecture</strong> = one breach could expose multiple CDFIs</li>
+            <li><strong>Third-party integrations</strong> = supply chain risk (Plaid, Codat, Ocrolus)</li>
+        </ul>
+
+        <p><strong>Mitigation Strategy:</strong></p>
+        <ul>
+            <li>SOC 2 Type II certification (Year 1 priority)</li>
+            <li>AES-256 encryption at rest, TLS 1.3 in transit, field-level PII encryption</li>
+            <li>Zero-trust architecture, API rate limiting, anomaly detection</li>
+            <li>Quarterly penetration testing, bug bounty program</li>
+            <li>Incident response plan with tabletop exercises</li>
+            <li>Cyber insurance ($5M+ coverage)</li>
+        </ul>
+
+        <p><strong>Total Mitigation Cost: $445-740K annually</strong></p>
+    </div>
+
+    <h2>High Risk 2: AI Bias & Fair Lending Violations</h2>
+
+    <div class="callout warning no-break">
+        <h3>Regulatory Landscape (2025-2026)</h3>
+        <ul>
+            <li><strong>CFPB Guidance:</strong> "No exceptions to federal consumer financial protection laws for new technologies"</li>
+            <li><strong>Massachusetts AG (July 2025):</strong> Settled with student loan company over AI models producing disparate impact based on race and immigration status</li>
+            <li><strong>OCC Requirements:</strong> Model explainability, bias detection, ongoing monitoring, less discriminatory alternatives analysis</li>
+        </ul>
+
+        <p><strong>CremoLogix Vulnerabilities:</strong></p>
+        <ul>
+            <li><strong>Predictive Delinquency Engine:</strong> If trained on biased historical data, will perpetuate bias</li>
+            <li><strong>Deal Health Score:</strong> Weighted scoring could systematically disadvantage certain groups</li>
+            <li><strong>Guesstimate Delta:</strong> Could disadvantage non-native speakers, immigrant communities</li>
+        </ul>
+
+        <p><strong>Mitigation Strategy:</strong></p>
+        <ul>
+            <li><strong>Continuous Fair Lending Monitor</strong> (unique mechanism #9) — Real-time disparate impact detection</li>
+            <li>Statistical testing: Chi-square, logistic regression (80% rule, p < 0.05 thresholds)</li>
+            <li>Exclude protected class variables, test for proxy variables</li>
+            <li>Adversarial debiasing, less discriminatory alternatives (LDA) analysis</li>
+            <li>Model documentation, model cards, explainability (SHAP, LIME)</li>
+            <li>Human override capability, quarterly model audits</li>
+        </ul>
+
+        <p><strong>Total Mitigation Cost: $115-205K annually</strong></p>
+    </div>
+
+    <h2>High Risk 3: CDFI Adoption Resistance</h2>
+
+    <div class="callout warning no-break">
+        <h3>Technology Adoption Barriers</h3>
+        <ul>
+            <li><strong>Financial constraints:</strong> Limited budgets for new systems ($500-3,500/month is significant)</li>
+            <li><strong>Skill gaps:</strong> Staff lack technical proficiency, limited training resources</li>
+            <li><strong>Resistance to change:</strong> Cultural barrier, especially top-down mandates</li>
+            <li><strong>Legacy system attachment:</strong> "If it ain't broke, don't fix it"</li>
+            <li><strong>Trust concerns:</strong> Persistent connections = "Big Brother", AI = "Black box"</li>
+        </ul>
+
+        <p><strong>CDFI-Specific Context (Richmond Fed Survey 2025):</strong></p>
+        <ul>
+            <li>Staffing and technology are most widely experienced challenges</li>
+            <li>CDFIs lack qualified candidates for technical roles</li>
+            <li>High costs associated with technology adoption</li>
+        </ul>
+
+        <p><strong>Mitigation Strategy:</strong></p>
+        <ul>
+            <li><strong>Design Partner Program (CRITICAL):</strong> 3-5 CDFIs in Year 1, 50% discount, heavy support, shape product with real user input</li>
+            <li><strong>7-phase onboarding process:</strong> 40 days, dedicated specialist, role-specific training</li>
+            <li><strong>Parallel run:</strong> Process loans in CremoLogix + old system simultaneously, validate outputs</li>
+            <li><strong>Progressive disclosure:</strong> Don't show all 20 mechanisms at once</li>
+            <li><strong>Early wins:</strong> Start with one product, prove value, expand</li>
+            <li><strong>Peer influence:</strong> CDFI networks (OFN) as distribution channel</li>
+        </ul>
+
+        <p><strong>Total Mitigation Cost: $540-730K annually</strong></p>
+    </div>
+
+    <h2>Critical Risk 4: Cash Runway Depletion</h2>
+
+    <div class="callout critical no-break">
+        <h3>This is the #1 Risk to Business Viability</h3>
+        <p><strong>Context:</strong> $7.3M cumulative losses over Years 1-5, requiring $7-8M capital (with 25% buffer). Break-even Year 5-6.</p>
+
+        <p><strong>Key Variables Affecting Capital Requirements:</strong></p>
+        <ol>
+            <li><strong>CDFI adoption rate</strong> (most critical) — Need 150 CDFIs by Year 5</li>
+            <li><strong>Tier mix</strong> — More Scale tier customers = higher ARPU</li>
+            <li><strong>Integration cost control</strong> — IRS transcripts are the killer</li>
+            <li><strong>Churn rate</strong> — Assumed 5% annually, could be higher if product doesn't deliver value</li>
+        </ol>
+
+        <p><strong>Mitigation Strategy:</strong></p>
+        <ul>
+            <li><strong>Milestone-based capital raising:</strong> Seed ($2M) → Series A ($5-6M) with clear milestones</li>
+            <li><strong>Burn control:</strong> Lean MVP (70% of features), variable costs scale with revenue</li>
+            <li><strong>Alternative revenue:</strong> Services (consulting, implementation), grants (CDFI Fund, Treasury SSBCI)</li>
+            <li><strong>Exit options:</strong> Acquisition target for LoanPro, Numerated, Salesforce, FIS/Fiserv/Jack Henry</li>
+            <li><strong>Scenario planning:</strong> Weekly burn rate monitoring, trigger points for adjustments</li>
+        </ul>
+
+        <p><strong>Sensitivity Analysis:</strong></p>
+        <ul>
+            <li><strong>Best Case:</strong> 150 CDFIs by Year 4 (not 5), $25K ARPU → Break-even Year 4, $8M capital</li>
+            <li><strong>Worst Case:</strong> 80 CDFIs by Year 5, $15K ARPU → Break-even Year 7+, $14M+ capital</li>
+        </ul>
+    </div>
+</div>
+
+<!-- OPTIMIZATION RECOMMENDATIONS -->
+<div class="section-page page-break">
+    <div class="section-header">7. Optimization Recommendations</div>
+
+    <p>Based on comprehensive analysis of discovery findings, market research, competitive positioning, technical feasibility, financial modeling, and risk assessment, <strong>10 key optimizations</strong> have been identified to improve viability, reduce cost, accelerate timeline, and increase probability of success.</p>
+
+    <h2>Optimization Summary</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Optimization</th>
+                <th>Priority</th>
+                <th>Impact</th>
+                <th>Effort</th>
+                <th>Recommendation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="highlight">
+                <td>1</td>
+                <td><strong>Tiered Integration Strategy</strong></td>
+                <td><span class="badge high">HIGH</span></td>
+                <td>$60K+ annual savings</td>
+                <td>Low</td>
+                <td><strong>IMPLEMENT</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td>2</td>
+                <td><strong>Simplified MVP Scope</strong></td>
+                <td><span class="badge critical">CRITICAL</span></td>
+                <td>6 mo faster, $700K cheaper</td>
+                <td>N/A</td>
+                <td><strong>STRONGLY RECOMMEND</strong></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><strong>Refundable Application Fee</strong></td>
+                <td><span class="badge medium">MEDIUM</span></td>
+                <td>Better conversion rate</td>
+                <td>Low</td>
+                <td>IMPLEMENT (configurable)</td>
+            </tr>
+            <tr class="highlight">
+                <td>4</td>
+                <td><strong>AI Auto-Approval</strong></td>
+                <td><span class="badge high">HIGH</span></td>
+                <td>10x scalability</td>
+                <td>Medium</td>
+                <td><strong>IMPLEMENT with guardrails</strong></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><strong>Partner Marketplace First</strong></td>
+                <td><span class="badge medium">MEDIUM</span></td>
+                <td>Faster MVP delivery</td>
+                <td>Medium</td>
+                <td>IMPLEMENT phased approach</td>
+            </tr>
+            <tr class="highlight">
+                <td>6</td>
+                <td><strong>Monitoring Opt-In</strong></td>
+                <td><span class="badge high">HIGH</span></td>
+                <td>Better adoption rate</td>
+                <td>Low</td>
+                <td><strong>STRONGLY RECOMMEND</strong></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><strong>Delayed Benchmarking</strong></td>
+                <td><span class="badge medium">MEDIUM</span></td>
+                <td>Focus MVP resources</td>
+                <td>N/A</td>
+                <td>IMPLEMENT (launch Year 2)</td>
+            </tr>
+            <tr class="highlight">
+                <td>8</td>
+                <td><strong>Hybrid Pricing Model</strong></td>
+                <td><span class="badge high">HIGH</span></td>
+                <td>Lower barrier to entry</td>
+                <td>Low</td>
+                <td><strong>IMPLEMENT (offer choice)</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td>9</td>
+                <td><strong>Design Partner Program</strong></td>
+                <td><span class="badge critical">CRITICAL</span></td>
+                <td>Product-market fit</td>
+                <td>High</td>
+                <td><strong>ESSENTIAL</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td>10</td>
+                <td><strong>PWA First (Not Native Apps)</strong></td>
+                <td><span class="badge high">HIGH</span></td>
+                <td>$200K+ savings</td>
+                <td>N/A</td>
+                <td><strong>IMPLEMENT</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Top 3 Critical Optimizations</h2>
+
+    <div class="callout success no-break">
+        <h3>Optimization 1 (CRITICAL): Simplified MVP Scope</h3>
+        <p><strong>Problem:</strong> Original design includes 20 unique mechanisms, 12 intake channels, mentorship program, secondary market, anonymous benchmarking—18-24 month timeline, $1.2-1.5M cost, risk of over-building before validation.</p>
+
+        <p><strong>Optimization:</strong></p>
+        <ul>
+            <li><strong>MVP Phase 1 (6 months, $600-800K):</strong> Origination (Gates 1-3), Underwriting (8 mini-dashboards), Decision paths, Direct borrower + email intake, Core integrations (Plaid, Didit, iSoftpull, e-signature, document vault), Admin config (loan products, users/roles, workflows)</li>
+            <li><strong>Defer to Phase 2:</strong> Continuous monitoring analytics, Predictive delinquency (build after 6-12 months of data), Mentorship, Virtual CFO, Most intake channels (broker portal, referral partners), Anonymous benchmarking</li>
+            <li><strong>Defer to Phase 3:</strong> Pre-approved renewal, Secondary market, Collections/default, Mobile native apps</li>
+        </ul>
+
+        <p><strong>Impact:</strong></p>
+        <div class="metrics-grid">
+            <div class="metric-box green">
+                <div class="value">67%</div>
+                <div class="label">Timeline Reduction (18-24 mo → 6 mo)</div>
+            </div>
+            <div class="metric-box green">
+                <div class="value">33-50%</div>
+                <div class="label">Cost Reduction ($1.2-1.5M → $600-800K)</div>
+            </div>
+            <div class="metric-box green">
+                <div class="value">3X</div>
+                <div class="label">Faster Feedback Loop</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout success no-break">
+        <h3>Optimization 2 (CRITICAL): Design Partner Program</h3>
+        <p><strong>Problem:</strong> Risk of building wrong product without customer input during development. No reference customers for sales. Slow adoption due to skepticism.</p>
+
+        <p><strong>Optimization:</strong> Recruit 3-5 design partner CDFIs in Year 1:</p>
+        <ul>
+            <li><strong>Target:</strong> Progressive, tech-forward CDFIs (not laggards). Mix of sizes (1 large, 2 medium, 2 small) and focus areas (microfinance, small biz, community development)</li>
+            <li><strong>Value Proposition:</strong> 50% off pricing Year 1, 25% off Year 2, dedicated onboarding specialist, weekly check-ins, shape roadmap, first-mover advantage</li>
+            <li><strong>Commitments:</strong> Process 10-25 loans through platform in Year 1, weekly feedback (onboarding), monthly feedback (thereafter), case study participation, serve as reference</li>
+        </ul>
+
+        <p><strong>Process:</strong></p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="year">Months 1-6</div>
+                <div class="milestone">Build MVP with design partner input (weekly feedback sessions)</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">Month 7</div>
+                <div class="milestone">Launch with design partners (parallel run with old system)</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">Months 7-12</div>
+                <div class="milestone">Refine based on design partner usage, track success metrics</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">Month 13+</div>
+                <div class="milestone">Expand sales to broader CDFI market with proven case studies</div>
+            </div>
+        </div>
+
+        <p><strong>Impact:</strong> Dramatically increases probability of product-market fit, provides reference customers for sales (60% shorter sales cycle), generates testimonials and case studies, starts network effects (5 CDFIs = enough data for early benchmarks).</p>
+    </div>
+
+    <div class="callout success no-break">
+        <h3>Optimization 3 (HIGH PRIORITY): Tiered Integration Strategy</h3>
+        <p><strong>Problem:</strong> IRS IVES costs $70/borrower (71% of integration costs). All borrowers go through all integrations = expensive, slow, friction. At 100 apps/month: $84K annually just for IRS.</p>
+
+        <p><strong>Optimization:</strong> Four integration tiers based on loan size and risk:</p>
+
+        <table style="margin-top: 1em;">
+            <thead>
+                <tr>
+                    <th>Tier</th>
+                    <th>Use Case</th>
+                    <th>Integrations</th>
+                    <th>Cost/Borrower</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tier 1: Basic</strong></td>
+                    <td>All borrowers (microloans, existing customers)</td>
+                    <td>Plaid bank + soft credit + identity</td>
+                    <td>~$10</td>
+                </tr>
+                <tr>
+                    <td><strong>Tier 2: Standard</strong></td>
+                    <td>Loans $25K-$100K</td>
+                    <td>Tier 1 + Argyle payroll + RentCast property</td>
+                    <td>~$18</td>
+                </tr>
+                <tr>
+                    <td><strong>Tier 3: Enhanced</strong></td>
+                    <td>Loans $100K+</td>
+                    <td>Tier 2 + IRS IVES tax transcripts</td>
+                    <td>~$88</td>
+                </tr>
+                <tr>
+                    <td><strong>Tier 4: Full</strong></td>
+                    <td>High-risk or special cases</td>
+                    <td>All integrations + Ocrolus fraud detection</td>
+                    <td>~$98</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Admin Control:</strong> Lender configures tiers per product, can require higher tier for specific risk profiles.</p>
+
+        <p><strong>Impact:</strong></p>
+        <div class="metrics-grid">
+            <div class="metric-box green">
+                <div class="value">$60K+</div>
+                <div class="label">Annual Savings (70% cost reduction)</div>
+            </div>
+            <div class="metric-box green">
+                <div class="value">2-3 days</div>
+                <div class="label">Faster Process (no IRS wait for Tier 1-2)</div>
+            </div>
+            <div class="metric-box green">
+                <div class="value">70%</div>
+                <div class="label">Fewer Authorizations Required</div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Net Impact of All Optimizations</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>Original</th>
+                <th>Optimized</th>
+                <th>Improvement</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="highlight">
+                <td><strong>MVP Cost</strong></td>
+                <td>$1.2-1.5M</td>
+                <td>$600-800K</td>
+                <td style="color: var(--green);"><strong>33-50% reduction</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>MVP Timeline</strong></td>
+                <td>18-24 months</td>
+                <td>6-9 months</td>
+                <td style="color: var(--green);"><strong>67% faster</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Integration Costs (annual)</strong></td>
+                <td>$118K</td>
+                <td>$40-60K</td>
+                <td style="color: var(--green);"><strong>50-65% reduction</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Adoption Risk</strong></td>
+                <td>High</td>
+                <td>Medium</td>
+                <td style="color: var(--green);"><strong>Risk reduced</strong></td>
+            </tr>
+            <tr class="highlight">
+                <td><strong>Capital Requirement (Years 1-4)</strong></td>
+                <td>$10.9M</td>
+                <td>$7-8M</td>
+                <td style="color: var(--green);"><strong>27% reduction</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout success">
+        <h3>Strategic Impact</h3>
+        <p><strong>These optimizations make CremoLogix significantly more viable as a business:</strong></p>
+        <ul>
+            <li>Lower capital requirement ($7-8M vs. $10.9M) increases probability of raising funds</li>
+            <li>Faster MVP timeline (6 months vs. 18-24) enables faster feedback and iteration</li>
+            <li>Design partner program dramatically increases product-market fit probability</li>
+            <li>Tiered pricing and opt-in monitoring address CDFI financial constraints and privacy concerns</li>
+            <li>Network effects and 20 unique mechanisms still create defensible moat once scaled</li>
+        </ul>
+    </div>
+</div>
+
+<!-- APPENDIX -->
+<div class="section-page page-break">
+    <div class="section-header">8. Appendix: Questions for Client Discussion</div>
+
+    <p>The following questions require client input before proceeding to UX Designer and Technical Analyst phases. These decisions will shape the final product specification and development roadmap.</p>
+
+    <div class="callout info no-break">
+        <h3>Question 1: Integration Strategy</h3>
+        <p><strong>Context:</strong> IRS transcripts cost $70/borrower (71% of integration costs). Tiered strategy reduces costs 50-65% but requires lender to configure appropriate thresholds.</p>
+        <p><strong>Question:</strong> Do you prefer <strong>tiered integration strategy</strong> (cheaper for most borrowers, faster process) or <strong>uniform full verification</strong> for all loans (more data, higher cost)?</p>
+        <p><strong>Recommendation:</strong> Tiered strategy with admin control per product.</p>
+    </div>
+
+    <div class="callout info no-break">
+        <h3>Question 2: MVP Scope</h3>
+        <p><strong>Context:</strong> Original design includes 20 mechanisms, 12 intake channels, mentorship, benchmarking = 18-24 months, $1.2-1.5M. Simplified MVP = 6-9 months, $600-800K, deferring advanced features to Phase 2.</p>
+        <p><strong>Question:</strong> Are you comfortable launching with <strong>core origination + underwriting only</strong>, deferring continuous monitoring and mentorship to Phase 2? Or is <strong>continuous monitoring essential</strong> to your vision from Day 1?</p>
+        <p><strong>Recommendation:</strong> Simplified MVP. Core platform must work before adding differentiation.</p>
+    </div>
+
+    <div class="callout info no-break">
+        <h3>Question 3: Application Fee Structure</h3>
+        <p><strong>Context:</strong> Application fee covers integration costs, deters tire-kickers, but may deter legitimate LMI borrowers (CDFI mission conflict).</p>
+        <p><strong>Question:</strong> Which model resonates most?</p>
+        <ul>
+            <li><strong>Option A:</strong> Refundable fee ($50-100, refunded upon closing)</li>
+            <li><strong>Option B:</strong> Contingent fee (only charged if approved, $100-200)</li>
+            <li><strong>Option C:</strong> Tiered by loan size (microloans free/$50, larger $100-200)</li>
+        </ul>
+        <p><strong>Recommendation:</strong> Make it admin-configurable so each CDFI can choose.</p>
+    </div>
+
+    <div class="callout info no-break">
+        <h3>Question 4: AI Auto-Approval</h3>
+        <p><strong>Context:</strong> Auto-approval for obvious loans (credit >720, DTI <30%, all dashboards green, loan <$50K) enables instant approvals and 10x scalability, but introduces risk if AI misses nuances.</p>
+        <p><strong>Question:</strong> Are you comfortable with <strong>AI auto-approving obvious loans</strong> (with strict guardrails, human oversight option, audit trail)? Or do you believe <strong>every loan must have human review</strong>?</p>
+        <p><strong>Recommendation:</strong> Implement with conservative criteria initially (10% of loans), expand as confidence builds.</p>
+    </div>
+
+    <div class="callout info no-break">
+        <h3>Question 5: Continuous Monitoring Opt-In</h3>
+        <p><strong>Context:</strong> Persistent connections enable unique features, but raise privacy concerns ("Big Brother"). Opt-in model gives borrowers choice, addresses concerns, but some won't opt in (lose predictive delinquency benefit).</p>
+        <p><strong>Question:</strong> Should continuous monitoring be <strong>opt-in (borrower choice)</strong> or <strong>required for all loans</strong>?</p>
+        <p><strong>Recommendation:</strong> Opt-in with clear value proposition. Lender can make required for certain products (e.g., lines of credit).</p>
+    </div>
+
+    <div class="callout info no-break">
+        <h3>Question 6: Pricing Model</h3>
+        <p><strong>Context:</strong> Pure SaaS ($500-3,500/month) may be too expensive for smallest CDFIs. Hybrid model (lower base + per-loan fee) lowers barrier to entry, aligns incentives.</p>
+        <p><strong>Question:</strong> <strong>Pure SaaS</strong> ($500-3,500/month) or <strong>Hybrid</strong> (e.g., $250/month + $100/funded loan)?</p>
+        <p><strong>Recommendation:</strong> Offer both, let CDFI choose. Some prefer predictable monthly, some prefer lower upfront + variable.</p>
+    </div>
+
+    <div class="callout info no-break">
+        <h3>Question 7: Design Partner Program</h3>
+        <p><strong>Context:</strong> Working deeply with 3-5 design partner CDFIs dramatically increases product-market fit probability, provides reference customers, generates testimonials. Delays broad launch by 6 months.</p>
+        <p><strong>Question:</strong> Are you willing to <strong>delay broad launch by 6 months</strong> to work deeply with 3-5 design partner CDFIs first? This dramatically increases probability of success.</p>
+        <p><strong>Recommendation:</strong> CRITICAL for success. Don't build in vacuum.</p>
+    </div>
+
+    <div class="callout info no-break">
+        <h3>Question 8: Anonymous Benchmarking Timeline</h3>
+        <p><strong>Context:</strong> Benchmarking network creates competitive moat, but not valuable until 20-30 CDFIs (critical mass). Building it Day 1 diverts MVP resources. Can pre-sell concept, launch Year 2.</p>
+        <p><strong>Question:</strong> Is anonymous benchmarking a <strong>"must-have Day 1"</strong> or can it be <strong>"coming soon" feature launching Year 2</strong> after critical mass?</p>
+        <p><strong>Recommendation:</strong> Delay launch to Year 2. Pre-sell vision ("You'll be founding member"), collect data, build when actually valuable.</p>
+    </div>
+
+    <div style="margin-top: 4em; padding-top: 2em; border-top: 2px solid var(--navy); text-align: center; color: #666;">
+        <p style="font-size: 0.9em;"><strong>CremoLogix v2 — Market Research & Feasibility Analysis</strong></p>
+        <p style="font-size: 0.85em;">Prepared by Crucible BA Agent | February 2026</p>
+        <p style="font-size: 0.8em; margin-top: 1em;">CONFIDENTIAL — For Internal Use Only</p>
+    </div>
+
+</div>
+
+</body>
+</html>
